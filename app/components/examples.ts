@@ -60,3 +60,7 @@ export const EXAMPLES = [
     country: "india",
   },
 ];
+
+// Saved plan for each example, served from public/examples so it's free and needs no code.
+export const exampleFile = (ex: (typeof EXAMPLES)[number]) =>
+  `/examples/${ex.brand.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "")}-${ex.country}.md`;

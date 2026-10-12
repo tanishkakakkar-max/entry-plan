@@ -39,3 +39,9 @@ About 1 plan a minute and ~25 a day. If plans start failing with a rate-limit me
 
 ## Updating the research
 Edit a file in `knowledge/countries/`, commit, push. The next deploy uses it. Remove `[TANI]` placeholders as you fill them, and keep `[VERIFY]` on anything you haven't checked against a primary source.
+
+## Access codes and credits
+Live plans need an access code; each plan that finishes uses one credit (errors and rate limits don't). Saved example plans in `public/examples/` are free and need no code.
+- Connect Upstash Redis to the Vercel project (Storage tab). Codes are stored there.
+- Set `ADMIN_PASSWORD` in Vercel, then open `/admin` to create codes (name + credits), see usage, top up and disable codes.
+- A per-IP hourly limit stays on as a backup.

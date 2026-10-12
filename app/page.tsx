@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { BRAND, COUNTRIES, countryLabel } from "./components/brand";
 import { CountryOutline, WorldMap } from "./components/Maps";
 import { PlanView, cleanPlanText } from "./components/PlanView";
-import { EXAMPLES } from "./components/examples";
+import { EXAMPLES, exampleFile } from "./components/examples";
 import { CATEGORIES } from "@/lib/categories";
 
 const EMPTY = {
@@ -72,6 +72,26 @@ export default function Home() {
   const [copied, setCopied] = useState(false);
   const [exampleIdx, setExampleIdx] = useState(-1);
   const [retryIn, setRetryIn] = useState(0);
+  const [errorKind, setErrorKind] = useState<"" | "missing" | "used_up">("");
+  const [creditsLeft, setCreditsLeft] = useState<number | null>(null);
+  const [savedExample, setSavedExample] = useState(false);
+
+  // Remember the access code on this device (a convenience only; it may not be available).
+  useEffect(() => {
+    try {
+      setAccessCode(localStorage.getItem("fp-code") ?? "");
+    } catch {}
+  }, []);
+  function changeCode(value: string) {
+    setAccessCode(value);
+    try {
+      localStorage.setItem("fp-code", value.trim());
+    } catch {}
+  }
+
+  // An example the visitor hasn't edited shows its saved plan: instant, free and no code needed.
+  const example = exampleIdx >= 0 ? EXAMPLES[exampleIdx] : null;
+  const unchangedExample = !!example && (Object.keys(EMPTY) as (keyof typeof EMPTY)[]).every((k) => form[k] === example[k]);
   const planRef = useRef<HTMLElement>(null);
   const formRef = useRef<HTMLElement>(null);
 
@@ -84,12 +104,33 @@ export default function Home() {
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
-    setLoading(true);
-    setPhase(0);
     setError("");
+    setErrorKind("");
     setPlan("");
+    setCreditsLeft(null);
+    setSavedExample(false);
     setPlanCountry(countryLabel(form.country));
     setTimeout(() => planRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
+
+    if (unchangedExample && example) {
+      try {
+        const res = await fetch(exampleFile(example));
+        if (!res.ok) throw new Error();
+        setPlan(await res.text());
+        setSavedExample(true);
+      } catch {
+        setError("Couldn't load the saved example. Please try again.");
+      }
+      return;
+    }
+    if (!accessCode.trim()) {
+      setErrorKind("missing");
+      setError("Live plans need an access code.");
+      return;
+    }
+
+    setLoading(true);
+    setPhase(0);
     try {
       // If the free tier is busy, wait out the minute with a countdown and try once more.
       for (let attempt = 1; attempt <= 2; attempt++) {
@@ -99,9 +140,12 @@ export default function Home() {
           body: JSON.stringify({ ...form, accessCode }),
         });
         if (!res.ok || !res.body) {
+          const status = res.headers.get("X-Code-Status");
+          setErrorKind(status === "used_up" ? "used_up" : status === "missing" ? "missing" : "");
           setError((await res.text()) || "Something went wrong.");
           return;
         }
+        const left = Number(res.headers.get("X-Credits-Left"));
         const reader = res.body.getReader();
         const decoder = new TextDecoder();
         let text = "";
@@ -113,7 +157,10 @@ export default function Home() {
           setPhase(2);
           setPlan(text);
         }
-        if (!text.startsWith(BUSY)) return;
+        if (!text.startsWith(BUSY)) {
+          if (text.trimStart().startsWith("#") && Number.isFinite(left)) setCreditsLeft(left);
+          return;
+        }
         if (attempt === 2) {
           setPlan(text);
           return;
@@ -323,8 +370,20 @@ export default function Home() {
             </div>
 
             <label className="field access">
-              <span>Access code (optional, if you were given one)</span>
-              <input value={accessCode} onChange={(e) => setAccessCode(e.target.value)} placeholder="Optional" />
+              <span>Access code</span>
+              <input
+                value={accessCode}
+                onChange={(e) => changeCode(e.target.value)}
+                placeholder="FP-XXXX-XXXX"
+                autoComplete="off"
+                autoCapitalize="characters"
+                spellCheck={false}
+              />
+              <small className="field-note">
+                {unchangedExample
+                  ? "Not needed for examples: you'll see a saved plan."
+                  : <>Needed for live plans. Don't have one? <a href="#contact">Get in touch</a>.</>}
+              </small>
             </label>
 
             <div className="form-actions">
@@ -361,7 +420,25 @@ export default function Home() {
 
             {error && (
               <p className="error" role="alert">
-                {error}
+                {errorKind === "used_up" ? (
+                  <>
+                    This code is used up. Want more? <a href="#contact">Get in touch</a>.
+                  </>
+                ) : errorKind === "missing" ? (
+                  <>
+                    Live plans need an access code. Try an example to see a saved plan, or{" "}
+                    <a href="#contact">get in touch</a> for a code.
+                  </>
+                ) : (
+                  error
+                )}
+              </p>
+            )}
+
+            {savedExample && plan && (
+              <p className="notice saved-note no-print">
+                This is a saved example plan. For a live plan for your own brand, change the details and add your access
+                code.
               </p>
             )}
 
@@ -400,6 +477,17 @@ export default function Home() {
                   <button className="btn btn-quiet" onClick={startOver} disabled={loading}>
                     Start another plan
                   </button>
+                  {creditsLeft !== null && !loading && (
+                    <p className="credits-left" role="status">
+                      {creditsLeft === 0 ? (
+                        <>
+                          That was the last plan on this code. Want more? <a href="#contact">Get in touch</a>.
+                        </>
+                      ) : (
+                        `${creditsLeft} ${creditsLeft === 1 ? "plan" : "plans"} left on this code`
+                      )}
+                    </p>
+                  )}
                 </div>
               </>
             )}
@@ -407,16 +495,22 @@ export default function Home() {
         )}
       </main>
 
-      <footer className="footer">
+      <footer className="footer" id="contact">
         <div className="wrap footer-inner">
+          <p className="footer-contact">
+            <strong>Get in touch</strong> for an access code or a personalised plan:{" "}
+            <a href={`mailto:${BRAND.email}?subject=${encodeURIComponent(`${BRAND.name}: access code`)}`}>{BRAND.email}</a>
+            <span className="dot" aria-hidden="true">
+              ·
+            </span>
+            <a href={BRAND.authorUrl} target="_blank" rel="noopener noreferrer">
+              LinkedIn
+            </a>
+          </p>
           <p>
             <a href={BRAND.authorUrl} target="_blank" rel="noopener noreferrer" className="no-print-link">
               Built by {BRAND.author}
             </a>
-            <span className="dot" aria-hidden="true">
-              ·
-            </span>
-            <a href={`mailto:${BRAND.email}`}>{BRAND.email}</a>
             <span className="dot" aria-hidden="true">
               ·
             </span>

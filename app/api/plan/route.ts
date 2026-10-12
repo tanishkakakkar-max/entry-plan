@@ -2,6 +2,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { instructions, samplePlan, countries } from "@/lib/knowledge.generated";
 import { webResearch, formatWebResults, cleanWebsiteUrl, readWebsite, formatWebsite } from "@/lib/web";
 import { CATEGORIES } from "@/lib/categories";
+import { creditsReady, normalizeCode, refundCredit, reserveCredit } from "@/lib/credits";
 
 export const runtime = "nodejs";
 export const maxDuration = 120;
@@ -16,8 +17,8 @@ const COUNTRY_NAMES: Record<string, string> = {
 const FIELDS = ["brand", "product", "identity", "customer", "price", "stage", "country"] as const;
 type Form = Record<(typeof FIELDS)[number], string> & { accessCode?: string; category?: string; website?: string };
 
-// Best-effort per-IP limit. Serverless instances don't share memory, so also set a
-// monthly spend limit in the Anthropic Console - that's the real safety net.
+// Backup per-IP limit on top of access-code credits. Serverless instances don't share memory,
+// so it's best-effort; the credits in Redis are the real limit.
 const hits = new Map<string, number[]>();
 const LIMIT = 5; // plans per IP
 const WINDOW_MS = 60 * 60 * 1000; // per hour
@@ -125,14 +126,14 @@ export async function POST(req: Request) {
     return new Response("Invalid request.", { status: 400 });
   }
 
-  if (process.env.ACCESS_CODE && body.accessCode !== process.env.ACCESS_CODE) {
-    return new Response("That access code isn't right.", { status: 401 });
+  // Live plans need an access code with credits left. The page tells codes apart by X-Code-Status.
+  const codeError = (status: number, reason: string, message: string) =>
+    new Response(message, { status, headers: { "X-Code-Status": reason } });
+  if (!creditsReady) {
+    return new Response("Access codes aren't set up yet. Please try again later.", { status: 503 });
   }
-
-  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
-  if (rateLimited(ip)) {
-    return new Response("You've hit the limit of 5 plans an hour. Try again later.", { status: 429 });
-  }
+  const code = normalizeCode(body.accessCode);
+  if (!code) return codeError(401, "missing", "Enter your access code to get a live plan.");
 
   for (const f of FIELDS) {
     const v = body[f];
@@ -160,6 +161,19 @@ export async function POST(req: Request) {
     return new Response("v0 covers Japan, Singapore, India and the US.", { status: 400 });
   }
   const countryName = COUNTRY_NAMES[countryKey];
+
+  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
+  if (rateLimited(ip)) {
+    return new Response("You've hit the limit of 5 plans an hour. Try again later.", { status: 429 });
+  }
+
+  // Take the credit now (so two tabs can't overspend it) and give it back if no plan comes out.
+  const reservation = await reserveCredit(code);
+  if (!reservation.ok) {
+    if (reservation.reason === "used_up") return codeError(402, "used_up", "This code is used up.");
+    if (reservation.reason === "disabled") return codeError(403, "disabled", "This code has been switched off.");
+    return codeError(403, "invalid", "That access code isn't right. Check it and try again.");
+  }
 
   const brief = `Write the market-entry plan for this brand.
 
@@ -219,14 +233,28 @@ Target country: ${countryName}${website ? `\nWebsite: ${website}` : ""}`;
         }
       } catch (err) {
         console.error(err);
-        send("\n\n_Something went wrong while writing the plan. Please try again in a minute._");
+        try {
+          send("\n\n_Something went wrong while writing the plan. Please try again in a minute._");
+        } catch {
+          // the reader has gone away
+        }
       } finally {
-        controller.close();
+        // Only a finished plan costs a credit: errors, rate limits and non-plan replies are refunded.
+        const finished = output.trimStart().startsWith("#") && output.length > 1500 && !output.includes("Something went wrong while writing");
+        if (!finished) await refundCredit(code).catch((e) => console.error("refund failed", e));
+        try {
+          controller.close();
+        } catch {}
       }
     },
   });
 
   return new Response(readable, {
-    headers: { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "no-store" },
+    headers: {
+      "Content-Type": "text/plain; charset=utf-8",
+      "Cache-Control": "no-store",
+      // Credits left if this plan finishes; the page only shows it after a successful plan.
+      "X-Credits-Left": String(reservation.left),
+    },
   });
 }
