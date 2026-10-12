@@ -4,7 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { BRAND, COUNTRIES, countryLabel } from "./components/brand";
 import { CountryOutline, WorldMap } from "./components/Maps";
 import { PlanView, cleanPlanText } from "./components/PlanView";
-import { EXAMPLES, exampleFile } from "./components/examples";
+import { EXAMPLE_BRANDS } from "./components/examples";
+import { exampleKeys } from "@/lib/examples-index.generated";
 import { CATEGORIES } from "@/lib/categories";
 import { checkBrief } from "@/lib/brief";
 
@@ -71,7 +72,7 @@ export default function Home() {
   const [phase, setPhase] = useState(0);
   const [planCountry, setPlanCountry] = useState("");
   const [copied, setCopied] = useState(false);
-  const [exampleIdx, setExampleIdx] = useState(-1);
+  const [exampleBrand, setExampleBrand] = useState<string>("");
   const [retryIn, setRetryIn] = useState(0);
   const [errorKind, setErrorKind] = useState<"" | "missing" | "used_up">("");
   const [creditsLeft, setCreditsLeft] = useState<number | null>(null);
@@ -90,9 +91,9 @@ export default function Home() {
     } catch {}
   }
 
-  // An example the visitor hasn't edited shows its saved plan: instant, free and no code needed.
-  const example = exampleIdx >= 0 ? EXAMPLES[exampleIdx] : null;
-  const unchangedExample = !!example && (Object.keys(EMPTY) as (keyof typeof EMPTY)[]).every((k) => form[k] === example[k]);
+  // Hand-checked example plans: only brands and countries with a saved file are offered.
+  const exampleBrands = EXAMPLE_BRANDS.filter((b) => exampleKeys.some((k) => k.startsWith(`${b.key}-`)));
+  const exampleCountries = (brand: string) => COUNTRIES.filter((c) => exampleKeys.includes(`${brand}-${c.key}`));
   const planRef = useRef<HTMLElement>(null);
   const formRef = useRef<HTMLElement>(null);
 
@@ -117,17 +118,6 @@ export default function Home() {
     setPlanCountry(countryLabel(form.country));
     setTimeout(() => planRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
 
-    if (unchangedExample && example) {
-      try {
-        const res = await fetch(exampleFile(example));
-        if (!res.ok) throw new Error();
-        setPlan(await res.text());
-        setSavedExample(true);
-      } catch {
-        setError("Couldn't load the saved example. Please try again.");
-      }
-      return;
-    }
     const problem = checkBrief(form);
     if (problem) {
       setError(problem);
@@ -190,11 +180,24 @@ export default function Home() {
     }
   }
 
-  // Each click shows the next example; the first click starts at a random one.
-  function tryExample() {
-    const next = exampleIdx < 0 ? Math.floor(Math.random() * EXAMPLES.length) : (exampleIdx + 1) % EXAMPLES.length;
-    setExampleIdx(next);
-    setForm(EXAMPLES[next]);
+  // Opens a saved example plan: no code, no credits, no AI call. The plan text loads on demand.
+  async function openExample(brand: string, country: string) {
+    if (loading) return;
+    setError("");
+    setErrorKind("");
+    setCreditsLeft(null);
+    setPlanCountry(countryLabel(country));
+    try {
+      const { examplePlans } = await import("@/lib/examples.generated");
+      const text = examplePlans[`${brand}-${country}`];
+      if (!text) throw new Error();
+      setPlan(text);
+      setSavedExample(true);
+    } catch {
+      setPlan("");
+      setError("Couldn't open that example. Please try again.");
+    }
+    setTimeout(() => planRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
   }
 
   async function copy() {
@@ -226,6 +229,7 @@ export default function Home() {
           </a>
           <nav aria-label="Main">
             <a href="#how">How it works</a>
+            {exampleBrands.length > 0 && <a href="#examples">Examples</a>}
             <a href="#get-a-plan" className="nav-cta">
               Get a plan
             </a>
@@ -289,6 +293,45 @@ export default function Home() {
           </ol>
         </section>
 
+        {exampleBrands.length > 0 && (
+          <section id="examples" className="wrap examples no-print" aria-labelledby="examples-title">
+            <p className="label">Example plans</p>
+            <h2 id="examples-title" className="section-title">
+              See a finished plan.
+            </h2>
+            <p className="pick-sub">
+              Pick a brand, then a market. These are saved, hand-checked plans: free to read, no access code needed.
+            </p>
+            <div className="example-brands" role="radiogroup" aria-label="Example brand">
+              {exampleBrands.map((b) => (
+                <button
+                  type="button"
+                  key={b.key}
+                  role="radio"
+                  aria-checked={exampleBrand === b.key}
+                  className={exampleBrand === b.key ? "example-brand selected" : "example-brand"}
+                  onClick={() => setExampleBrand(b.key)}
+                >
+                  <span className="example-brand-name">{b.name}</span>
+                  <span className="example-brand-blurb">{b.blurb}</span>
+                </button>
+              ))}
+            </div>
+            {exampleBrand && (
+              <div className="example-countries">
+                <p className="example-step">Now pick a market:</p>
+                <div className="port-chips">
+                  {exampleCountries(exampleBrand).map((c) => (
+                    <button type="button" key={c.key} className="port-chip example-chip" onClick={() => openExample(exampleBrand, c.key)}>
+                      {c.label} <span aria-hidden="true">→</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </section>
+        )}
+
         <section id="get-a-plan" ref={formRef} className="wrap get-plan no-print" aria-labelledby="plan-form-title">
           <div className="pick-head">
             <p className="label">Get a plan</p>
@@ -297,9 +340,13 @@ export default function Home() {
             </h2>
             <p className="pick-sub">Your brand can be based anywhere. Choose the first market you want to enter.</p>
             <p className="access-callout">
-              <strong>No access code?</strong> You can still open our saved example plans: click <em>Try an example</em>,
-              then <em>Let&apos;s go</em>. For a personalised plan for your own brand,{" "}
-              <a href="#contact">get in touch for an access code</a>.
+              <strong>Live plans need an access code.</strong>{" "}
+              {exampleBrands.length > 0 && (
+                <>
+                  Without one, you can read the <a href="#examples">example plans</a>.{" "}
+                </>
+              )}
+              For a personalised plan for your own brand, <a href="#contact">get in touch for an access code</a>.
             </p>
           </div>
           <form onSubmit={submit}>
@@ -396,18 +443,13 @@ export default function Home() {
                 spellCheck={false}
               />
               <small className="field-note">
-                {unchangedExample
-                  ? "Not needed for examples: you'll see a saved plan."
-                  : <>Needed for live plans. Don't have one? <a href="#contact">Get in touch</a>.</>}
+                Needed for live plans. Don&apos;t have one? <a href="#contact">Get in touch</a>.
               </small>
             </label>
 
             <div className="form-actions">
               <button className="btn btn-orange" disabled={loading}>
                 {loading ? "Writing your plan..." : "Let's go"} {!loading && <span aria-hidden="true">→</span>}
-              </button>
-              <button type="button" className="btn btn-quiet" onClick={tryExample} disabled={loading}>
-                {exampleIdx < 0 ? "Try an example" : "Another example"}
               </button>
             </div>
           </form>
@@ -442,7 +484,12 @@ export default function Home() {
                   </>
                 ) : errorKind === "missing" ? (
                   <>
-                    Live plans need an access code. Try an example to see a saved plan, or{" "}
+                    Live plans need an access code.{" "}
+                    {exampleBrands.length > 0 && (
+                      <>
+                        Read an <a href="#examples">example plan</a> for free, or{" "}
+                      </>
+                    )}
                     <a href="#contact">get in touch</a> for a code.
                   </>
                 ) : (
@@ -452,10 +499,12 @@ export default function Home() {
             )}
 
             {savedExample && plan && (
-              <p className="notice saved-note no-print">
-                This is a saved example plan. For a live plan for your own brand, change the details and add your access
-                code.
-              </p>
+              <div className="example-label">
+                <span className="example-badge">Example plan · hand-checked</span>
+                <span className="no-print">
+                  Want one for your brand? <a href="#get-a-plan">Fill in the form</a> with your access code.
+                </span>
+              </div>
             )}
 
             {plan && (

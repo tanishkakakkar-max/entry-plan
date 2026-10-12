@@ -195,6 +195,27 @@ input:focus-visible, textarea:focus-visible { outline: 2px solid var(--ink); out
 .access { max-width: 420px; margin: 24px 0 0; }
 .form-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
 
+/* Example plans */
+.examples { padding-top: 72px; }
+.examples .pick-sub { margin-bottom: 24px; }
+.example-brands { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+@media (min-width: 900px) { .example-brands { grid-template-columns: repeat(4, 1fr); gap: 16px; } }
+.example-brand {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 6px; text-align: left; padding: 18px;
+  border: 1px solid var(--line); border-radius: var(--radius); background: var(--white); color: var(--ink);
+}
+.example-brand:hover { border-color: var(--line-strong); background: #fbfefd; }
+.example-brand.selected { border: 2px solid var(--aqua); padding: 17px; background: #f6fcfc; box-shadow: 0 0 0 4px rgba(162, 225, 230, 0.35); }
+.example-brand-name { font-family: var(--display); font-size: 22px; line-height: 1.2; }
+.example-brand-blurb { font-size: 14px; line-height: 1.45; color: var(--ink-soft); }
+.example-countries { margin-top: 20px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.example-step { margin: 0; font-weight: 600; font-size: 15px; }
+.example-chip { font-size: 15px; padding: 9px 16px; }
+.example-chip:hover { background: var(--aqua); border-color: var(--aqua); }
+.example-label { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin-top: 32px; font-size: 15px; color: var(--ink-soft); }
+.example-label a { font-weight: 600; color: var(--ink); text-underline-offset: 3px; }
+.example-badge { display: inline-block; background: var(--mist); border: 1px solid var(--leaf); color: var(--ink); font-weight: 600; font-size: 13px; letter-spacing: 0.04em; padding: 6px 14px; border-radius: 999px; }
+
 /* Results */
 .results { padding-top: 24px; padding-bottom: 80px; border-top: 1px solid var(--line); }
 .progress-card { background: var(--mist); border-radius: var(--radius-lg); padding: 28px; margin-top: 32px; }
