@@ -2,9 +2,19 @@ import type { Metadata } from "next";
 import { BRAND } from "./components/brand";
 import "./globals.css";
 
+// Share previews (LinkedIn, iMessage, Slack) use app/opengraph-image.png; icons are app/icon.svg and app/apple-icon.png.
 export const metadata: Metadata = {
+  metadataBase: new URL(BRAND.url),
   title: `${BRAND.name} - clear market-entry plans`,
   description: `${BRAND.description} By ${BRAND.author}.`,
+  openGraph: {
+    type: "website",
+    url: "/",
+    siteName: BRAND.name,
+    title: `${BRAND.name}: ${BRAND.headline}`,
+    description: "Market-entry plans for brands from anywhere, into Japan, Singapore, India and the United States. Built on real research with live sources.",
+  },
+  twitter: { card: "summary_large_image" },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
