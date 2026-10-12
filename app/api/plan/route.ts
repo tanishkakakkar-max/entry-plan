@@ -64,7 +64,7 @@ async function streamGroq(system: string[], brief: string, send: Send) {
     body: JSON.stringify({
       model: process.env.GROQ_MODEL || "openai/gpt-oss-120b",
       stream: true,
-      max_completion_tokens: 3500,
+      max_completion_tokens: 3000, // plans use ~2,500; Groq free tier counts input + this cap against 8K tokens/min
       reasoning_effort: "low",
       include_reasoning: false,
       messages: [
