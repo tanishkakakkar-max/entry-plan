@@ -4,12 +4,22 @@ import { useEffect, useState } from "react";
 import { BRAND } from "../components/brand";
 
 type Code = { code: string; name: string; total: number; used: number; disabled: boolean; created: string };
+type Signup = { email: string; code: string; consent: boolean; created: string; used: number; total: number };
+
+// CSV for importing into a newsletter tool. Quotes every field so commas in emails/dates are safe.
+function toCsv(rows: Signup[]) {
+  const q = (v: string | number | boolean) => `"${String(v).replace(/"/g, '""')}"`;
+  const head = ["email", "code", "credits_used", "credits_total", "marketing_opt_in", "signed_up"];
+  const body = rows.map((r) => [r.email, r.code, r.used, r.total, r.consent ? "yes" : "no", r.created].map(q).join(","));
+  return [head.join(","), ...body].join("\n");
+}
 
 // Private page for managing access codes. The password lives only in this browser tab's session.
 export default function Admin() {
   const [password, setPassword] = useState("");
   const [authed, setAuthed] = useState(false);
   const [codes, setCodes] = useState<Code[]>([]);
+  const [signups, setSignups] = useState<Signup[]>([]);
   const [message, setMessage] = useState("");
   const [busy, setBusy] = useState(false);
   const [name, setName] = useState("");
@@ -28,8 +38,9 @@ export default function Admin() {
   }
 
   async function load(pw = password) {
-    const data = await api("/api/admin/codes", {}, pw);
+    const [data, su] = await Promise.all([api("/api/admin/codes", {}, pw), api("/api/admin/signups", {}, pw)]);
     setCodes(data.codes);
+    setSignups(su.signups);
   }
 
   useEffect(() => {
@@ -94,6 +105,16 @@ export default function Admin() {
       setCopied(code);
       setTimeout(() => setCopied(""), 1500);
     } catch {}
+  }
+
+  function downloadCsv(onlyOptedIn: boolean) {
+    const rows = onlyOptedIn ? signups.filter((s) => s.consent) : signups;
+    const blob = new Blob([toCsv(rows)], { type: "text/csv;charset=utf-8" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `first-port-signups${onlyOptedIn ? "-opted-in" : ""}-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(a.href);
   }
 
   function signOut() {
@@ -253,6 +274,60 @@ export default function Admin() {
           </tbody>
         </table>
       </div>
+
+      <section className="admin-signups" aria-labelledby="signups-title">
+        <div className="admin-head">
+          <div>
+            <h2 id="signups-title" className="admin-h2">
+              Email sign-ups
+            </h2>
+            <p className="admin-sub">
+              {signups.length} sign-ups · {signups.filter((s) => s.consent).length} opted in to offers and updates
+            </p>
+          </div>
+          <div className="admin-actions">
+            <button className="btn btn-quiet admin-small" onClick={() => downloadCsv(false)} disabled={!signups.length}>
+              Download CSV
+            </button>
+            <button className="btn btn-quiet admin-small" onClick={() => downloadCsv(true)} disabled={!signups.some((s) => s.consent)}>
+              Opted-in only
+            </button>
+          </div>
+        </div>
+        <div className="table-wrap admin-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Email</th>
+                <th>Code</th>
+                <th>Credits used</th>
+                <th>Offers opt-in</th>
+                <th>Signed up</th>
+              </tr>
+            </thead>
+            <tbody>
+              {signups.length === 0 && (
+                <tr>
+                  <td colSpan={5}>No sign-ups yet.</td>
+                </tr>
+              )}
+              {signups.map((r) => (
+                <tr key={r.email}>
+                  <td>{r.email}</td>
+                  <td>
+                    <span className="admin-code">{r.code}</span>
+                  </td>
+                  <td>
+                    {r.used} / {r.total}
+                  </td>
+                  <td>{r.consent ? <span className="admin-status active">Yes</span> : <span className="admin-status disabled">No</span>}</td>
+                  <td>{r.created ? new Date(r.created).toLocaleDateString() : ""}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
     </main>
   );
 }

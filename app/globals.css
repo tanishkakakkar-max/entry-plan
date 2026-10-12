@@ -118,6 +118,62 @@ button:disabled { opacity: 0.55; cursor: default; }
 @keyframes pin-pop { from { transform: scale(0.2); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .world-route, .world-routes, .pin-pop { animation: none; } }
 
+/* Dark hero (matches the share image) */
+.hero-dark { background: var(--ink); color: var(--white); border-bottom: 0; overflow: hidden; }
+.hero-dark .hero-inner { padding-top: 48px; padding-bottom: 56px; gap: 28px; }
+@media (min-width: 960px) {
+  .hero-dark .hero-inner { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 24px; padding-top: 80px; padding-bottom: 88px; }
+  .hero-dark .hero h1, .hero-dark h1 { white-space: normal; }
+}
+.hero-brand { display: flex; align-items: center; gap: 14px; margin: 0 0 26px; font-size: 16px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--aqua); }
+.hero-dark h1 { color: var(--white); font-size: clamp(52px, 7.2vw, 96px); line-height: 0.98; white-space: normal; margin-bottom: 24px; }
+.hero-dark h1 em { font-style: italic; }
+.hero-dark .lede { color: #d6e7ea; font-size: 19px; max-width: 460px; }
+@media (min-width: 768px) { .hero-dark .lede { font-size: 22px; } }
+.hero-dark .lede span { display: inline; }
+@media (min-width: 768px) { .hero-dark .lede span { display: block; } }
+.hero-ports { margin-top: 30px; display: flex; flex-direction: column; gap: 10px; }
+.hero-dark .map-caption { color: #a9c7cd; font-weight: 500; font-size: 14px; }
+.hero-dark .port-chip { background: transparent; color: var(--white); border-color: #4f8593; }
+.hero-dark .port-chip:hover { border-color: var(--aqua); }
+.hero-dark .port-chip.selected { background: var(--aqua); border-color: var(--aqua); color: var(--ink); }
+.hero-dark .hero-map { background: none; padding: 0; margin: 0 calc(-1 * var(--gutter)) 0 0; }
+/* Wide screens: text column, then the map in the remaining space, running off the right edge
+   (as in the share image). Tied to the content column, so it sits beside the headline at any width. */
+@media (min-width: 960px) {
+  /* The hero uses more of the screen than the 1,160px content column, so the text sits near the left edge. */
+  .hero-dark .hero-inner {
+    display: grid; grid-template-columns: minmax(0, 470px) minmax(0, 1fr); gap: 8px; align-items: start;
+    max-width: 1680px; padding-left: clamp(32px, 6vw, 112px); padding-right: 28px;
+  }
+  .hero-dark .hero-map { position: static; width: auto; margin: 24px 0 0 -150px; }
+}
+.map-ports { margin-top: 8px; padding-left: 8%; }
+.hero-dark .world-land { fill: #1f4a55; stroke: #4f8593; stroke-width: 0.9; }
+.hero-dark .world-route { stroke: var(--aqua); opacity: 0.8; }
+.hero-dark .origin-dot { fill: var(--ink); stroke: var(--aqua); opacity: 1; }
+.hero-dark .port-dot { fill: var(--aqua); stroke: var(--ink); opacity: 1; }
+.hero-dark .pin-halo { fill: var(--aqua); opacity: 1; }
+.hero-dark .pin-dot { fill: var(--orange); stroke: var(--white); }
+.hero-dark .port-label { fill: var(--white); stroke: var(--ink); }
+.hero-dark :focus-visible { outline-color: var(--aqua); }
+.hero-dark .port-option:hover .port-dot, .hero-dark .port-option:focus-visible .port-dot { fill: var(--white); }
+
+.hero-dark .hero-free { background: rgba(255, 255, 255, 0.06); border-color: #2f6170; color: var(--white); margin-top: 6px; }
+.hero-dark .hero-free .free-title { font-family: var(--display); font-weight: 400; font-size: 26px; margin: 0 0 4px; color: var(--white); }
+.hero-dark .hero-free .free-sub, .hero-dark .hero-free .privacy-line, .hero-dark .hero-free .free-note { color: #b8d3d8; }
+.hero-dark .hero-free .field span { color: var(--white); }
+.hero-dark .hero-free input[type="email"] { background: var(--white); border-color: var(--white); }
+.hero-dark .hero-free .consent { color: #e3eff1; }
+.hero-dark .hero-free .consent input { accent-color: var(--aqua); }
+.hero-dark .hero-free .free-code { color: var(--ink); }
+.hero-dark .hero-free .btn-quiet { background: transparent; color: var(--white); border-color: #4f8593; }
+.hero-dark .hero-free .error { color: var(--ink); }
+.hero-dark .hero-free .error a { color: var(--ink); }
+.hero-alt { margin: 16px 0 0; color: #b8d3d8; font-size: 15px; }
+.hero-alt a { color: var(--aqua); font-weight: 600; text-underline-offset: 3px; }
+.hero-dark .hero-ports { margin-top: 22px; }
+
 /* How it works */
 .how { padding-top: 88px; padding-bottom: 40px; }
 .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
@@ -194,6 +250,22 @@ select:focus-visible { outline: 2px solid var(--ink); outline-offset: 1px; borde
 input:focus-visible, textarea:focus-visible { outline: 2px solid var(--ink); outline-offset: 1px; border-color: var(--ink); }
 .access { max-width: 420px; margin: 24px 0 0; }
 .form-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+
+/* Get free access */
+.free-access { margin-top: 20px; max-width: 720px; padding: 22px; border: 1px solid var(--leaf); border-radius: var(--radius); background: var(--mist); }
+@media (min-width: 768px) { .free-access { padding: 26px 28px; } }
+.free-access h3 { font-family: var(--display); font-weight: 400; font-size: 26px; margin: 0 0 4px; }
+.free-sub { margin: 0 0 16px; color: var(--ink-soft); }
+.free-form { display: grid; gap: 14px; }
+.free-form .field { margin: 0; }
+.free-form .btn { justify-self: start; }
+.consent { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; line-height: 1.45; cursor: pointer; }
+.consent input { width: 20px; height: 20px; margin: 1px 0 0; flex: none; accent-color: var(--ink); }
+.privacy-line { margin: 0; font-size: 13px; color: var(--ink-soft); }
+.free-error { margin: 0; }
+.free-result p { margin: 0 0 8px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.free-code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 20px; letter-spacing: 0.06em; background: var(--white); border: 1px solid var(--line-strong); border-radius: 8px; padding: 6px 12px; }
+.free-note { color: var(--ink-soft); font-size: 15px; display: block !important; }
 
 /* Example plans */
 .examples { padding-top: 72px; }
@@ -383,3 +455,16 @@ a.cite:hover { background: var(--sky); }
 .admin-status.disabled { background: #eef1f2; color: var(--ink-soft); }
 tr.is-disabled td { color: var(--ink-soft); }
 @media (max-width: 600px) { .admin-stats { grid-template-columns: 1fr; } }
+.admin-signups { margin-top: 48px; }
+.admin-h2 { font-family: var(--display); font-weight: 400; font-size: 30px; margin: 0; }
+.admin-sub { margin: 4px 0 16px; color: var(--ink-soft); font-size: 15px; }
+.admin-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+
+/* Free access page */
+.free-page { min-height: 100vh; display: flex; align-items: center; }
+.free-page-inner { width: 100%; max-width: 640px; padding-top: 48px; padding-bottom: 64px; }
+.free-page-brand { text-decoration: none; display: inline-flex; margin-bottom: 28px; }
+.free-page .hero-free { margin-top: 0; }
+.free-page .free-title { font-size: clamp(34px, 6vw, 48px); line-height: 1.05; margin-bottom: 8px; }
+.free-page .hero-alt { margin-top: 20px; }
+.free-page .hero-alt .dot { color: #6f97a0; }

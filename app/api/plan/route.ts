@@ -18,6 +18,8 @@ const COUNTRY_NAMES: Record<string, string> = {
 };
 
 const FIELDS = ["brand", "product", "identity", "customer", "price", "stage", "country"] as const;
+// Answers a brand can skip when it gives its website (the plan reads the site instead).
+const OPTIONAL_WITH_WEBSITE = ["product", "identity", "customer", "price", "stage"] as const;
 type Form = Record<(typeof FIELDS)[number], string> & { accessCode?: string; category?: string; website?: string };
 
 // Backup per-IP limit on top of access-code credits. Serverless instances don't share memory,
@@ -149,8 +151,17 @@ export async function POST(req: Request) {
   const code = normalizeCode(body.accessCode);
   if (!code) return codeError(401, "missing", "Enter your access code to get a live plan.");
 
+  // With a website, the detail fields are optional: the plan reads the site instead.
+  const website = cleanWebsiteUrl(body.website);
+  if (body.website?.trim() && !website) {
+    return new Response("That website link doesn't look right - try something like brand.com.", { status: 400 });
+  }
   for (const f of FIELDS) {
     const v = body[f];
+    if (website && (OPTIONAL_WITH_WEBSITE as readonly string[]).includes(f) && (v === undefined || v === null || v === "")) {
+      body[f] = "";
+      continue;
+    }
     if (typeof v !== "string" || !v.trim()) {
       return new Response(`Please fill in: ${f}.`, { status: 400 });
     }
@@ -160,7 +171,7 @@ export async function POST(req: Request) {
   }
 
   // Reject nonsense before any credit is spent.
-  const problem = checkBrief(body);
+  const problem = checkBrief(body, !!website);
   if (problem) return new Response(problem, { status: 400 });
 
   // Optional extras: category must be one we support; website must be a plain http(s) link.
@@ -168,11 +179,6 @@ export async function POST(req: Request) {
   if (body.category && !category) {
     return new Response("Please pick a category from the list.", { status: 400 });
   }
-  const website = cleanWebsiteUrl(body.website);
-  if (body.website?.trim() && !website) {
-    return new Response("That website link doesn't look right - try something like brand.com.", { status: 400 });
-  }
-
   const countryKey = body.country.toLowerCase();
   const research = countries[countryKey];
   if (!research) {
@@ -195,34 +201,58 @@ export async function POST(req: Request) {
         : codeError(403, "invalid", "That access code isn't right. Check it and try again.");
   if (!codeState.ok) return refuse(codeState);
 
+  // Blank answers + website: read the site now, before any credit is spent, and stop if it's unreadable.
+  const blanks = OPTIONAL_WITH_WEBSITE.filter((f) => !body[f].trim());
+  let siteText: string | null = null;
+  if (website && blanks.length) {
+    siteText = await readWebsite(website).catch((err) => {
+      console.error("website read failed", err);
+      return "";
+    });
+    if (siteText.length < 300) {
+      return new Response(
+        "We couldn't read enough from your website. Please fill in what you sell, your customer and your price.",
+        { status: 400 },
+      );
+    }
+  }
+
   // Does the brief make enough sense to build a strategy on? Rejections cost no credit.
-  const notUsable = await aiCheckBrief({ ...body, category, country: countryName }, provider);
+  const notUsable = await aiCheckBrief(
+    { ...body, category, country: countryName, website, websiteText: siteText ?? undefined },
+    provider,
+  );
   if (notUsable) return new Response(notUsable, { status: 400, headers: { "X-Brief": "not_usable" } });
 
   // Take the credit now (so two tabs can't overspend it) and give it back if no plan comes out.
   const reservation = await reserveCredit(code);
   if (!reservation.ok) return refuse(reservation);
 
+  const fromSite = (v: string) => v.trim() || "(not given - work it out from the brand website)";
   const brief = `Write the market-entry plan for this brand.
 
 Brand: ${body.brand}
-${category ? `Category: ${category}\n` : ""}What they sell: ${body.product}
-Brand identity: ${body.identity}
-Target customer: ${body.customer}
-Price point: ${body.price}
-Where they sell today / stage: ${body.stage}
+${category ? `Category: ${category}\n` : ""}What they sell: ${fromSite(body.product)}
+Brand identity: ${fromSite(body.identity)}
+Target customer: ${fromSite(body.customer)}
+Price point: ${fromSite(body.price)}
+Where they sell today / stage: ${fromSite(body.stage)}
 Target country: ${countryName}${website ? `\nWebsite: ${website}` : ""}`;
 
   // Live web search runs alongside the research docs (skipped if TAVILY_API_KEY isn't set).
-  const [webResults, siteText] = await Promise.all([
-    webResearch(category ? `${category} ${body.product}` : body.product, countryName, body.brand, website).catch(() => []),
-    website
-      ? readWebsite(website).catch((err) => {
-          console.error("website read failed", err);
-          return "";
-        })
-      : Promise.resolve(""),
+  const searchTopic = body.product.trim() || `${body.brand} ${category ?? ""}`.trim();
+  const [webResults, siteRead] = await Promise.all([
+    webResearch(category ? `${category} ${searchTopic}` : searchTopic, countryName, body.brand, website).catch(() => []),
+    siteText !== null
+      ? Promise.resolve(siteText)
+      : website
+        ? readWebsite(website).catch((err) => {
+            console.error("website read failed", err);
+            return "";
+          })
+        : Promise.resolve(""),
   ]);
+  siteText = siteRead;
   const web = formatWebResults(webResults);
   const site = website ? formatWebsite(website, siteText) : "";
   console.log(`web results: ${webResults.length} (${countryName})${website ? `, website chars: ${siteText.length}` : ""}`);

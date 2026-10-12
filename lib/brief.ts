@@ -29,17 +29,19 @@ const STAGE_WORDS = /\b(pre[- ]?launch|launching|idea|prototype|dtc|d2c|online|s
 const PRICE_WORDS = /\b(premium|luxury|budget|mass|mid|affordable|value|cheap|expensive|high[- ]end|entry[- ]level|free)\b/i;
 
 // Returns a friendly message for the first field that looks wrong, or null if the brief looks real.
-export function checkBrief(b: Brief): string | null {
+// With a website, the other answers are optional (the plan reads the site); anything typed is still checked.
+export function checkBrief(b: Brief, hasWebsite = false): string | null {
+  const skip = (v: string) => hasWebsite && !v.trim();
   if (!/\p{L}/u.test(b.brand) || b.brand.trim().length < 2) return "Add your brand name.";
-  if (!looksReal(b.product, 2))
+  if (!skip(b.product) && !looksReal(b.product, 2))
     return 'Describe what you sell in a short phrase, for example "organic cotton basics made in India".';
-  if (!looksReal(b.identity, 2))
+  if (!skip(b.identity) && !looksReal(b.identity, 2))
     return 'Describe your brand identity in a few words, for example "calm, crafted, made to last".';
-  if (!looksReal(b.customer, 2))
+  if (!skip(b.customer) && !looksReal(b.customer, 2))
     return 'Describe your target customer in a few words, for example "women 25-40 who buy natural fabrics".';
-  if (!/\d/.test(b.price) && !PRICE_WORDS.test(b.price))
+  if (!skip(b.price) && !/\d/.test(b.price) && !PRICE_WORDS.test(b.price))
     return 'Add a price point with a number or a level, for example "$40-90 per piece" or "premium".';
-  if (!STAGE_WORDS.test(b.stage) && !looksReal(b.stage, 2))
+  if (!skip(b.stage) && !STAGE_WORDS.test(b.stage) && !looksReal(b.stage, 2))
     return 'Say where you sell today, for example "pre-launch" or "US DTC and Amazon".';
   return null;
 }

@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { BRAND, COUNTRIES, countryLabel } from "./components/brand";
 import { CountryOutline, WorldMap } from "./components/Maps";
+import { LogoMark } from "./components/Logo";
 import { PlanView, cleanPlanText } from "./components/PlanView";
 import { EXAMPLE_BRANDS } from "./components/examples";
 import { exampleKeys } from "@/lib/examples-index.generated";
@@ -24,22 +25,24 @@ const EMPTY = {
 
 type FieldName = Exclude<keyof typeof EMPTY, "country">;
 type Field = { name: FieldName; label: string; hint: string; kind?: "long" | "select" | "url"; optional?: boolean };
+// With a website, these can be left blank: the plan reads the site instead.
+const SKIPPABLE_WITH_WEBSITE: FieldName[] = ["product", "identity", "customer", "price", "stage"];
 
 const GROUPS: { title: string; fields: Field[] }[] = [
   {
     title: "Your brand",
     fields: [
+      {
+        name: "website",
+        label: "Website",
+        hint: "brand.com",
+        kind: "url",
+        optional: true,
+      },
       { name: "brand", label: "Brand name", hint: "e.g. OLVAE" },
       { name: "category", label: "Category", hint: "Choose a category", kind: "select" },
       { name: "product", label: "What you sell", hint: "Products, materials, and where they're made", kind: "long" },
       { name: "identity", label: "Brand identity", hint: "Positioning, values and voice, in your own words", kind: "long" },
-      {
-        name: "website",
-        label: "Website",
-        hint: "brand.com (we'll read it to make the plan more specific)",
-        kind: "url",
-        optional: true,
-      },
     ],
   },
   {
@@ -92,6 +95,7 @@ export default function Home() {
   }
 
   // Hand-checked example plans: only brands and countries with a saved file are offered.
+  const hasWebsite = !!form.website.trim();
   const exampleBrands = EXAMPLE_BRANDS.filter((b) => exampleKeys.some((k) => k.startsWith(`${b.key}-`)));
   const exampleCountries = (brand: string) => COUNTRIES.filter((c) => exampleKeys.includes(`${brand}-${c.key}`));
   const planRef = useRef<HTMLElement>(null);
@@ -118,7 +122,7 @@ export default function Home() {
     setPlanCountry(countryLabel(form.country));
     setTimeout(() => planRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
 
-    const problem = checkBrief(form);
+    const problem = checkBrief(form, !!form.website.trim());
     if (problem) {
       setError(problem);
       return;
@@ -238,12 +242,24 @@ export default function Home() {
       </header>
 
       <main id="top">
-        <section className="hero no-print">
+        <section className="hero hero-dark no-print">
           <div className="wrap hero-inner">
             <div className="hero-copy">
-              <p className="label">{BRAND.tagline}</p>
+              <p className="hero-brand">
+                <LogoMark size={44} onDark />
+                <span>{BRAND.name}</span>
+              </p>
               <h1>
-                {BRAND.headline.split(/(first)/).map((part, i) => (part === "first" ? <em key={i}>{part}</em> : part))}
+                {BRAND.headline.split(/(first)/).map((part, i) =>
+                  part === "first" ? (
+                    <span key={i}>
+                      <br />
+                      <em>{part}</em>
+                    </span>
+                  ) : (
+                    part.trim() && <span key={i}>{part}</span>
+                  ),
+                )}
               </h1>
               <p className="lede">
                 {BRAND.description.split(/(?<=\.)\s+/).map((line) => (
@@ -253,26 +269,31 @@ export default function Home() {
               <a href="#get-a-plan" className="btn btn-orange">
                 Get your plan <span aria-hidden="true">→</span>
               </a>
+              <p className="hero-alt">
+                No access code? <a href="/free-access">Click here to get 3 free plans →</a>
+                <br />
+                Just looking? <a href="#examples">Read an example plan</a> first.
+              </p>
             </div>
             <figure className="hero-map">
               <WorldMap highlight={form.country} onSelect={(key) => setForm({ ...form, country: key })} />
-              <figcaption>
-                <span className="map-caption">Brands from anywhere. Four ports to start:</span>
-                <div className="port-chips" role="radiogroup" aria-label="Choose a market">
-                  {COUNTRIES.map((c) => (
-                    <button
-                      type="button"
-                      key={c.key}
-                      role="radio"
-                      aria-checked={form.country === c.key}
-                      className={form.country === c.key ? "port-chip selected" : "port-chip"}
-                      onClick={() => setForm({ ...form, country: c.key })}
-                    >
-                      {c.label}
-                    </button>
-                  ))}
-                </div>
-              </figcaption>
+              <figcaption className="hero-ports map-ports">
+                  <span className="map-caption">Four ports to start:</span>
+                  <div className="port-chips" role="radiogroup" aria-label="Choose a market">
+                    {COUNTRIES.map((c) => (
+                      <button
+                        type="button"
+                        key={c.key}
+                        role="radio"
+                        aria-checked={form.country === c.key}
+                        className={form.country === c.key ? "port-chip selected" : "port-chip"}
+                        onClick={() => setForm({ ...form, country: c.key })}
+                      >
+                        {c.label}
+                      </button>
+                    ))}
+                  </div>
+                </figcaption>
             </figure>
           </div>
         </section>
@@ -340,14 +361,15 @@ export default function Home() {
             </h2>
             <p className="pick-sub">Your brand can be based anywhere. Choose the first market you want to enter.</p>
             <p className="access-callout">
-              <strong>Live plans need an access code.</strong>{" "}
+              <strong>Live plans need an access code.</strong> <a href="/free-access">Get one free</a> with your email
               {exampleBrands.length > 0 && (
                 <>
-                  Without one, you can read the <a href="#examples">example plans</a>.{" "}
+                  , or read the <a href="#examples">example plans</a>
                 </>
               )}
-              For a personalised plan for your own brand, <a href="#contact">get in touch for an access code</a>.
+              . For a personalised plan, <a href="#contact">get in touch</a>.
             </p>
+
           </div>
           <form onSubmit={submit}>
             <div className="country-grid" role="radiogroup" aria-label="Target market">
@@ -384,6 +406,9 @@ export default function Home() {
                       <span>
                         {f.label}
                         {f.optional && <em className="optional">Optional</em>}
+                        {hasWebsite && SKIPPABLE_WITH_WEBSITE.includes(f.name) && (
+                          <em className="optional">Optional with your website</em>
+                        )}
                       </span>
                       {f.kind === "select" ? (
                         <select
@@ -406,7 +431,7 @@ export default function Home() {
                           placeholder={f.hint}
                           value={form[f.name]}
                           maxLength={1500}
-                          required={!f.optional}
+                          required={!f.optional && !(hasWebsite && SKIPPABLE_WITH_WEBSITE.includes(f.name))}
                           onChange={(e) => setForm({ ...form, [f.name]: e.target.value })}
                         />
                       ) : (
@@ -417,9 +442,14 @@ export default function Home() {
                           placeholder={f.hint}
                           value={form[f.name]}
                           maxLength={300}
-                          required={!f.optional}
+                          required={!f.optional && !(hasWebsite && SKIPPABLE_WITH_WEBSITE.includes(f.name))}
                           onChange={(e) => setForm({ ...form, [f.name]: e.target.value })}
                         />
+                      )}
+                      {f.kind === "url" && (
+                        <small className="field-note">
+                          Add your website and you can skip most of the questions below: we&apos;ll read it for you.
+                        </small>
                       )}
                       {f.kind === "select" && (
                         <small className="field-note">

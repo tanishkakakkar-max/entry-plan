@@ -4,7 +4,7 @@
 // refuses to serve live plans until Redis is connected.
 import { Redis } from "@upstash/redis";
 
-export type CodeInfo = { code: string; name: string; total: number; used: number; disabled: boolean; created: string };
+export type CodeInfo = { code: string; name: string; total: number; used: number; disabled: boolean; created: string; email?: string };
 export type Reservation = { ok: true; left: number } | { ok: false; reason: "invalid" | "disabled" | "used_up" };
 
 const KEY = (code: string) => `fp:code:${code}`;
@@ -35,11 +35,13 @@ function redisFromEnv(): Redis | null {
 }
 
 const redis = redisFromEnv();
+// Shared with lib/signups.ts so sign-ups live in the same database as the codes.
+export const db = redis;
 export const creditsReady = !!redis || process.env.NODE_ENV !== "production";
 
 // Dev-only stand-in so the app runs locally without Redis. Seeded with one test code.
 const g = globalThis as unknown as { __fpCodes?: Map<string, CodeInfo> };
-const mem = (g.__fpCodes ??= new Map([
+const mem = (g.__fpCodes ??= new Map<string, CodeInfo>([
   ["DEV-TEST", { code: "DEV-TEST", name: "Local test code", total: 3, used: 0, disabled: false, created: new Date().toISOString() }],
 ]));
 
@@ -63,6 +65,7 @@ function toInfo(code: string, h: Record<string, unknown> | null): CodeInfo | nul
     used: Number(h.used ?? 0),
     disabled: String(h.disabled ?? "0") === "1",
     created: String(h.created ?? ""),
+    ...(h.email ? { email: String(h.email) } : {}),
   };
 }
 
@@ -107,15 +110,20 @@ export async function listCodes(): Promise<CodeInfo[]> {
   return rows.filter((r): r is CodeInfo => !!r).sort((a, b) => b.created.localeCompare(a.created));
 }
 
-export async function createCode(name: string, credits: number): Promise<CodeInfo> {
-  const info: CodeInfo = { code: newCode(), name, total: credits, used: 0, disabled: false, created: new Date().toISOString() };
+export async function createCode(name: string, credits: number, email?: string): Promise<CodeInfo> {
+  const info: CodeInfo = { code: newCode(), name, total: credits, used: 0, disabled: false, created: new Date().toISOString(), ...(email ? { email } : {}) };
   if (redis) {
-    await redis.hset(KEY(info.code), { name, total: credits, used: 0, disabled: "0", created: info.created });
+    await redis.hset(KEY(info.code), { name, total: credits, used: 0, disabled: "0", created: info.created, ...(email ? { email } : {}) });
     await redis.sadd(INDEX, info.code);
   } else {
     mem.set(info.code, info);
   }
   return info;
+}
+
+export async function getCode(code: string): Promise<CodeInfo | null> {
+  if (redis) return toInfo(code, await redis.hgetall(KEY(code)));
+  return mem.get(code) ?? null;
 }
 
 export async function updateCode(code: string, change: { topUp?: number; disabled?: boolean }): Promise<CodeInfo | null> {
