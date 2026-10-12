@@ -50,6 +50,11 @@ const GROUPS: { title: string; fields: Field[] }[] = [
   },
 ];
 
+// Must match the rate-limit message streamed by app/api/plan/route.ts.
+const BUSY = "The free AI tier is busy right now";
+const RETRY_SECONDS = 60;
+const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
 const STEPS = [
   { title: "Pick a market", text: "Japan, Singapore, India or the United States." },
   { title: "Tell us about your brand", text: "Six short answers about what you sell and who buys it." },
@@ -66,6 +71,7 @@ export default function Home() {
   const [planCountry, setPlanCountry] = useState("");
   const [copied, setCopied] = useState(false);
   const [exampleIdx, setExampleIdx] = useState(-1);
+  const [retryIn, setRetryIn] = useState(0);
   const planRef = useRef<HTMLElement>(null);
   const formRef = useRef<HTMLElement>(null);
 
@@ -85,28 +91,44 @@ export default function Home() {
     setPlanCountry(countryLabel(form.country));
     setTimeout(() => planRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
     try {
-      const res = await fetch("/api/plan", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, accessCode }),
-      });
-      if (!res.ok || !res.body) {
-        setError((await res.text()) || "Something went wrong.");
-        return;
-      }
-      const reader = res.body.getReader();
-      const decoder = new TextDecoder();
-      let text = "";
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        text += decoder.decode(value, { stream: true });
-        setPhase(2);
-        setPlan(text);
+      // If the free tier is busy, wait out the minute with a countdown and try once more.
+      for (let attempt = 1; attempt <= 2; attempt++) {
+        const res = await fetch("/api/plan", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...form, accessCode }),
+        });
+        if (!res.ok || !res.body) {
+          setError((await res.text()) || "Something went wrong.");
+          return;
+        }
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        let text = "";
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          text += decoder.decode(value, { stream: true });
+          if (BUSY.startsWith(text) || text.startsWith(BUSY)) continue; // don't flash the busy message
+          setPhase(2);
+          setPlan(text);
+        }
+        if (!text.startsWith(BUSY)) return;
+        if (attempt === 2) {
+          setPlan(text);
+          return;
+        }
+        setPhase(0);
+        for (let s = RETRY_SECONDS; s > 0; s--) {
+          setRetryIn(s);
+          await wait(1000);
+        }
+        setRetryIn(0);
       }
     } catch {
       setError("Couldn't reach the server. Check your connection and try again.");
     } finally {
+      setRetryIn(0);
       setLoading(false);
     }
   }
@@ -321,6 +343,11 @@ export default function Home() {
             {loading && !plan && (
               <div className="progress-card">
                 <p className="label">Working on your {planCountry} plan</p>
+                {retryIn > 0 && (
+                  <p className="retry-note" aria-live="off">
+                    The free AI tier is busy. Retrying automatically in {retryIn}s.
+                  </p>
+                )}
                 <ol className="progress">
                   {progress.map((p, i) => (
                     <li key={p} className={i < phase ? "done" : i === phase ? "active" : ""}>

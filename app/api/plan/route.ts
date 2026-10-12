@@ -71,8 +71,13 @@ async function streamGroq(system: string[], brief: string, send: Send) {
     }),
   });
 
-  if (res.status === 429 || res.status === 413) {
+  // The page watches for this exact message and retries once by itself, so keep them in sync.
+  if (res.status === 429) {
     send("The free AI tier is busy right now (rate limit). Please wait a minute and try again.");
+    return;
+  }
+  if (res.status === 413) {
+    send("This plan is too large for the free AI tier. Try shorter answers or leave out the website.");
     return;
   }
   if (!res.ok || !res.body) {

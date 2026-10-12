@@ -207,6 +207,7 @@ input:focus-visible, textarea:focus-visible { outline: 2px solid var(--ink); out
 @keyframes spin { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) { .progress li.active .tick { animation: none; border-top-color: var(--ink); } html { scroll-behavior: auto; } }
 
+.retry-note { margin: -4px 0 18px; font-size: 15px; font-weight: 600; }
 .error, .notice { border-radius: var(--radius); padding: 16px 20px; margin-top: 32px; }
 .error { background: #fdeee3; border: 1px solid #f3c4a2; }
 .notice { background: var(--mist); border: 1px solid var(--leaf); }
