@@ -7,7 +7,7 @@ export const EXAMPLES = [
     website: "https://www.herocosmetics.us",
     product: "Skincare: hydrocolloid acne patches (Mighty Patch) plus a small range of acne-care products",
     identity: "Friendly, science-backed, fun. Makes acne care feel less embarrassing. Hero-product focus.",
-    customer: "Gen Z and millennial women and men with occasional breakouts, discovering products on TikTok",
+    customer: "Gen Z and millennial women and men with occasional breakouts, discovering products on Instagram Reels and YouTube Shorts",
     price: "Mass-premium, roughly $10-15 per pack",
     stage: "Selling in the US via Amazon, Target, Walmart, Ulta and DTC",
     country: "india",

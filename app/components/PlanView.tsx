@@ -68,6 +68,15 @@ export function cleanDashes(md: string) {
     .replace(/[–—‑‐]/g, "-");
 }
 
+// Some models write 【W4】; treat it as [W4].
+const normalizeCitations = (md: string) => md.replace(/【W(\d+)】/g, "[W$1]");
+
+// Once the plan is complete, drop any [W#] that has no matching source (the model cited a number
+// that wasn't in the results). While streaming, the Sources list hasn't arrived yet, so keep them.
+export function tidyCitations(md: string, valid: Set<string>) {
+  return md.replace(/ ?\[W(\d+)\](?!\()/g, (m, n) => (valid.has(n) ? m : ""));
+}
+
 // [W3] -> a link to the matching source, rendered as a small badge.
 const linkCitations = (md: string) => md.replace(/\[W(\d+)\](?!\()/g, "[W$1](#source-w$1)");
 
@@ -97,8 +106,19 @@ function Markdown({ children }: { children: string }) {
   );
 }
 
+// The text Copy plan puts on the clipboard: same clean-up as the screen.
+export function cleanPlanText(plan: string) {
+  const md = normalizeCitations(cleanDashes(plan));
+  const valid = new Set(parsePlan(md).sources.map((s) => s.n));
+  return tidyCitations(md, valid);
+}
+
 export function PlanView({ plan, country, streaming }: { plan: string; country: string; streaming: boolean }) {
-  const { title, preamble, sections, sources, sourcesSection } = parsePlan(cleanDashes(plan));
+  const parsed = parsePlan(normalizeCitations(cleanDashes(plan)));
+  const valid = new Set(parsed.sources.map((s) => s.n));
+  const { title, preamble, sections, sources, sourcesSection } = streaming
+    ? parsed
+    : parsePlan(tidyCitations(normalizeCitations(cleanDashes(plan)), valid));
 
   // Not a plan (e.g. the rate-limit message): show it as a notice.
   if (!title && !sections.length) {

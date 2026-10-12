@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { BRAND, COUNTRIES, countryLabel } from "./components/brand";
 import { CountryOutline, WorldMap } from "./components/Maps";
-import { PlanView, cleanDashes } from "./components/PlanView";
+import { PlanView, cleanPlanText } from "./components/PlanView";
 import { EXAMPLES } from "./components/examples";
 import { CATEGORIES } from "@/lib/categories";
 
@@ -141,7 +141,7 @@ export default function Home() {
   }
 
   async function copy() {
-    await navigator.clipboard.writeText(cleanDashes(plan));
+    await navigator.clipboard.writeText(cleanPlanText(plan));
     setCopied(true);
     setTimeout(() => setCopied(false), 1500);
   }
