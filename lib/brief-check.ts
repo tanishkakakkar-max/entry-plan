@@ -1,7 +1,7 @@
 // AI sanity check of a brief, run before a credit is spent. Imaginary brands are fine; what we
 // reject is a brief nobody could build a strategy on (no real product, no customer, no positioning,
 // fields that contradict each other, or test/placeholder text).
-// Uses a small, fast model so it doesn't eat the main model's rate limit. If the check itself
+// Uses a smaller model so it doesn't eat the main model's rate limit. If the check itself
 // fails, we let the plan go ahead: the word-level check in lib/brief.ts still catches keyboard mash.
 
 export type BriefInput = {
@@ -46,25 +46,40 @@ Target country: ${b.country}
 </brief>`;
 }
 
+// Small model first (its own rate limit, so plans aren't slowed down); if Groq has retired it,
+// fall back to the next one rather than silently skipping the check.
+const GROQ_CHECK_MODELS = [process.env.GROQ_CHECK_MODEL, "openai/gpt-oss-20b", process.env.GROQ_MODEL || "openai/gpt-oss-120b"].filter(
+  (m, i, all): m is string => !!m && all.indexOf(m) === i,
+);
+
 async function askGroq(b: BriefInput): Promise<string> {
-  const res = await fetch(`${process.env.GROQ_BASE_URL || "https://api.groq.com/openai/v1"}/chat/completions`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", Authorization: `Bearer ${process.env.GROQ_API_KEY}` },
-    body: JSON.stringify({
-      model: process.env.GROQ_CHECK_MODEL || "llama-3.1-8b-instant",
-      temperature: 0,
-      max_tokens: 120,
-      response_format: { type: "json_object" },
-      messages: [
-        { role: "system", content: SYSTEM },
-        { role: "user", content: briefText(b) },
-      ],
-    }),
-    signal: AbortSignal.timeout(8000),
-  });
-  if (!res.ok) throw new Error(`brief check ${res.status}`);
-  const data = await res.json();
-  return String(data.choices?.[0]?.message?.content ?? "");
+  let lastError = "";
+  for (const model of GROQ_CHECK_MODELS) {
+    const res = await fetch(`${process.env.GROQ_BASE_URL || "https://api.groq.com/openai/v1"}/chat/completions`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${process.env.GROQ_API_KEY}` },
+      body: JSON.stringify({
+        model,
+        temperature: 0,
+        max_completion_tokens: 600, // room for the model's brief reasoning plus the JSON
+        reasoning_effort: "low",
+        include_reasoning: false,
+        response_format: { type: "json_object" },
+        messages: [
+          { role: "system", content: SYSTEM },
+          { role: "user", content: briefText(b) },
+        ],
+      }),
+      signal: AbortSignal.timeout(10000),
+    });
+    if (res.ok) {
+      const data = await res.json();
+      return String(data.choices?.[0]?.message?.content ?? "");
+    }
+    lastError = `${model} ${res.status} ${(await res.text()).slice(0, 160)}`;
+    if (res.status !== 404 && res.status !== 400) break; // only retire-type errors move on to the next model
+  }
+  throw new Error(`brief check failed: ${lastError}`);
 }
 
 async function askClaude(b: BriefInput): Promise<string> {
