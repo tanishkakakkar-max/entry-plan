@@ -8,7 +8,7 @@ import { aiCheckBrief } from "@/lib/brief-check";
 import { formatResearch, selectResearch } from "@/lib/research";
 
 export const runtime = "nodejs";
-export const maxDuration = 120;
+export const maxDuration = 300; // Hobby plan maximum with Fluid compute (Vercel docs, Oct 2026)
 
 const COUNTRY_NAMES: Record<string, string> = {
   japan: "Japan",
@@ -41,7 +41,7 @@ async function streamClaude(system: string[], brief: string, send: Send, cacheIn
   const client = new Anthropic();
   const stream = client.messages.stream({
     model: process.env.ANTHROPIC_MODEL || "claude-sonnet-5-5",
-    max_tokens: 4000,
+    max_tokens: 4500, // Claude only; the Groq cap is set separately in streamGroq
     system: system.map((text, i) => ({
       type: "text" as const,
       text,
@@ -54,6 +54,12 @@ async function streamClaude(system: string[], brief: string, send: Send, cacheIn
   for await (const event of stream) {
     if (event.type === "content_block_delta" && event.delta.type === "text_delta") send(event.delta.text);
   }
+  // Why the model stopped and what it used: a plan cut short shows up here as max_tokens or similar.
+  const final = await stream.finalMessage();
+  const u = final.usage;
+  console.log(
+    `claude: stop=${final.stop_reason} out=${u.output_tokens} in=${u.input_tokens} cache_read=${u.cache_read_input_tokens ?? 0} cache_write=${u.cache_creation_input_tokens ?? 0}`,
+  );
 }
 
 // Groq (free tier). Default provider. Free limits are roughly 8K tokens per minute and
@@ -219,7 +225,9 @@ Target country: ${countryName}${website ? `\nWebsite: ${website}` : ""}`;
 
   // Tagged research notes that match this country or category. Example plans are never included.
   const related = selectResearch(countryKey, category);
-  console.log(`research used (${related.length}): ${related.map((n) => n.file).join(", ") || "none"}`);
+  console.log(
+    `research used (${related.length}, ${category ?? "no category"} -> ${countryName}): ${related.map((n) => `${n.file} [${n.why}]`).join(", ") || "none"}`,
+  );
   const relatedBlock = formatResearch(related);
 
   const system = [
@@ -265,7 +273,10 @@ Target country: ${countryName}${website ? `\nWebsite: ${website}` : ""}`;
         }
       } finally {
         // Only a finished plan costs a credit: errors, rate limits and non-plan replies are refunded.
-        const finished = output.trimStart().startsWith("#") && output.length > 1500 && !output.includes("Something went wrong while writing");
+        // A plan counts as finished only if it reached section 9; anything cut short is refunded.
+        const finished =
+          output.trimStart().startsWith("#") && /^##\s*9\./m.test(output) && !output.includes("Something went wrong while writing");
+        if (!finished) console.log(`plan not finished (${output.length} chars), credit refunded`);
         if (!finished) await refundCredit(code).catch((e) => console.error("refund failed", e));
         try {
           controller.close();

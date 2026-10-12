@@ -1,6 +1,6 @@
 ---
 countries: [japan, singapore, india, us]
-categories: [retail products, home goods]
+categories: [home goods]
 topics: [ceramics, handmade, gifting, tableware regulation, wholesale marketplaces, tariffs]
 updated: 2026-10-12
 ---
