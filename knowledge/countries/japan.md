@@ -1,7 +1,7 @@
 # Japan - country research doc
 
 Status: v0.1. Desk research plus Tanishka's own Japan work (CAVA -> Japan market-entry project and a Japan/Thailand/Romania PEST study, Global Dimensions of Business, SJSU, 2026). Sections 1-2 are her judgment and override anything below.
-Legend: [VERIFY] = check against a primary source before relying on it. [TANI] = needs Tanishka's own input.
+Legend: [VERIFY] = check against a primary source before relying on it. [TANI] = needs Tanishka's own input. Tags like (Apparel), (Beauty), (Food), (Restaurants), (Retail products) mean the note applies ONLY to that category. Untagged notes apply to every brand.
 
 ## 0. Thesis (the non-consensus point of view)
 [TANI] One or two sentences that the tool should lead with for any brand entering Japan.
@@ -25,37 +25,40 @@ Draft to react to: Japan rewards foreign brands that win on craft and material p
 - Teams: expat trainers for launch plus local hires; adapt management to horenso (report, contact, consult) with clear reporting lines.
 
 ## 3. Consumer psychology (each insight -> so what)
-- Quality and defect intolerance: Japanese shoppers inspect stitching, packaging and finish closely; small defects drive returns and bad reviews. -> QC and packaging must be at Japanese standard before launch, not after.
-- Kodawari (particular attention to detail / obsessive care in making): products with a clear "why it's made this way" story sell at a premium. -> Lead with the making story: fabric origin, construction, why each detail exists.
-- Hadazawari (how a fabric feels on skin) is a buying vocabulary in apparel and bedding. -> For textile brands, sensory language beats ethical language.
-- Trust is built through third parties: select shops, department store buyers, magazines and trusted creators carry more weight than brand-owned ads. -> Entry should borrow credibility from a curator rather than buy reach.
+- Quality and defect intolerance: Japanese shoppers inspect finish, packaging and presentation closely; small defects drive returns and bad reviews. -> QC and packaging must be at Japanese standard before launch, not after.
+- Kodawari (particular attention to detail / obsessive care in making): products with a clear "why it's made this way" story sell at a premium. -> Lead with the making story: origin, method, why each detail exists.
+- (Apparel) Hadazawari (how a fabric feels on skin) is a buying vocabulary in apparel and bedding. -> For textile brands, sensory language beats ethical language.
+- Trust is built through third parties rather than brand-owned ads. (Retail products) select shops, department store buyers and magazines; (Restaurants) Tabelog reviews, food creators and a credible local partner. -> Borrow credibility rather than buy reach.
 - Risk aversion with unknown brands: shoppers want reviews, a Japanese-language site, and clear return/after-sales info. -> Localize the full purchase path, not just the product page.
 - Aging market: about 29% of people are over 65 (Santander Trade). Older shoppers are more price-conscious and very loyal to a brand or store once won. -> Loyalty is the prize; health and wellness demand keeps growing.
 - After decades of flat prices, inflation and wage growth are returning slowly (Bank of Japan, 2025), so shoppers are value-conscious about new price levels. -> Justify the premium clearly.
 - High uncertainty avoidance and long-term orientation: buyers and partners want proof and decide slowly. -> Plan long timelines and lead with evidence.
-- Seasonality matters: retail calendars run on distinct seasons and gift seasons (ochugen in summer, oseibo at year end) [VERIFY timing for category]. -> Time launches to season changes; gift packaging can be a real channel.
+- Seasonality matters: distinct seasons and seasonal menus or collections. (Retail products) gift seasons (ochugen in summer, oseibo at year end) [VERIFY timing] can be a real channel. -> Time launches to season changes.
 - "Eco" claims are not a strong standalone premium driver for most mass shoppers [VERIFY with interviews]. -> Treat values as a supporting reason to believe, not the headline.
 
 ## 4. Entry routes (when each one fits)
 | Route | Fits when | Watch out |
 |---|---|---|
 | Cross-border DTC (Japanese-language Shopify, JPY pricing, local payment options) | Testing demand cheaply; brand has strong content | Shipping cost/time, duties paid at delivery hurt conversion; need Japanese customer service |
-| Marketplaces: Rakuten Ichiba, Amazon.co.jp | Proven product, competing on search and price | Rakuten is promotion- and points-heavy; can cheapen a premium brand early |
-| Fashion platforms: ZOZOTOWN | Apparel with existing demand signals | Selective; usually needs a Japanese entity or partner [VERIFY] |
-| Select shops (e.g. BEAMS, United Arrows, Journal Standard) | Brand with a strong design/craft point of view | Long buying cycles, consignment or wholesale margins |
-| Department store pop-ups (e.g. Isetan, Hankyu) | Testing in person, building legitimacy fast | Short runs, high cost, need staff who speak Japanese |
+| (Retail products) Marketplaces: Rakuten Ichiba, Amazon.co.jp | Proven product, competing on search and price | Rakuten is promotion- and points-heavy; can cheapen a premium brand early |
+| (Apparel) Fashion platforms: ZOZOTOWN | Apparel with existing demand signals | Selective; usually needs a Japanese entity or partner [VERIFY] |
+| (Apparel, design goods) Select shops (e.g. BEAMS, United Arrows, Journal Standard) | Brand with a strong design/craft point of view | Long buying cycles, consignment or wholesale margins |
+| (Retail products) Department store pop-ups (e.g. Isetan, Hankyu) | Testing in person, building legitimacy fast | Short runs, high cost, need staff who speak Japanese |
 | Importer / distributor / agent | Brand wants Japan without building a team | Lose control of pricing and brand; contract terms must protect positioning |
 | Licensing / JV | Large brands with proven global demand | Not a v0 recommendation for small brands |
+| (Restaurants) Local partner, franchise or JV operating small-format stores | Restaurant chains; partner handles leases, hiring, licensing and suppliers | Profit share and control; pick a partner with food-service experience |
+| (Restaurants) Food hall stall or short-term kitchen in an office district | Testing demand before signing a long lease | Limited menu and capacity; still needs a food business licence |
 
-Default recommendation for small consumer brands: earn credibility first (curator, pop-up or creator seeding), then scale through DTC and marketplaces. Don't lead with Rakuten discounting.
+Default for small retail-product brands: earn credibility first (curator, pop-up or creator seeding), then scale through DTC and marketplaces. Don't lead with Rakuten discounting.
+Default for restaurants: enter Tokyo through a local partner with one or two small-format stores near office demand, backed by a commissary kitchen; restaurants do not use marketplaces, select shops or gift seasons.
 
 ## 5. Regulations, tariffs, costs
 - Consumption tax: 10% standard [VERIFY].
-- Import duties on apparel: vary by HS code and origin; roughly single digits to low teens percent for many cotton garments; EPAs (e.g. Japan-India CEPA, CPTPP) can reduce rates for qualifying origin [VERIFY per HS code on Japan Customs].
-- Labeling: Household Goods Quality Labeling Act requires Japanese-language fiber composition, care and labeler info on textiles; care symbols follow JIS L 0001 (aligned to ISO) [VERIFY].
-- Cosmetics: Pharmaceuticals and Medical Devices Act (PMD Act) - need a licensed marketing authorization holder in Japan; ingredient rules differ from US [VERIFY].
-- Food: Food Sanitation Act, labeling in Japanese, ingredient approvals [VERIFY].
-- Sizing: Japanese sizing runs smaller; size charts need cm and Japanese size equivalents.
+- (Apparel) Import duties on apparel: vary by HS code and origin; roughly single digits to low teens percent for many cotton garments; EPAs (e.g. Japan-India CEPA, CPTPP) can reduce rates for qualifying origin [VERIFY per HS code on Japan Customs].
+- (Apparel) Labeling: Household Goods Quality Labeling Act requires Japanese-language fiber composition, care and labeler info on textiles; care symbols follow JIS L 0001 (aligned to ISO) [VERIFY].
+- (Beauty) Cosmetics: Pharmaceuticals and Medical Devices Act (PMD Act) - need a licensed marketing authorization holder in Japan; ingredient rules differ from US [VERIFY].
+- (Food, Restaurants) Food Sanitation Act: imported ingredients need an importer and food import notification; restaurants need a food business licence from the local health centre and a food hygiene manager; labels in Japanese [VERIFY].
+- (Apparel) Sizing: Japanese sizing runs smaller; size charts need cm and Japanese size equivalents.
 - Payments: credit card, convenience-store payment (konbini), and QR wallets like PayPay are common. -> Card-only checkout loses buyers.
 - Operating costs: labor, Tokyo real estate and compliance costs are high versus other Asian markets, and strong employee protection makes downsizing slow and costly. -> Start small, lean on partners and 3PLs before hiring a large local team.
 - Trade agreements: Japan is in CPTPP and RCEP plus bilateral EPAs (e.g. Japan-India CEPA); rates depend on where goods are made [VERIFY per HS code].
@@ -68,9 +71,9 @@ Default recommendation for small consumer brands: earn credibility first (curato
 - Customer service expectations are very high; slow replies damage reputation.
 
 ## 7. Category notes
-- Apparel / loungewear: strong roomwear culture (gelato pique is a well-known domestic roomwear brand). MUJI sells organic cotton basics at accessible prices, so "organic cotton basics" alone is not differentiated [VERIFY current MUJI range].
-- Skincare: very competitive domestic market, ingredient-literate shoppers, sunscreen and gentle formulations big. Regulatory route needed before selling.
-- Food / fast casual: one of the world's largest, most demanding food-service markets. Healthy, customizable, locally grown options already exist, so differentiation is hard. Rice is a staple; portions, flavor (less sweet), seasonality and presentation matter; build-your-own needs curated sets alongside it. Matcha and ready-to-go meals are everywhere; konbini set the low price anchor. Price reference: CAVA planned about ¥1,200-1,800 per bowl, above konbini and below sit-down (Tanishka's CAVA project). Food Sanitation Act and an importer of record apply.
+- (Apparel) Apparel / loungewear: strong roomwear culture (gelato pique is a well-known domestic roomwear brand). MUJI sells organic cotton basics at accessible prices, so "organic cotton basics" alone is not differentiated [VERIFY current MUJI range].
+- (Beauty) Skincare: very competitive domestic market, ingredient-literate shoppers, sunscreen and gentle formulations big. Regulatory route needed before selling.
+- (Food, Restaurants) Food / fast casual: one of the world's largest, most demanding food-service markets. Healthy, customizable, locally grown options already exist, so differentiation is hard. Rice is a staple; portions, flavor (less sweet), seasonality and presentation matter; build-your-own needs curated sets alongside it. Matcha and ready-to-go meals are everywhere; konbini set the low price anchor. Price reference: CAVA planned about ¥1,200-1,800 per bowl, above konbini and below sit-down (Tanishka's CAVA project). Food Sanitation Act and an importer of record apply.
 - Cities: Tokyo (finance, startups, about 75% of foreign companies' Japan HQs), Osaka (trade, food services, pharma, electronics), Nagoya (manufacturing, bold-flavored local food). Launch where your category is concentrated; for most consumer brands that is Tokyo first.
 
 ## 8. Channels for awareness

@@ -1,7 +1,7 @@
 # Singapore - country research doc
 
 Status: v0 baseline (desk research). Tanishka's Singapore teardown paper, interview notes and judgment go in sections 0-2 and override anything below.
-Legend: [VERIFY] = check against a primary source. [TANI] = needs Tanishka's own input.
+Legend: [VERIFY] = check against a primary source. [TANI] = needs Tanishka's own input. Tags like (Apparel), (Beauty), (Food), (Restaurants) mean the note applies ONLY to that category.
 
 ## 0. Thesis (the non-consensus point of view)
 Brands typically enter Singapore as a Southeast Asia beachhead, not a destination. The market is small, rich and expensive, so the right question is rarely "can we win Singapore?" and usually "what does Singapore prove or unlock for the region?"
@@ -17,7 +17,7 @@ Brands typically enter Singapore as a Southeast Asia beachhead, not a destinatio
 - High income, highly digital, well-traveled shoppers who already know many global brands. -> Being foreign isn't a novelty; the brand needs a sharper reason to exist than "new from the US."
 - Multicultural market (Chinese, Malay, Indian and other communities), with festive calendars across cultures (Chinese New Year, Hari Raya, Deepavali, Christmas). -> Plan campaigns around several festive peaks, with culturally specific creative.
 - Value-conscious despite high income: promotions and platform sale days (e.g. 9.9, 11.11, 12.12) shape buying [VERIFY current impact]. -> Budget for these sale events or the brand disappears from marketplaces during them.
-- Hot, humid climate year round. -> Breathable fabrics (cotton, linen) have a real functional story; heavy layers and seasonal collections need rethinking.
+- Hot, humid climate year round. (Apparel) -> Breathable fabrics (cotton, linen) have a real functional story; heavy layers and seasonal collections need rethinking.
 - Trust in regulation and quality standards is high. -> Clear ingredient and material transparency is expected, not a differentiator by itself.
 
 ## 4. Entry routes (when each one fits)
@@ -35,9 +35,9 @@ Default recommendation: use Singapore as a low-friction test (English, simple cu
 ## 5. Regulations, tariffs, costs
 - GST: 9% from 2024 [VERIFY]; GST also applies to low-value imported goods sold to consumers via overseas vendors above registration thresholds [VERIFY].
 - Customs duties: most goods, including apparel, enter duty-free; duties mainly on alcohol, tobacco, motor vehicles, petroleum [VERIFY].
-- Cosmetics: ASEAN Cosmetic Directive; product notification to HSA by a local company before sale [VERIFY].
+- (Beauty) ASEAN Cosmetic Directive; product notification to HSA by a local company before sale [VERIFY].
 - Medical devices: HSA registration, risk-class based; local registrant needed [VERIFY].
-- Health supplements: HSA rules on claims; no medicinal claims.
+- (Health & wellness) Health supplements: HSA rules on claims; no medicinal claims.
 - Advertising: ASAS code governs claims; environmental and health claims need substantiation [VERIFY].
 
 ## 6. Cultural fit risks

@@ -10,7 +10,7 @@ async function search(query: string): Promise<WebResult[]> {
   const res = await fetch(`${process.env.TAVILY_BASE_URL || "https://api.tavily.com"}/search`, {
     method: "POST",
     headers: { "Content-Type": "application/json", Authorization: `Bearer ${process.env.TAVILY_API_KEY}` },
-    body: JSON.stringify({ query, search_depth: "basic", max_results: 3, include_answer: false }),
+    body: JSON.stringify({ query, search_depth: "basic", max_results: 4, include_answer: false }),
     signal: AbortSignal.timeout(8000),
   });
   if (!res.ok) throw new Error(`Tavily ${res.status}`);
@@ -23,7 +23,42 @@ async function search(query: string): Promise<WebResult[]> {
   }));
 }
 
-export async function webResearch(product: string, country: string): Promise<WebResult[]> {
+// Same page with different tracking parameters counts once.
+function pageKey(url: string) {
+  try {
+    const u = new URL(url);
+    return (u.hostname.replace(/^www\./, "") + u.pathname.replace(/\/$/, "")).toLowerCase();
+  } catch {
+    return url;
+  }
+}
+
+const SHOPS = /(^|\.)(amazon|walmart|target|ulta|sephora|ebay|etsy|flipkart|nykaa|myntra|rakuten|zozo|shopee|lazada)\./i;
+
+// The brand's own site and its own product listings are not market evidence.
+function isBrandOwn(r: WebResult, brand?: string, website?: string | null) {
+  let host = "";
+  try {
+    host = new URL(r.url).hostname.replace(/^www\./, "");
+  } catch {
+    return false;
+  }
+  if (website) {
+    try {
+      const own = new URL(website).hostname.replace(/^www\./, "");
+      if (host === own || host.endsWith(`.${own}`)) return true;
+    } catch {}
+  }
+  const name = brand?.trim().toLowerCase();
+  return !!name && name.length > 2 && SHOPS.test(host) && r.title.toLowerCase().includes(name);
+}
+
+export async function webResearch(
+  product: string,
+  country: string,
+  brand?: string,
+  website?: string | null,
+): Promise<WebResult[]> {
   if (!process.env.TAVILY_API_KEY) return [];
   const what = product.replace(/\s+/g, " ").slice(0, 80);
   const year = new Date().getFullYear();
@@ -40,8 +75,9 @@ export async function webResearch(product: string, country: string): Promise<Web
       continue;
     }
     for (const r of s.value) {
-      if (r.url && !seen.has(r.url)) {
-        seen.add(r.url);
+      const key = pageKey(r.url);
+      if (r.url && !seen.has(key) && !isBrandOwn(r, brand, website)) {
+        seen.add(key);
         out.push(r);
       }
     }

@@ -173,7 +173,7 @@ Target country: ${countryName}${website ? `\nWebsite: ${website}` : ""}`;
 
   // Live web search runs alongside the research docs (skipped if TAVILY_API_KEY isn't set).
   const [webResults, siteText] = await Promise.all([
-    webResearch(category ? `${category} ${body.product}` : body.product, countryName).catch(() => []),
+    webResearch(category ? `${category} ${body.product}` : body.product, countryName, body.brand, website).catch(() => []),
     website
       ? readWebsite(website).catch((err) => {
           console.error("website read failed", err);
