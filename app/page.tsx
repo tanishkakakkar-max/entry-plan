@@ -89,7 +89,7 @@ export default function Home() {
           route, what local buyers actually believe, and the risks worth knowing before you spend.
         </p>
         <p className="byline">
-          Built by Tanishka Kakkar on original country research for Japan, Singapore, India and the US.
+          Built by Tanishka Kakkar on original country research for Japan, Singapore, India and the US, checked against live web sources.
         </p>
       </header>
 
@@ -166,7 +166,7 @@ export default function Home() {
               </ol>
             </div>
           )}
-          {loading && !plan && <p className="muted pulse">Reading the country research…</p>}
+          {loading && !plan && <p className="muted pulse">Reading the country research and searching the web…</p>}
           {error && <p className="error">{error}</p>}
           {plan && (
             <>
@@ -176,12 +176,17 @@ export default function Home() {
                 </button>
               </div>
               <article className="prose">
-                <ReactMarkdown remarkPlugins={[remarkGfm]}>{plan}</ReactMarkdown>
+                <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
+                  components={{ a: (props) => <a {...props} target="_blank" rel="noopener noreferrer" /> }}
+                >
+                  {plan}
+                </ReactMarkdown>
               </article>
               {!loading && (
                 <p className="disclaimer">
-                  This is a first read, not legal or customs advice. Anything marked [verify] should be checked with a
-                  primary source before you act on it.
+                  This is a first read, not legal or customs advice. Web sources are cited as [W1], [W2]. Anything marked
+                  [verify] should be checked with a primary source before you act on it.
                 </p>
               )}
             </>

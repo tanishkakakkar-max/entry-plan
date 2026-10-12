@@ -24,6 +24,9 @@ A brand enters its product, identity, target customer and a country (Japan, Sing
 3. Before deploying, open Environment Variables and add `GROQ_API_KEY`. The key lives only there, never in the code.
 4. Deploy. Every push to GitHub redeploys.
 
+## Live web search
+Each plan searches the web twice (via Tavily) and the AI combines those results with your country research, citing them as [W1], [W2] with a Sources list. Add `TAVILY_API_KEY` in Vercel (free at app.tavily.com: 1,000 searches/month, about 500 plans). Without the key, plans use the research docs only.
+
 ## Switching to Claude later
 In Vercel -> Settings -> Environment Variables: set `LLM_PROVIDER` to `anthropic`, add `ANTHROPIC_API_KEY`, then redeploy. Set a monthly spend limit in the Anthropic Console first.
 

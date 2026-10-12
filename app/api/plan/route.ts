@@ -1,5 +1,6 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { instructions, samplePlan, countries } from "@/lib/knowledge.generated";
+import { webResearch, formatWebResults } from "@/lib/web";
 
 export const runtime = "nodejs";
 export const maxDuration = 120;
@@ -39,8 +40,8 @@ async function streamClaude(system: string[], brief: string, send: Send) {
     system: system.map((text, i) => ({
       type: "text" as const,
       text,
-      // Caches the instructions + sample + country doc so repeat runs are cheaper and faster.
-      ...(i === system.length - 1 ? { cache_control: { type: "ephemeral" as const } } : {}),
+      // Caches instructions + sample + country doc (blocks 0-2); web results change every request.
+      ...(i === 2 ? { cache_control: { type: "ephemeral" as const } } : {}),
     })),
     messages: [{ role: "user", content: brief }],
   });
@@ -154,10 +155,14 @@ Price point: ${body.price}
 Where they sell today / stage: ${body.stage}
 Target country: ${countryName}`;
 
+  // Live web search runs alongside the research docs (skipped if TAVILY_API_KEY isn't set).
+  const web = formatWebResults(await webResearch(body.product, countryName).catch(() => []));
+
   const system = [
     instructions,
     `<sample_plan>\n${samplePlan}\n</sample_plan>`,
     `<country_research country="${countryName}">\n${research}\n</country_research>`,
+    ...(web ? [web] : []),
   ];
 
   const encoder = new TextEncoder();
