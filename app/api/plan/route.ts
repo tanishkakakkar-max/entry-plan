@@ -158,6 +158,7 @@ Target country: ${countryName}`;
   // Live web search runs alongside the research docs (skipped if TAVILY_API_KEY isn't set).
   const webResults = await webResearch(body.product, countryName).catch(() => []);
   const web = formatWebResults(webResults);
+  console.log(`web results: ${webResults.length} (${countryName})`);
 
   const system = [
     instructions,
