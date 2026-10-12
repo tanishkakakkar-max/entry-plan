@@ -95,6 +95,9 @@ export function cleanWebsiteUrl(input: unknown): string | null {
   try {
     const url = new URL(/^https?:\/\//i.test(raw) ? raw : `https://${raw}`);
     if (!["http:", "https:"].includes(url.protocol) || !url.hostname.includes(".")) return null;
+    // Drop ad and tracking parameters (?tw_source=..., utm_..., gclid...) people copy from ads.
+    url.search = "";
+    url.hash = "";
     return url.toString();
   } catch {
     return null;

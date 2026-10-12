@@ -204,12 +204,12 @@ export async function POST(req: Request) {
   // Blank answers + website: read the site now, before any credit is spent, and stop if it's unreadable.
   const blanks = OPTIONAL_WITH_WEBSITE.filter((f) => !body[f].trim());
   let siteText: string | null = null;
-  if (website && blanks.length) {
+  if (website) {
     siteText = await readWebsite(website).catch((err) => {
       console.error("website read failed", err);
       return "";
     });
-    if (siteText.length < 300) {
+    if (blanks.length && siteText.length < 300) {
       return new Response(
         "We couldn't read enough from your website. Please fill in what you sell, your customer and your price.",
         { status: 400 },
