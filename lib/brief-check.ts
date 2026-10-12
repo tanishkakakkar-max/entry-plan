@@ -92,7 +92,9 @@ async function askClaude(b: BriefInput): Promise<string> {
     },
     body: JSON.stringify({
       model: process.env.ANTHROPIC_CHECK_MODEL || "claude-haiku-5-5",
-      max_tokens: 400,
+      // Haiku 5.5 thinks by default and that counts against max_tokens; a yes/no check needs little.
+      max_tokens: 2000,
+      output_config: { effort: "low" },
       system: SYSTEM,
       messages: [{ role: "user", content: briefText(b) }],
     }),

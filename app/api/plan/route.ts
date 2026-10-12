@@ -41,7 +41,11 @@ async function streamClaude(system: string[], brief: string, send: Send, cacheIn
   const client = new Anthropic();
   const stream = client.messages.stream({
     model: process.env.ANTHROPIC_MODEL || "claude-sonnet-5-5",
-    max_tokens: 4500, // Claude only; the Groq cap is set separately in streamGroq
+    // Sonnet 5.5 thinks before writing and those hidden tokens count against max_tokens; 4,500 cut
+    // plans off mid-way. Room for thinking + a ~3k-token plan, with effort "medium" to keep thinking lean.
+    // (Claude only; the Groq cap is set separately in streamGroq.)
+    max_tokens: 16000,
+    output_config: { effort: "medium" },
     system: system.map((text, i) => ({
       type: "text" as const,
       text,
