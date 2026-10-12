@@ -182,7 +182,8 @@ Target country: ${countryName}`;
           await streamGroq(system, brief, send);
         }
         // The model doesn't reliably write the Sources list, so build it from the [W#] tags it actually cited.
-        if (!/^#+\s*Sources/im.test(output)) {
+        // Only skip if the model already wrote a Sources section with real links.
+        if (!/^#+\s*Sources[\s\S]*\]\(http/im.test(output)) {
           const cited = [...new Set([...output.matchAll(/\[W(\d+)\]/g)].map((m) => Number(m[1])))]
             .filter((n) => webResults[n - 1])
             .sort((a, b) => a - b);
