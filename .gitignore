@@ -8,3 +8,4 @@ lib/knowledge.generated.ts
 !.env.example
 .claude/
 *.tsbuildinfo
+test-plans/
