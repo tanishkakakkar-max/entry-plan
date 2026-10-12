@@ -1,6 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { instructions, samplePlan, countries } from "@/lib/knowledge.generated";
-import { webResearch, formatWebResults } from "@/lib/web";
+import { webResearch, formatWebResults, cleanWebsiteUrl, readWebsite, formatWebsite } from "@/lib/web";
+import { CATEGORIES } from "@/lib/categories";
 
 export const runtime = "nodejs";
 export const maxDuration = 120;
@@ -13,7 +14,7 @@ const COUNTRY_NAMES: Record<string, string> = {
 };
 
 const FIELDS = ["brand", "product", "identity", "customer", "price", "stage", "country"] as const;
-type Form = Record<(typeof FIELDS)[number], string> & { accessCode?: string };
+type Form = Record<(typeof FIELDS)[number], string> & { accessCode?: string; category?: string; website?: string };
 
 // Best-effort per-IP limit. Serverless instances don't share memory, so also set a
 // monthly spend limit in the Anthropic Console - that's the real safety net.
@@ -138,6 +139,16 @@ export async function POST(req: Request) {
     }
   }
 
+  // Optional extras: category must be one we support; website must be a plain http(s) link.
+  const category = CATEGORIES.find((c) => c === body.category);
+  if (body.category && !category) {
+    return new Response("Please pick a category from the list.", { status: 400 });
+  }
+  const website = cleanWebsiteUrl(body.website);
+  if (body.website?.trim() && !website) {
+    return new Response("That website link doesn't look right - try something like brand.com.", { status: 400 });
+  }
+
   const countryKey = body.country.toLowerCase();
   const research = countries[countryKey];
   if (!research) {
@@ -148,22 +159,32 @@ export async function POST(req: Request) {
   const brief = `Write the market-entry plan for this brand.
 
 Brand: ${body.brand}
-What they sell: ${body.product}
+${category ? `Category: ${category}\n` : ""}What they sell: ${body.product}
 Brand identity: ${body.identity}
 Target customer: ${body.customer}
 Price point: ${body.price}
 Where they sell today / stage: ${body.stage}
-Target country: ${countryName}`;
+Target country: ${countryName}${website ? `\nWebsite: ${website}` : ""}`;
 
   // Live web search runs alongside the research docs (skipped if TAVILY_API_KEY isn't set).
-  const webResults = await webResearch(body.product, countryName).catch(() => []);
+  const [webResults, siteText] = await Promise.all([
+    webResearch(category ? `${category} ${body.product}` : body.product, countryName).catch(() => []),
+    website
+      ? readWebsite(website).catch((err) => {
+          console.error("website read failed", err);
+          return "";
+        })
+      : Promise.resolve(""),
+  ]);
   const web = formatWebResults(webResults);
-  console.log(`web results: ${webResults.length} (${countryName})`);
+  const site = website ? formatWebsite(website, siteText) : "";
+  console.log(`web results: ${webResults.length} (${countryName})${website ? `, website chars: ${siteText.length}` : ""}`);
 
   const system = [
     instructions,
     `<sample_plan>\n${samplePlan}\n</sample_plan>`,
     `<country_research country="${countryName}">\n${research}\n</country_research>`,
+    ...(site ? [site] : []),
     ...(web ? [web] : []),
   ];
 

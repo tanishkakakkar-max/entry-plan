@@ -49,6 +49,45 @@ export async function webResearch(product: string, country: string): Promise<Web
   return out.slice(0, 6);
 }
 
+// Reads the brand's own website via Tavily Extract (1 credit per page), so our server never
+// fetches arbitrary URLs itself. Trimmed hard to stay inside the Groq free tier's token budget.
+const WEBSITE_CHARS = 1500;
+
+export function cleanWebsiteUrl(input: unknown): string | null {
+  if (typeof input !== "string" || !input.trim() || input.length > 300) return null;
+  const raw = input.trim();
+  try {
+    const url = new URL(/^https?:\/\//i.test(raw) ? raw : `https://${raw}`);
+    if (!["http:", "https:"].includes(url.protocol) || !url.hostname.includes(".")) return null;
+    return url.toString();
+  } catch {
+    return null;
+  }
+}
+
+export async function readWebsite(url: string): Promise<string> {
+  if (!process.env.TAVILY_API_KEY) return "";
+  const res = await fetch(`${process.env.TAVILY_BASE_URL || "https://api.tavily.com"}/extract`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${process.env.TAVILY_API_KEY}` },
+    body: JSON.stringify({ urls: [url], extract_depth: "basic" }),
+    signal: AbortSignal.timeout(10000),
+  });
+  if (!res.ok) throw new Error(`Tavily extract ${res.status}`);
+  const data = await res.json();
+  const text = String(data.results?.[0]?.raw_content ?? "")
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, "") // images
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1") // keep link text, drop URLs
+    .replace(/\s+/g, " ")
+    .trim();
+  return text.slice(0, WEBSITE_CHARS);
+}
+
+export function formatWebsite(url: string, text: string): string {
+  if (!text) return "";
+  return `<brand_website url="${url}">\n${text}\n</brand_website>`;
+}
+
 export function formatWebResults(results: WebResult[]): string {
   if (!results.length) return "";
   const items = results
