@@ -156,7 +156,8 @@ Where they sell today / stage: ${body.stage}
 Target country: ${countryName}`;
 
   // Live web search runs alongside the research docs (skipped if TAVILY_API_KEY isn't set).
-  const web = formatWebResults(await webResearch(body.product, countryName).catch(() => []));
+  const webResults = await webResearch(body.product, countryName).catch(() => []);
+  const web = formatWebResults(webResults);
 
   const system = [
     instructions,
@@ -168,12 +169,25 @@ Target country: ${countryName}`;
   const encoder = new TextEncoder();
   const readable = new ReadableStream({
     async start(controller) {
-      const send = (t: string) => controller.enqueue(encoder.encode(t));
+      let output = "";
+      const send = (t: string) => {
+        output += t;
+        controller.enqueue(encoder.encode(t));
+      };
       try {
         if (provider === "anthropic") {
           await streamClaude(system, brief, send);
         } else {
           await streamGroq(system, brief, send);
+        }
+        // The model doesn't reliably write the Sources list, so build it from the [W#] tags it actually cited.
+        if (!/^#+\s*Sources/im.test(output)) {
+          const cited = [...new Set([...output.matchAll(/\[W(\d+)\]/g)].map((m) => Number(m[1])))]
+            .filter((n) => webResults[n - 1])
+            .sort((a, b) => a - b);
+          if (cited.length) {
+            send(`\n\n## Sources\n\n${cited.map((n) => `- [W${n}] [${webResults[n - 1].title.replace(/[[\]]/g, "")}](${webResults[n - 1].url})`).join("\n")}\n`);
+          }
         }
       } catch (err) {
         console.error(err);
