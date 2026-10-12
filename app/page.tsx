@@ -6,6 +6,7 @@ import { CountryOutline, WorldMap } from "./components/Maps";
 import { PlanView, cleanPlanText } from "./components/PlanView";
 import { EXAMPLES, exampleFile } from "./components/examples";
 import { CATEGORIES } from "@/lib/categories";
+import { checkBrief } from "@/lib/brief";
 
 const EMPTY = {
   brand: "",
@@ -95,11 +96,15 @@ export default function Home() {
   const planRef = useRef<HTMLElement>(null);
   const formRef = useRef<HTMLElement>(null);
 
-  // Loading progress: research -> web search -> writing (writing starts when the first words arrive).
+  // Loading progress: brief check -> research -> web search -> writing (writing starts when the first words arrive).
   useEffect(() => {
     if (!loading) return;
-    const t = setTimeout(() => setPhase((p) => Math.max(p, 1)), 1400);
-    return () => clearTimeout(t);
+    const t1 = setTimeout(() => setPhase((p) => Math.max(p, 1)), 1200);
+    const t2 = setTimeout(() => setPhase((p) => Math.max(p, 2)), 2600);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+    };
   }, [loading]);
 
   async function submit(e: React.FormEvent) {
@@ -121,6 +126,11 @@ export default function Home() {
       } catch {
         setError("Couldn't load the saved example. Please try again.");
       }
+      return;
+    }
+    const problem = checkBrief(form);
+    if (problem) {
+      setError(problem);
       return;
     }
     if (!accessCode.trim()) {
@@ -154,7 +164,7 @@ export default function Home() {
           if (done) break;
           text += decoder.decode(value, { stream: true });
           if (BUSY.startsWith(text) || text.startsWith(BUSY)) continue; // don't flash the busy message
-          setPhase(2);
+          setPhase(3);
           setPlan(text);
         }
         if (!text.startsWith(BUSY)) {
@@ -200,6 +210,7 @@ export default function Home() {
   }
 
   const progress = [
+    "Checking your brief",
     `Reading the ${planCountry} research`,
     form.website.trim() ? "Reading your website and searching the web" : "Searching the web",
     "Writing your plan",
@@ -285,6 +296,11 @@ export default function Home() {
               Pick a market.
             </h2>
             <p className="pick-sub">Your brand can be based anywhere. Choose the first market you want to enter.</p>
+            <p className="access-callout">
+              <strong>No access code?</strong> You can still open our saved example plans: click <em>Try an example</em>,
+              then <em>Let&apos;s go</em>. For a personalised plan for your own brand,{" "}
+              <a href="#contact">get in touch for an access code</a>.
+            </p>
           </div>
           <form onSubmit={submit}>
             <div className="country-grid" role="radiogroup" aria-label="Target market">

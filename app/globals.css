@@ -132,6 +132,11 @@ button:disabled { opacity: 0.55; cursor: default; }
 .get-plan { padding-top: 72px; padding-bottom: 72px; }
 .pick-head { margin-bottom: 28px; }
 .pick-head .section-title { margin-bottom: 12px; }
+.access-callout {
+  margin: 18px 0 0; padding: 14px 18px; max-width: 720px; font-size: 15px; line-height: 1.55;
+  background: #f3fbfc; border: 1px solid var(--aqua); border-radius: var(--radius-sm);
+}
+.access-callout a { font-weight: 600; text-underline-offset: 3px; }
 .pick-sub { margin: 0; color: var(--ink-soft); max-width: 460px; }
 .country-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-bottom: 48px; }
 @media (min-width: 900px) { .country-grid { grid-template-columns: repeat(4, 1fr); gap: 16px; } }

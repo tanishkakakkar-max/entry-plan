@@ -2,7 +2,9 @@ import Anthropic from "@anthropic-ai/sdk";
 import { instructions, samplePlan, countries } from "@/lib/knowledge.generated";
 import { webResearch, formatWebResults, cleanWebsiteUrl, readWebsite, formatWebsite } from "@/lib/web";
 import { CATEGORIES } from "@/lib/categories";
-import { creditsReady, normalizeCode, refundCredit, reserveCredit } from "@/lib/credits";
+import { checkBrief } from "@/lib/brief";
+import { creditsReady, normalizeCode, peekCode, refundCredit, reserveCredit } from "@/lib/credits";
+import { aiCheckBrief } from "@/lib/brief-check";
 
 export const runtime = "nodejs";
 export const maxDuration = 120;
@@ -145,6 +147,10 @@ export async function POST(req: Request) {
     }
   }
 
+  // Reject nonsense before any credit is spent.
+  const problem = checkBrief(body);
+  if (problem) return new Response(problem, { status: 400 });
+
   // Optional extras: category must be one we support; website must be a plain http(s) link.
   const category = CATEGORIES.find((c) => c === body.category);
   if (body.category && !category) {
@@ -167,13 +173,23 @@ export async function POST(req: Request) {
     return new Response("You've hit the limit of 5 plans an hour. Try again later.", { status: 429 });
   }
 
+  // Check the code before spending anything on the AI brief check.
+  const codeState = await peekCode(code);
+  const refuse = (r: { reason: string }) =>
+    r.reason === "used_up"
+      ? codeError(402, "used_up", "This code is used up.")
+      : r.reason === "disabled"
+        ? codeError(403, "disabled", "This code has been switched off.")
+        : codeError(403, "invalid", "That access code isn't right. Check it and try again.");
+  if (!codeState.ok) return refuse(codeState);
+
+  // Does the brief make enough sense to build a strategy on? Rejections cost no credit.
+  const notUsable = await aiCheckBrief({ ...body, category, country: countryName }, provider);
+  if (notUsable) return new Response(notUsable, { status: 400, headers: { "X-Brief": "not_usable" } });
+
   // Take the credit now (so two tabs can't overspend it) and give it back if no plan comes out.
   const reservation = await reserveCredit(code);
-  if (!reservation.ok) {
-    if (reservation.reason === "used_up") return codeError(402, "used_up", "This code is used up.");
-    if (reservation.reason === "disabled") return codeError(403, "disabled", "This code has been switched off.");
-    return codeError(403, "invalid", "That access code isn't right. Check it and try again.");
-  }
+  if (!reservation.ok) return refuse(reservation);
 
   const brief = `Write the market-entry plan for this brand.
 

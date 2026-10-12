@@ -80,6 +80,17 @@ export async function reserveCredit(code: string): Promise<Reservation> {
   return { ok: true, left: r };
 }
 
+// Read-only version of reserveCredit: is this code usable right now? Takes nothing.
+export async function peekCode(code: string): Promise<Reservation> {
+  let c: CodeInfo | null;
+  if (redis) c = toInfo(code, await redis.hgetall(KEY(code)));
+  else c = mem.get(code) ?? null;
+  if (!c) return { ok: false, reason: "invalid" };
+  if (c.disabled) return { ok: false, reason: "disabled" };
+  if (c.used >= c.total) return { ok: false, reason: "used_up" };
+  return { ok: true, left: c.total - c.used };
+}
+
 export async function refundCredit(code: string) {
   if (redis) {
     await redis.eval(REFUND, [KEY(code)], []);
