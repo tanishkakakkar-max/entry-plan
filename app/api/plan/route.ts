@@ -5,6 +5,7 @@ import { CATEGORIES } from "@/lib/categories";
 import { checkBrief } from "@/lib/brief";
 import { creditsReady, normalizeCode, peekCode, refundCredit, reserveCredit } from "@/lib/credits";
 import { aiCheckBrief } from "@/lib/brief-check";
+import { formatResearch, selectResearch } from "@/lib/research";
 
 export const runtime = "nodejs";
 export const maxDuration = 120;
@@ -36,7 +37,7 @@ function rateLimited(ip: string) {
 type Send = (text: string) => void;
 
 // Claude (paid, best quality). Switch with LLM_PROVIDER=anthropic.
-async function streamClaude(system: string[], brief: string, send: Send) {
+async function streamClaude(system: string[], brief: string, send: Send, cacheIndex: number) {
   const client = new Anthropic();
   const stream = client.messages.stream({
     model: process.env.ANTHROPIC_MODEL || "claude-sonnet-5-5",
@@ -44,8 +45,9 @@ async function streamClaude(system: string[], brief: string, send: Send) {
     system: system.map((text, i) => ({
       type: "text" as const,
       text,
-      // Caches instructions + sample + country doc (blocks 0-2); web results change every request.
-      ...(i === 2 ? { cache_control: { type: "ephemeral" as const } } : {}),
+      // Caches the stable blocks (instructions, sample, country doc, related research); website and
+      // web results change every request.
+      ...(i === cacheIndex ? { cache_control: { type: "ephemeral" as const } } : {}),
     })),
     messages: [{ role: "user", content: brief }],
   });
@@ -215,13 +217,20 @@ Target country: ${countryName}${website ? `\nWebsite: ${website}` : ""}`;
   const site = website ? formatWebsite(website, siteText) : "";
   console.log(`web results: ${webResults.length} (${countryName})${website ? `, website chars: ${siteText.length}` : ""}`);
 
+  // Tagged research notes that match this country or category. Example plans are never included.
+  const related = selectResearch(countryKey, category);
+  console.log(`research used (${related.length}): ${related.map((n) => n.file).join(", ") || "none"}`);
+  const relatedBlock = formatResearch(related);
+
   const system = [
     instructions,
     `<sample_plan>\n${samplePlan}\n</sample_plan>`,
     `<country_research country="${countryName}">\n${research}\n</country_research>`,
+    ...(relatedBlock ? [relatedBlock] : []),
     ...(site ? [site] : []),
     ...(web ? [web] : []),
   ];
+  const cacheIndex = relatedBlock ? 3 : 2;
 
   const encoder = new TextEncoder();
   const readable = new ReadableStream({
@@ -233,7 +242,7 @@ Target country: ${countryName}${website ? `\nWebsite: ${website}` : ""}`;
       };
       try {
         if (provider === "anthropic") {
-          await streamClaude(system, brief, send);
+          await streamClaude(system, brief, send, cacheIndex);
         } else {
           await streamGroq(system, brief, send);
         }
