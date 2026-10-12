@@ -92,7 +92,7 @@ async function askClaude(b: BriefInput): Promise<string> {
     },
     body: JSON.stringify({
       model: process.env.ANTHROPIC_CHECK_MODEL || "claude-haiku-5-5",
-      max_tokens: 120,
+      max_tokens: 400,
       system: SYSTEM,
       messages: [{ role: "user", content: briefText(b) }],
     }),
@@ -100,14 +100,18 @@ async function askClaude(b: BriefInput): Promise<string> {
   });
   if (!res.ok) throw new Error(`brief check ${res.status}`);
   const data = await res.json();
-  return String(data.content?.[0]?.text ?? "");
+  // Join every text block (the reply may not start with one).
+  return (data.content ?? []).filter((c: { type: string }) => c.type === "text").map((c: { text: string }) => c.text).join("");
 }
 
 // Returns a message to show the founder if the brief isn't usable, or null to go ahead.
 export async function aiCheckBrief(b: BriefInput, provider: string): Promise<string | null> {
   try {
     const raw = provider === "anthropic" ? await askClaude(b) : await askGroq(b);
-    const json = JSON.parse(raw.slice(raw.indexOf("{"), raw.lastIndexOf("}") + 1));
+    const start = raw.indexOf("{");
+    const end = raw.lastIndexOf("}");
+    if (start < 0 || end < start) throw new Error(`no JSON in reply: ${raw.slice(0, 200)}`);
+    const json = JSON.parse(raw.slice(start, end + 1));
     console.log(`brief check: usable=${json.usable}`);
     if (json.usable === false) {
       const reason = typeof json.reason === "string" ? json.reason.trim().slice(0, 300) : "";
