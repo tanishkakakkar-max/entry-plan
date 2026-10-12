@@ -58,6 +58,16 @@ function verdictHeadline(verdict: string, country: string) {
   return `Test ${country} first.`;
 }
 
+// The model overuses dashes as punctuation. After a bold lead-in a dash becomes a colon,
+// elsewhere a spaced dash becomes a comma; dashes inside ranges and words become plain hyphens.
+export function cleanDashes(md: string) {
+  return md
+    .replace(/(\*\*[^*\n]+\*\*)\s*[–—]\s*/g, "$1: ")
+    .replace(/(^|\n)(\s*)[–—]\s+/g, "$1$2- ")
+    .replace(/\s+[–—]\s+/g, ", ")
+    .replace(/[–—‑‐]/g, "-");
+}
+
 // [W3] -> a link to the matching source, rendered as a small badge.
 const linkCitations = (md: string) => md.replace(/\[W(\d+)\](?!\()/g, "[W$1](#source-w$1)");
 
@@ -88,7 +98,7 @@ function Markdown({ children }: { children: string }) {
 }
 
 export function PlanView({ plan, country, streaming }: { plan: string; country: string; streaming: boolean }) {
-  const { title, preamble, sections, sources, sourcesSection } = parsePlan(plan);
+  const { title, preamble, sections, sources, sourcesSection } = parsePlan(cleanDashes(plan));
 
   // Not a plan (e.g. the rate-limit message): show it as a notice.
   if (!title && !sections.length) {
