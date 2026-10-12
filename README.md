@@ -1,4 +1,4 @@
-# Entry Plan (v0)
+# First Port (v0)
 
 A brand enters its product, identity, target customer and a country (Japan, Singapore, India, US) and gets a staked market-entry plan grounded in Tanishka Kakkar's country research.
 
