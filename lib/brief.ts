@@ -40,12 +40,12 @@ export type BriefField = "website" | "brand" | "category" | "categoryOther" | "p
 export type BriefProblems = Partial<Record<BriefField, string>>;
 
 // Every problem in the brief, keyed by field, so the form can show each one under its own field.
-// With a website, the other answers are optional (the plan reads the site), and anything typed only needs to
-// be a real word or two ("Skincare", "Gen Z", "DTC"); keyboard mash is still caught.
+// With a website, the other answers are optional (the plan reads the site).
 export function checkBriefFields(b: Brief, hasWebsite = false): BriefProblems {
   const out: BriefProblems = {};
   const skip = (v: string) => hasWebsite && !v.trim();
-  const min = hasWebsite ? 1 : 2;
+  // One real word is enough ("Lemonade", "Students"); keyboard mash and placeholders are still refused.
+  const min = 1;
   const orBlank = hasWebsite ? " Or leave it blank and we'll read your site." : "";
   if (b.website?.trim() && !/^(https?:\/\/)?[^\s/?#]+\.[a-z]{2,}([/?#]\S*)?$/i.test(b.website.trim()))
     out.website = 'Enter a link like "brand.com".';

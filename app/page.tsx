@@ -8,8 +8,8 @@ import { PlanView, cleanPlanText } from "./components/PlanView";
 import { FeedbackForm } from "./components/FeedbackForm";
 import { YourPlans, type SavedPlan } from "./components/YourPlans";
 import { AccessStep } from "./components/AccessStep";
+import { SiteFooter, SiteNav } from "./components/SiteChrome";
 import { EXAMPLE_BRANDS } from "./components/examples";
-import { exampleKeys } from "@/lib/examples-index.generated";
 import { CATEGORIES, OTHER, OTHER_MAX } from "@/lib/categories";
 import { checkBriefFields, type BriefField, type BriefProblems } from "@/lib/brief";
 
@@ -59,29 +59,17 @@ const GROUPS: { title: string; fields: Field[] }[] = [
   },
 ];
 
-// "Try with a sample brand": a realistic made-up brief that works for any of the four markets.
-const SAMPLE = {
-  brand: "Tidewell",
-  category: "Beauty & personal care",
-  categoryOther: "",
-  website: "",
-  product: "Reef-safe mineral sunscreens and after-sun gels, made in Australia",
-  identity: "Clean, sunny and science-backed, for people who live outdoors",
-  customer: "Women and men 22-40 who surf, run or travel",
-  price: "$22-34 per tube",
-  stage: "Australia DTC on Shopify plus 40 surf shops",
-};
-
 // The form in three steps. Titles show above the fields; the short names label the progress bar.
+// The market cards stay visible above the steps, so the country can change at any point.
 const FORM_STEPS = [
-  { name: "Market", title: "Pick a market.", sub: "Your brand can be based anywhere. Choose the first market you want to enter." },
-  { name: "Your brand", title: "Tell us about your brand.", sub: "Add your website and you can skip most questions: we'll read it for you." },
-  { name: "Your market", title: "Who buys, and where you sell.", sub: "Last step. Then we check your brief and write the plan." },
+  { name: "Your brand", title: "Tell us about your brand.", sub: "" },
+  { name: "Customer", title: "Who buys, and where you sell.", sub: "Last step. Then we check your brief and write the plan." },
 ];
+const LAST_STEP = FORM_STEPS.length - 1;
 // Which fields each form step holds, so problems are shown (and checked) step by step.
 const STEP_FIELDS: Record<number, BriefField[]> = {
-  1: ["website", "brand", "category", "categoryOther", "product", "identity"],
-  2: ["customer", "price", "stage"],
+  0: ["website", "brand", "category", "categoryOther", "product", "identity"],
+  1: ["customer", "price", "stage"],
 };
 
 // Must match the rate-limit message streamed by app/api/plan/route.ts.
@@ -105,17 +93,19 @@ export default function Home() {
   const [planCountry, setPlanCountry] = useState("");
   const [planBrand, setPlanBrand] = useState("");
   const [copied, setCopied] = useState(false);
-  const [exampleBrand, setExampleBrand] = useState<string>("");
   const [retryIn, setRetryIn] = useState(0);
   const [errorKind, setErrorKind] = useState<"" | "missing" | "used_up">("");
   const [creditsLeft, setCreditsLeft] = useState<number | null>(null);
-  const [savedExample, setSavedExample] = useState(false);
   // A plan from "Your plans": "repeat" = same brief asked again (no credit used), "opened" = opened from the list.
   const [savedNote, setSavedNote] = useState<"" | "repeat" | "opened">("");
   const [planId, setPlanId] = useState("");
   const [plansVersion, setPlansVersion] = useState(0);
   const [step, setStep] = useState(0);
   const [errors, setErrors] = useState<BriefProblems>({});
+  // "See an example": which example brand is filled into the form (cleared as soon as they type their own),
+  // and whether the plan on screen is a saved example (no code needed).
+  const [exampleKey, setExampleKey] = useState("");
+  const [isExample, setIsExample] = useState(false);
   const [accessOpen, setAccessOpen] = useState(false);
   const accessRef = useRef<HTMLDivElement>(null);
   const stepRef = useRef<HTMLDivElement>(null);
@@ -133,10 +123,7 @@ export default function Home() {
     } catch {}
   }
 
-  // Hand-checked example plans: only brands and countries with a saved file are offered.
   const hasWebsite = !!form.website.trim();
-  const exampleBrands = EXAMPLE_BRANDS.filter((b) => exampleKeys.some((k) => k.startsWith(`${b.key}-`)));
-  const exampleCountries = (brand: string) => COUNTRIES.filter((c) => exampleKeys.includes(`${brand}-${c.key}`));
   const planRef = useRef<HTMLElement>(null);
   const formRef = useRef<HTMLElement>(null);
 
@@ -172,6 +159,59 @@ export default function Home() {
     return () => io.disconnect();
   }, []);
 
+  // Arriving from another page: /#access opens the free-code box, /#example fills in an example brand.
+  useEffect(() => {
+    if (window.location.hash === "#access") openFreeStep();
+    if (window.location.hash === "#example") fillExample();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Fills the form with one of the example brands (random, or the next one after `after`), keeping the market.
+  function fillExample(after?: string) {
+    const i = EXAMPLE_BRANDS.findIndex((b) => b.key === after);
+    const pick =
+      after !== undefined && i >= 0
+        ? EXAMPLE_BRANDS[(i + 1) % EXAMPLE_BRANDS.length]
+        : EXAMPLE_BRANDS.filter((b) => b.key !== exampleKey)[Math.floor(Math.random() * (EXAMPLE_BRANDS.length - (exampleKey ? 1 : 0)))];
+    setForm((f) => ({ ...f, website: "", categoryOther: "", ...pick.brief }));
+    setErrors({});
+    setExampleKey(pick.key);
+    setStep(0);
+    // Land on the example bar (just above the steps), so it's clear what changed.
+    if (after === undefined) setTimeout(() => document.querySelector(".example-bar")?.scrollIntoView({ behavior: "smooth", block: "center" }), 80);
+    return pick.key;
+  }
+
+  // Shows the saved, hand-checked plan for an example brand in the chosen market. No code, no credits.
+  async function showExample(key = exampleKey, country = form.country) {
+    const b = EXAMPLE_BRANDS.find((x) => x.key === key);
+    if (!b) return;
+    setError("");
+    setErrorKind("");
+    setCreditsLeft(null);
+    setSavedNote("");
+    setPlanId("");
+    setPlanCountry(countryLabel(country));
+    setPlanBrand(b.name);
+    try {
+      const { examplePlans } = await import("@/lib/examples.generated");
+      const text = examplePlans[`${key}-${country}`];
+      if (!text) throw new Error();
+      setPlan(text);
+      setIsExample(true);
+    } catch {
+      setPlan("");
+      setError("Couldn't open that example. Please try again.");
+    }
+    setTimeout(() => planRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
+  }
+
+  // "Try another example": the next brand, same market, plan shown right away.
+  function nextExample() {
+    const key = fillExample(exampleKey || EXAMPLE_BRANDS[0].key);
+    showExample(key, form.country);
+  }
+
   // Opens the "get 3 free plans" step at the top of the form and brings it into view.
   function openFreeStep() {
     setAccessOpen(true);
@@ -190,6 +230,7 @@ export default function Home() {
   // Updates one answer and clears that field's error.
   function setField(name: FieldName, value: string) {
     setForm({ ...form, [name]: value });
+    if (exampleKey) setExampleKey(""); // their own answers now: a live plan, which needs a code
     if (errors[name as BriefField]) setErrors({ ...errors, [name]: undefined });
   }
 
@@ -208,7 +249,7 @@ export default function Home() {
 
   // Moves between form steps, checking the current step's answers first when going forward.
   function goTo(next: number) {
-    if (next > step && step > 0) {
+    if (next > step) {
       const found = problemsIn(checkBriefFields(form, !!form.website.trim()), step);
       if (Object.keys(found).length) {
         showProblems(found);
@@ -226,21 +267,25 @@ export default function Home() {
   // Enter moves to the next step (except in long text boxes, where it adds a new line).
   function enterNext(e: React.KeyboardEvent<HTMLFormElement>) {
     const t = e.target as HTMLElement;
-    if (e.key !== "Enter" || e.defaultPrevented || t.tagName === "TEXTAREA" || t.tagName === "BUTTON" || step === 2) return;
+    if (e.key !== "Enter" || e.defaultPrevented || t.tagName === "TEXTAREA" || t.tagName === "BUTTON" || step === LAST_STEP) return;
     e.preventDefault();
     goTo(step + 1);
   }
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
-    if (step < 2) {
+    if (step < LAST_STEP) {
       goTo(step + 1);
+      return;
+    }
+    if (exampleKey) {
+      showExample();
       return;
     }
     const all = checkBriefFields(form, !!form.website.trim());
     if (Object.keys(all).length) {
       // Go back to the first step with a problem; every problem shows under its own field.
-      const firstStep = Object.keys(problemsIn(all, 1)).length ? 1 : 2;
+      const firstStep = Object.keys(problemsIn(all, 0)).length ? 0 : 1;
       setStep(firstStep);
       showProblems(all);
       return;
@@ -254,9 +299,9 @@ export default function Home() {
     setErrorKind("");
     setPlan("");
     setCreditsLeft(null);
-    setSavedExample(false);
     setSavedNote("");
     setPlanId("");
+    setIsExample(false);
     setPlanCountry(countryLabel(form.country));
     setPlanBrand(form.brand.trim());
     setTimeout(() => planRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
@@ -324,29 +369,6 @@ export default function Home() {
     }
   }
 
-  // Opens a saved example plan: no code, no credits, no AI call. The plan text loads on demand.
-  async function openExample(brand: string, country: string) {
-    if (loading) return;
-    setError("");
-    setErrorKind("");
-    setCreditsLeft(null);
-    setSavedNote("");
-    setPlanId("");
-    setPlanCountry(countryLabel(country));
-    setPlanBrand(EXAMPLE_BRANDS.find((b) => b.key === brand)?.name ?? brand);
-    try {
-      const { examplePlans } = await import("@/lib/examples.generated");
-      const text = examplePlans[`${brand}-${country}`];
-      if (!text) throw new Error();
-      setPlan(text);
-      setSavedExample(true);
-    } catch {
-      setPlan("");
-      setError("Couldn't open that example. Please try again.");
-    }
-    setTimeout(() => planRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
-  }
-
   async function copy() {
     await navigator.clipboard.writeText(cleanPlanText(plan));
     setCopied(true);
@@ -358,9 +380,9 @@ export default function Home() {
     setError("");
     setErrorKind("");
     setCreditsLeft(null);
-    setSavedExample(false);
     setSavedNote("opened");
     setPlanId(p.id);
+    setIsExample(false);
     setPlanCountry(countryLabel(p.country));
     setPlanBrand(p.brand);
     setPlan(p.text);
@@ -383,27 +405,7 @@ export default function Home() {
 
   return (
     <>
-      <header className="nav no-print">
-        <div className="wrap nav-inner">
-          <a href="#top" className="wordmark">
-            {BRAND.name}
-          </a>
-          <nav aria-label="Main">
-            <a href="#how">How it works</a>
-            {exampleBrands.length > 0 && <a href="#examples">Examples</a>}
-            <a
-              href="#get-a-plan"
-              className="nav-cta"
-              onClick={(e) => {
-                e.preventDefault();
-                openFreeStep();
-              }}
-            >
-              Get 3 free plans
-            </a>
-          </nav>
-        </div>
-      </header>
+      <SiteNav home onFree={openFreeStep} onExample={() => fillExample()} />
 
       <main id="top">
         <section className="hero hero-dark no-print">
@@ -441,8 +443,15 @@ export default function Home() {
                 >
                   Get 3 free plans <span aria-hidden="true">→</span>
                 </a>
-                <a href="#examples" className="btn btn-on-dark">
-                  Read an example
+                <a
+                  href="#example"
+                  className="btn btn-on-dark"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    fillExample();
+                  }}
+                >
+                  See an example
                 </a>
               </div>
             </div>
@@ -483,79 +492,26 @@ export default function Home() {
               </li>
             ))}
           </ol>
+          <p className="how-example">
+            Want to see one first?{" "}
+            <button type="button" className="link-btn" onClick={() => fillExample()}>
+              See an example plan
+            </button>{" "}
+            <span aria-hidden="true">→</span>
+          </p>
         </section>
 
-        {exampleBrands.length > 0 && (
-          <section id="examples" className="wrap examples no-print reveal" aria-labelledby="examples-title">
-            <p className="label">Example plans</p>
-            <h2 id="examples-title" className="section-title">
-              See a finished plan.
-            </h2>
-            <p className="pick-sub">
-              Pick a brand, then a market. These are saved, hand-checked plans: free to read, no access code needed.
-            </p>
-            <div className="example-brands" role="radiogroup" aria-label="Example brand">
-              {exampleBrands.map((b) => (
-                <button
-                  type="button"
-                  key={b.key}
-                  role="radio"
-                  aria-checked={exampleBrand === b.key}
-                  className={exampleBrand === b.key ? "example-brand selected" : "example-brand"}
-                  onClick={() => setExampleBrand(b.key)}
-                >
-                  <span className="example-brand-name">{b.name}</span>
-                  <span className="example-brand-blurb">{b.blurb}</span>
-                </button>
-              ))}
-            </div>
-            {exampleBrand && (
-              <div className="example-countries">
-                <p className="example-step">Now pick a market:</p>
-                <div className="port-chips">
-                  {exampleCountries(exampleBrand).map((c) => (
-                    <button type="button" key={c.key} className="port-chip example-chip" onClick={() => openExample(exampleBrand, c.key)}>
-                      {c.label} <span aria-hidden="true">→</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-          </section>
-        )}
 
         <section id="get-a-plan" ref={formRef} className="wrap get-plan no-print reveal" aria-labelledby="plan-form-title">
           <div className="pick-head">
             <p className="label">Get a plan</p>
             <AccessStep ref={accessRef} code={accessCode} onCode={applyCode} open={accessOpen} refresh={plansVersion} />
+            <h2 id="plan-form-title" className="section-title market-title">
+              Pick a market.
+            </h2>
+            <p className="pick-sub">Your brand can be based anywhere. You can change the market at any point.</p>
           </div>
           <form onSubmit={submit} onKeyDown={enterNext} noValidate>
-            <ol className="form-steps" aria-label="Form progress">
-              {FORM_STEPS.map((st, i) => (
-                <li key={st.name} className={i < step ? "done" : i === step ? "active" : ""}>
-                  <button type="button" disabled={i > step} aria-current={i === step ? "step" : undefined} onClick={() => goTo(i)}>
-                    <span className="form-step-num">{i < step ? "✓" : i + 1}</span>
-                    {st.name}
-                  </button>
-                </li>
-              ))}
-            </ol>
-            <div className="form-bar" aria-hidden="true">
-              <span style={{ width: `${((step + 1) / FORM_STEPS.length) * 100}%` }} />
-            </div>
-            <div className="step-head">
-              <h2 id="plan-form-title" className="section-title">
-                {FORM_STEPS[step].title}
-              </h2>
-              <p className="pick-sub">{FORM_STEPS[step].sub}</p>
-              {step === 1 && (
-                <button type="button" className="btn btn-quiet sample-btn" onClick={() => setForm({ ...form, ...SAMPLE })}>
-                  Try with a sample brand
-                </button>
-              )}
-            </div>
-            <div ref={stepRef} key={step} className="step-panel">
-            {step === 0 && (
             <div className="country-grid" role="radiogroup" aria-label="Target market">
               {COUNTRIES.map((c) => {
                 const selected = form.country === c.key;
@@ -580,13 +536,66 @@ export default function Home() {
                 );
               })}
             </div>
+
+            {exampleKey && (
+              <div className="example-bar" role="status">
+                <div className="example-bar-text">
+                  <p className="card-eyebrow">Example brand · no code needed</p>
+                  <p className="example-bar-name">{EXAMPLE_BRANDS.find((b) => b.key === exampleKey)?.name}</p>
+                  <p className="example-bar-sub">
+                    {EXAMPLE_BRANDS.find((b) => b.key === exampleKey)?.blurb}. Its answers are filled in below; pick a market
+                    above to switch.
+                  </p>
+                </div>
+                <div className="example-bar-actions">
+                  <button type="button" className="btn btn-orange" onClick={() => showExample()}>
+                    See the {countryLabel(form.country)} plan <span aria-hidden="true">→</span>
+                  </button>
+                  <button type="button" className="btn btn-quiet" onClick={() => (isExample && plan ? nextExample() : fillExample(exampleKey))}>
+                    Try another example
+                  </button>
+                  <button
+                    type="button"
+                    className="link-btn"
+                    onClick={() => {
+                      setForm({ ...EMPTY, country: form.country });
+                      setExampleKey("");
+                    }}
+                  >
+                    Use my own brand
+                  </button>
+                </div>
+              </div>
             )}
 
-            {step > 0 && (
+            <ol className="form-steps" aria-label="Form progress">
+              {FORM_STEPS.map((st, i) => (
+                <li key={st.name} className={i < step ? "done" : i === step ? "active" : ""}>
+                  <button type="button" aria-current={i === step ? "step" : undefined} onClick={() => i !== step && goTo(i)}>
+                    <span className="form-step-num">{i < step ? "✓" : i + 1}</span>
+                    {st.name}
+                  </button>
+                </li>
+              ))}
+            </ol>
+            <div className="form-bar" aria-hidden="true">
+              <span style={{ width: `${((step + 1) / FORM_STEPS.length) * 100}%` }} />
+            </div>
+            <div className="step-head">
+              <h3 className="section-title step-title">{FORM_STEPS[step].title}</h3>
+              {FORM_STEPS[step].sub && <p className="pick-sub">{FORM_STEPS[step].sub}</p>}
+              {step === 0 && !exampleKey && (
+                <button type="button" className="btn btn-quiet sample-btn" onClick={() => fillExample()}>
+                  See an example
+                </button>
+              )}
+            </div>
+            <div ref={stepRef} key={step} className="step-panel">
+            {(
             <div className="field-groups">
-              {GROUPS.filter((_, gi) => gi === step - 1).map((g) => (
+              {GROUPS.filter((_, gi) => gi === step).map((g) => (
                 <fieldset key={g.title} className="field-group">
-                  <legend>{g.title}</legend>
+                  <legend className="sr-only">{g.title}</legend>
                   {g.fields.map((f) => (
                     <Fragment key={f.name}>
                       <label className={errors[f.name as BriefField] ? "field has-error" : "field"}>
@@ -677,7 +686,7 @@ export default function Home() {
             )}
             </div>
 
-            {step === 2 && (
+            {step === LAST_STEP && (
               <label className="field access">
                 <span>Access code</span>
                 <input
@@ -704,13 +713,14 @@ export default function Home() {
                   <span aria-hidden="true">←</span> Back
                 </button>
               )}
-              {step < 2 ? (
+              {step < LAST_STEP ? (
                 <button type="submit" className="btn btn-orange">
                   Next <span aria-hidden="true">→</span>
                 </button>
               ) : (
                 <button type="submit" className="btn btn-orange" disabled={loading}>
-                  {loading ? "Writing your plan..." : "Write my plan"} {!loading && <span aria-hidden="true">→</span>}
+                  {loading ? "Writing your plan..." : exampleKey ? "See the example plan" : "Write my plan"}{" "}
+                  {!loading && <span aria-hidden="true">→</span>}
                 </button>
               )}
             </div>
@@ -759,7 +769,7 @@ export default function Home() {
               </p>
             )}
 
-            {savedExample && plan && (
+            {isExample && plan && (
               <div className="example-label">
                 <span className="example-badge">Example plan · hand-checked</span>
                 <span className="no-print">
@@ -767,7 +777,7 @@ export default function Home() {
                   <button type="button" className="link-btn" onClick={openFreeStep}>
                     Get 3 free plans
                   </button>{" "}
-                  and fill in the form.
+                  and fill in your own answers.
                 </span>
               </div>
             )}
@@ -809,6 +819,11 @@ export default function Home() {
                   </aside>
                 )}
                 <div className="plan-actions no-print">
+                  {isExample && (
+                    <button className="btn btn-orange" onClick={nextExample}>
+                      Try another example <span aria-hidden="true">→</span>
+                    </button>
+                  )}
                   <button className="btn btn-quiet" onClick={copy} disabled={loading}>
                     {copied ? "Copied" : "Copy plan"}
                   </button>
@@ -834,7 +849,7 @@ export default function Home() {
                   <FeedbackForm
                     key={`${planBrand}-${planCountry}-${plan.length}`}
                     country={planCountry}
-                    kind={savedExample ? "example" : "live"}
+                    kind={isExample ? "example" : "live"}
                   />
                 )}
               </>
@@ -843,46 +858,7 @@ export default function Home() {
         )}
       </main>
 
-      <footer className="footer" id="contact">
-        <div className="wrap footer-inner">
-          <p className="footer-contact">
-            <strong>No code?</strong>{" "}
-            <a
-              href="#access"
-              onClick={(e) => {
-                e.preventDefault();
-                openFreeStep();
-              }}
-            >
-              Get 3 free plans
-            </a>{" "}
-            with your email, then get in touch if you&apos;d like more.
-          </p>
-          <p className="footer-contact">
-            <strong>Get in touch</strong> for a personalised plan or more plans:{" "}
-            <a href={`mailto:${BRAND.email}?subject=${encodeURIComponent(`${BRAND.name}: personalised plan`)}`}>{BRAND.email}</a>
-            <span className="dot" aria-hidden="true">
-              ·
-            </span>
-            <a href={BRAND.authorUrl} target="_blank" rel="noopener noreferrer">
-              LinkedIn
-            </a>
-          </p>
-          <p>
-            <a href={BRAND.authorUrl} target="_blank" rel="noopener noreferrer" className="no-print-link">
-              Built by {BRAND.author}
-            </a>
-            <span className="dot" aria-hidden="true">
-              ·
-            </span>
-            <span>{BRAND.version}</span>
-          </p>
-          <p className="disclaimer">
-            This is a first read, not legal or customs advice. Web sources are cited as [W1], [W2]. Anything marked
-            [verify] should be checked with a primary source before you act on it.
-          </p>
-        </div>
-      </footer>
+      <SiteFooter onFree={openFreeStep} />
     </>
   );
 }

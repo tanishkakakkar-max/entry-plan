@@ -11,6 +11,8 @@ export const AccessStep = forwardRef<HTMLDivElement, { code: string; onCode: (co
     const [email, setEmail] = useState("");
     const [consent, setConsent] = useState(false);
     const [expanded, setExpanded] = useState(false);
+    const [mode, setMode] = useState<"email" | "code">("email"); // get a free code, or type one you have
+    const [draft, setDraft] = useState("");
     const [busy, setBusy] = useState(false);
     const [error, setError] = useState("");
     const [fresh, setFresh] = useState(""); // a code we just got: shown as "Your code" with a Copy button
@@ -126,8 +128,9 @@ export const AccessStep = forwardRef<HTMLDivElement, { code: string; onCode: (co
               className="link-btn"
               onClick={() => {
                 setFresh("");
+                setDraft("");
+                setMode("code");
                 onCode("");
-                setExpanded(true);
               }}
             >
               use a different code
@@ -137,11 +140,46 @@ export const AccessStep = forwardRef<HTMLDivElement, { code: string; onCode: (co
       );
     }
 
+    if (mode === "code") {
+      const useDraft = (e: React.SyntheticEvent) => {
+        e.preventDefault();
+        if (draft.trim()) onCode(draft.trim().toUpperCase());
+      };
+      return (
+        <div ref={ref} id="access" className="access-step is-open">
+          <p className="card-eyebrow">Access code</p>
+          <p className="access-title">Enter your code</p>
+          {status === "bad" && <p className="access-note">That code isn&apos;t right. Check it and try again.</p>}
+          <form className="access-row" onSubmit={useDraft}>
+            <input
+              value={draft}
+              placeholder="FP-XXXX-XXXX"
+              aria-label="Access code"
+              autoComplete="off"
+              autoCapitalize="characters"
+              spellCheck={false}
+              autoFocus
+              onChange={(e) => setDraft(e.target.value)}
+            />
+            <button className="btn btn-orange" disabled={!draft.trim()}>
+              Use this code
+            </button>
+          </form>
+          <p className="privacy-line">
+            No code?{" "}
+            <button type="button" className="link-btn" onClick={() => setMode("email")}>
+              Get 3 free plans with your email
+            </button>
+          </p>
+        </div>
+      );
+    }
+
     return (
       <div ref={ref} id="access" className={`access-step${expanded ? " is-open" : ""}`}>
-        <p className="access-title">
-          <strong>Get 3 free plans:</strong> enter your email and your code appears right here.
-        </p>
+        <p className="card-eyebrow">Free access</p>
+        <p className="access-title">Get 3 free plans</p>
+        <p className="access-sub">Enter your email and your code appears right here.</p>
         {status === "bad" && <p className="access-note">The code saved on this device isn&apos;t valid, so get a free one below.</p>}
         <form className="access-row" onSubmit={getFreeCode}>
           <input
@@ -176,6 +214,12 @@ export const AccessStep = forwardRef<HTMLDivElement, { code: string; onCode: (co
             </p>
           </div>
         )}
+        <p className="privacy-line access-have-code">
+          Already have a code?{" "}
+          <button type="button" className="link-btn" onClick={() => setMode("code")}>
+            Enter it here
+          </button>
+        </p>
       </div>
     );
   },

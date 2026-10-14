@@ -281,7 +281,6 @@ input:focus-visible, textarea:focus-visible { outline: 2px solid var(--ink); out
 .example-brand-name { font-family: var(--display); font-size: 22px; line-height: 1.2; }
 .example-brand-blurb { font-size: 14px; line-height: 1.45; color: var(--ink-soft); }
 .example-countries { margin-top: 20px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
-.example-step { margin: 0; font-weight: 600; font-size: 15px; }
 .example-chip { font-size: 15px; padding: 9px 16px; }
 .example-chip:hover { background: var(--aqua); border-color: var(--aqua); }
 .example-label { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin-top: 32px; font-size: 15px; color: var(--ink-soft); }
@@ -553,7 +552,13 @@ tr.is-disabled td { color: var(--ink-soft); }
 .sample-btn { margin-top: 14px; min-height: 40px; padding: 8px 16px; font-size: 15px; }
 .step-panel { animation: step-in 0.3s ease-out; }
 @keyframes step-in { from { opacity: 0; transform: translateX(12px); } to { opacity: 1; transform: none; } }
-.get-plan .field-groups { grid-template-columns: 1fr; max-width: 760px; }
+.get-plan .field-groups { grid-template-columns: 1fr; }
+/* Desktop: the step's fields in two columns, using the full width of the form */
+@media (min-width: 900px) {
+  .get-plan .field-group { display: grid; grid-template-columns: 1fr 1fr; column-gap: 28px; align-items: start; }
+  .get-plan .field-group .field, .get-plan .field-group .field:last-child { margin-bottom: 18px; }
+}
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 .get-plan .country-grid { margin-bottom: 8px; }
 .form-error { margin: 20px 0 0; }
 .step-code-note { margin-top: 18px; font-size: 15px; }
@@ -592,4 +597,116 @@ tr.is-disabled td { color: var(--ink-soft); }
 @media (max-width: 560px) {
   .nav nav a:not(.nav-cta) { display: none; }
   .nav .nav-cta { background: var(--orange); border-color: var(--orange); font-weight: 600; }
+}
+
+.market-title { margin-top: 36px; }
+.step-title { font-size: clamp(26px, 3.4vw, 34px); }
+.access-have-code { margin-top: 10px; }
+
+.how-example { margin: 24px 0 0; font-size: 16px; }
+/* "See an example": the bar above the steps while an example brand is filled in */
+.example-bar { margin: 4px 0 28px; padding: 16px 18px; border: 1px solid var(--leaf); border-radius: var(--radius); background: var(--mist); }
+.example-bar p { margin: 0 0 12px; }
+.example-bar-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+
+/* Card look for the free-code box and the example bar: white, soft shadow, small eyebrow label */
+.card-eyebrow { margin: 0 0 6px; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #3f8a95; }
+.access-step, .example-bar {
+  background: var(--white); border: 1px solid var(--line); border-radius: 20px;
+  box-shadow: 0 1px 2px rgba(9, 37, 44, 0.04), 0 14px 36px -18px rgba(9, 37, 44, 0.18);
+}
+.access-step { padding: 22px 22px 18px; max-width: 640px; }
+@media (min-width: 768px) { .access-step { padding: 26px 30px 22px; } }
+.access-step.is-open { border-color: var(--aqua); box-shadow: 0 0 0 4px rgba(162, 225, 230, 0.35), 0 14px 36px -18px rgba(9, 37, 44, 0.18); }
+.access-title { margin: 0; font-family: var(--display); font-weight: 400; font-size: 26px; line-height: 1.15; }
+.access-sub { margin: 4px 0 16px; color: var(--ink-soft); font-size: 15px; }
+.access-step:has(.access-title:only-of-type) .access-row { margin-top: 14px; }
+/* Email and button joined into one bar */
+.access-row { display: flex; gap: 6px; padding: 5px; border: 1px solid var(--line-strong); border-radius: 999px; background: var(--white); margin-bottom: 12px; }
+.access-row:focus-within { border-color: var(--ink); }
+.access-row input { flex: 1 1 auto; min-width: 0; border: 0; box-shadow: none; background: transparent; padding: 10px 14px; }
+.access-row input:focus-visible { outline: none; }
+.access-row .btn { min-height: 44px; padding: 10px 20px; font-size: 15px; }
+@media (max-width: 480px) {
+  .access-row { flex-direction: column; border-radius: 16px; }
+  .access-row .btn { justify-content: center; }
+}
+.access-step .privacy-line, .access-step .consent { font-size: 13px; }
+.access-have-code { margin-top: 8px; }
+.access-step.has-code { padding: 16px 22px; }
+.access-step.has-code .access-tick { background: var(--aqua); }
+
+.example-bar { display: grid; gap: 16px; padding: 22px 24px; margin: 8px 0 32px; border-left: 4px solid var(--orange); }
+@media (min-width: 900px) { .example-bar { grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 28px; padding: 24px 30px; } }
+.example-bar p { margin: 0; }
+.example-bar-name { font-family: var(--display); font-size: 28px; line-height: 1.15; }
+.example-bar-sub { margin-top: 4px !important; color: var(--ink-soft); font-size: 15px; }
+.example-bar-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
+.example-bar-actions .btn { min-height: 44px; padding: 10px 20px; font-size: 15px; }
+.example-bar-actions .link-btn { font-size: 14px; font-weight: 500; color: var(--ink-soft); }
+
+/* Hero actions: natural widths, quieter secondary */
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; max-width: none; }
+.hero-actions .btn { width: auto; }
+.btn-on-dark { border-color: rgba(162, 225, 230, 0.45); }
+.access-row { flex-wrap: nowrap; align-items: center; }
+.access-row input { flex: 1 1 auto; width: auto; min-height: 44px; }
+@media (max-width: 480px) { .access-row { flex-wrap: wrap; } .access-row input, .access-row .btn { width: 100%; } }
+
+/* ---------- Hover and focus feedback: things react when you're on them ---------- */
+/* Country cards: lift, shadow, and the map fills in */
+.country-card { transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s, background 0.2s; }
+.country-card .country-outline { transition: transform 0.3s ease; }
+.country-card .country-outline path { transition: fill 0.25s ease; }
+.country-card:hover { transform: translateY(-4px); box-shadow: 0 14px 30px -14px rgba(9, 37, 44, 0.28); border-color: var(--aqua); }
+.country-card:hover .country-outline { transform: scale(1.06); }
+.country-card:hover .country-outline path { fill: #c9eef1; }
+.country-card:active { transform: translateY(-1px) scale(0.99); }
+
+/* Buttons: arrow slides, orange glows, press-in on click */
+.btn span[aria-hidden="true"] { display: inline-block; transition: transform 0.2s ease; }
+.btn:hover:not(:disabled) span[aria-hidden="true"] { transform: translateX(4px); }
+.btn-orange:hover:not(:disabled) { box-shadow: 0 8px 22px -8px rgba(238, 135, 60, 0.7); }
+.btn:active:not(:disabled) { transform: translateY(0) scale(0.97); }
+.btn-quiet:hover:not(:disabled) { border-color: var(--ink); }
+
+/* Nav: underline slides in */
+.nav nav a:not(.nav-cta) { position: relative; }
+.nav nav a:not(.nav-cta)::after {
+  content: ""; position: absolute; left: 12px; right: 12px; bottom: 4px; height: 2px; border-radius: 2px;
+  background: var(--orange); transform: scaleX(0); transform-origin: left; transition: transform 0.25s ease;
+}
+.nav nav a:not(.nav-cta):hover { background: none; }
+.nav nav a:not(.nav-cta):hover::after { transform: scaleX(1); }
+.nav .nav-cta { transition: background 0.2s, border-color 0.2s, transform 0.2s; }
+.nav .nav-cta:hover { background: var(--orange); border-color: var(--orange); transform: translateY(-1px); }
+
+/* Form: fields darken on hover, glow when typing; the box you're in lights up and its label turns teal */
+input, textarea, select { transition: border-color 0.15s, box-shadow 0.2s; }
+.field input:hover, .field textarea:hover, .field select:hover { border-color: var(--ink-soft); }
+.field input:focus-visible, .field textarea:focus-visible, .field select:focus-visible {
+  outline: none; border-color: var(--ink); box-shadow: 0 0 0 4px rgba(162, 225, 230, 0.55);
+}
+.field span { transition: color 0.2s; }
+.field:focus-within > span { color: #2f7f8a; }
+.field-group { transition: border-color 0.25s, box-shadow 0.25s; }
+.field-group:focus-within { border-color: var(--aqua); box-shadow: 0 10px 30px -18px rgba(9, 37, 44, 0.25); }
+.field.has-error input:focus-visible, .field.has-error textarea:focus-visible, .field.has-error select:focus-visible { box-shadow: 0 0 0 4px rgba(194, 85, 58, 0.18); }
+
+/* "How it works" cards: lift and the number turns orange */
+.step .step-num { transition: color 0.2s; }
+.step:hover { transform: translateY(-4px); box-shadow: 0 14px 30px -16px rgba(9, 37, 44, 0.25); border-color: var(--line-strong); }
+.step:hover .step-num { color: var(--orange); }
+
+/* Step tabs and plain links */
+.form-steps button:not(:disabled):hover { color: var(--ink); }
+.form-steps button:not(:disabled):hover .form-step-num { transform: scale(1.1); }
+.form-step-num { transition: transform 0.2s, background 0.2s; }
+main a:not(.btn):not(.cite), .link-btn { transition: text-decoration-thickness 0.15s, color 0.15s; }
+main a:not(.btn):not(.cite):hover, .link-btn:hover { text-decoration-thickness: 2px; color: #2f7f8a; }
+
+@media (prefers-reduced-motion: reduce) {
+  .country-card:hover, .country-card:active, .step:hover, .nav .nav-cta:hover, .btn:active:not(:disabled) { transform: none !important; }
+  .country-card:hover .country-outline, .btn:hover:not(:disabled) span[aria-hidden="true"], .form-steps button:hover .form-step-num { transform: none; }
+  .nav nav a:not(.nav-cta)::after { transition: none; }
 }

@@ -23,7 +23,7 @@ export default function FreeAccessPage() {
             {" "}
             ·{" "}
           </span>
-          <a href="/#examples">Read an example plan</a>
+          <a href="/#example">See an example plan</a>
         </p>
       </div>
     </main>
