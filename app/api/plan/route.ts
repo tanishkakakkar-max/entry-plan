@@ -23,20 +23,6 @@ const FIELDS = ["brand", "product", "identity", "customer", "price", "stage", "c
 const OPTIONAL_WITH_WEBSITE = ["product", "identity", "customer", "price", "stage"] as const;
 type Form = Record<(typeof FIELDS)[number], string> & { accessCode?: string; category?: string; categoryOther?: string; website?: string };
 
-// Backup per-IP limit on top of access-code credits. Serverless instances don't share memory,
-// so it's best-effort; the credits in Redis are the real limit.
-const hits = new Map<string, number[]>();
-const LIMIT = 5; // plans per IP
-const WINDOW_MS = 60 * 60 * 1000; // per hour
-
-function rateLimited(ip: string) {
-  const now = Date.now();
-  const recent = (hits.get(ip) ?? []).filter((t) => now - t < WINDOW_MS);
-  recent.push(now);
-  hits.set(ip, recent);
-  return recent.length > LIMIT;
-}
-
 type Send = (text: string) => void;
 
 // Claude (paid, best quality). Switch with LLM_PROVIDER=anthropic.
@@ -207,11 +193,6 @@ export async function POST(req: Request) {
         },
       });
     }
-  }
-
-  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
-  if (rateLimited(ip)) {
-    return new Response("You've hit the limit of 5 plans an hour. Try again later.", { status: 429 });
   }
 
   // Check the code before spending anything on the AI brief check.
