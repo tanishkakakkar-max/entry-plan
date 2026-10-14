@@ -8,7 +8,7 @@ export const BRAND = {
   authorUrl: "https://www.linkedin.com/in/tanishka-kakkar98",
   email: "tanishka.kakkar05@gmail.com",
   version: "v0",
-  url: "https://first-port-plans.vercel.app",
+  url: "https://www.findyourfirstport.com",
 };
 
 export const COUNTRIES = [
