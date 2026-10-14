@@ -6,11 +6,37 @@ export type WebResult = { title: string; url: string; content: string; date?: st
 
 const SNIPPET_CHARS = 450; // keeps the whole web block ~800 tokens (Groq free tier: 8K tokens/min)
 
+// Generic SEO and marketing content farms, forums and essay mills: never market evidence.
+const EXCLUDE_DOMAINS = [
+  "medium.com", "linkedin.com", "quora.com", "reddit.com", "pinterest.com", "facebook.com", "youtube.com",
+  "hubspot.com", "semrush.com", "neilpatel.com", "ahrefs.com", "moz.com", "oberlo.com", "sellbrite.com",
+  "marketing91.com", "feedough.com", "startupnation.com", "businessmodelanalyst.com", "blogspot.com",
+  "wordpress.com", "scribd.com", "slideshare.net", "coursehero.com", "studocu.com", "ivypanda.com", "ukessays.com",
+];
+
+// Prefer government, trade bodies and serious news; demote how-to and listicle pages.
+const GOV = /(^|\.)(gov|gov\.[a-z]{2}|go\.jp|gob\.[a-z]{2}|nic\.in|int|europa\.eu)$/i;
+const TRADE = /(^|\.)(jetro\.go\.jp|ibef\.org|wto\.org|oecd\.org|worldbank\.org|enterprisesg\.gov\.sg|investindia\.gov\.in|trade\.gov|amcham[a-z.]*|[a-z]+chamber[a-z.]*)$/i;
+const NEWS = /(^|\.)(reuters\.com|bloomberg\.com|nikkei\.com|ft\.com|wsj\.com|cnbc\.com|bbc\.(com|co\.uk)|apnews\.com|nytimes\.com|economist\.com|japantimes\.co\.jp|straitstimes\.com|businesstimes\.com\.sg|channelnewsasia\.com|economictimes\.indiatimes\.com|livemint\.com|business-standard\.com|thehindubusinessline\.com|techcrunch\.com|businesswire\.com|prnewswire\.com)$/i;
+const FLUFF = /\/(blog|blogs)\/|\b(ultimate-guide|how-to|tips|top-\d+|best-\d+|step-by-step)\b/i;
+
+function sourceScore(url: string): number {
+  try {
+    const u = new URL(url);
+    const host = u.hostname.replace(/^www\./, "");
+    if (GOV.test(host) || TRADE.test(host)) return 3;
+    if (NEWS.test(host)) return 2;
+    return FLUFF.test(u.pathname) ? -2 : 0;
+  } catch {
+    return -2;
+  }
+}
+
 async function search(query: string): Promise<WebResult[]> {
   const res = await fetch(`${process.env.TAVILY_BASE_URL || "https://api.tavily.com"}/search`, {
     method: "POST",
     headers: { "Content-Type": "application/json", Authorization: `Bearer ${process.env.TAVILY_API_KEY}` },
-    body: JSON.stringify({ query, search_depth: "basic", max_results: 4, include_answer: false }),
+    body: JSON.stringify({ query, search_depth: "basic", max_results: 5, include_answer: false, exclude_domains: EXCLUDE_DOMAINS }),
     signal: AbortSignal.timeout(8000),
   });
   if (!res.ok) throw new Error(`Tavily ${res.status}`);
@@ -53,6 +79,9 @@ function isBrandOwn(r: WebResult, brand?: string, website?: string | null) {
   return !!name && name.length > 2 && SHOPS.test(host) && r.title.toLowerCase().includes(name);
 }
 
+// Software, apps, websites and services: no goods cross a border, so search digital rules instead of tariffs.
+export const DIGITAL = /\b(software|saas|app|apps|platform|website|web ?app|online tool|ai tool|subscription|service|services|consulting|agency|marketplace|plugin|api)\b/i;
+
 export async function webResearch(
   product: string,
   country: string,
@@ -64,8 +93,13 @@ export async function webResearch(
   const year = new Date().getFullYear();
   const queries = [
     `${what} market ${country} consumers competitors ${year}`,
-    `${country} import rules tariffs labeling ${what} ${year}`,
+    DIGITAL.test(what)
+      ? `${country} rules for ${what} data privacy payments digital services tax ${year}`
+      : `${country} import rules tariffs labeling ${what} ${year}`,
   ];
+  // Is the brand already there? Lets the plan say "Already in market" with a source.
+  const name = brand?.trim();
+  if (name && name.length > 2) queries.push(`"${name}" ${country} stores launch presence`);
   const settled = await Promise.allSettled(queries.map(search));
   const seen = new Set<string>();
   const out: WebResult[] = [];
@@ -76,13 +110,18 @@ export async function webResearch(
     }
     for (const r of s.value) {
       const key = pageKey(r.url);
-      if (r.url && !seen.has(key) && !isBrandOwn(r, brand, website)) {
+      if (r.url && !seen.has(key) && !isBrandOwn(r, brand, website) && sourceScore(r.url) > -2) {
         seen.add(key);
         out.push(r);
       }
     }
   }
-  return out.slice(0, 6);
+  // Best sources first (stable within a score, so search order breaks ties). Fewer is fine: no padding.
+  return out
+    .map((r, i) => ({ r, i, score: sourceScore(r.url) }))
+    .sort((a, b) => b.score - a.score || a.i - b.i)
+    .slice(0, 6)
+    .map((x) => x.r);
 }
 
 // Reads the brand's own website via Tavily Extract (1 credit per page), so our server never

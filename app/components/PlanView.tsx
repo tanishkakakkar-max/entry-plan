@@ -41,8 +41,14 @@ function parsePlan(md: string) {
 }
 
 // Reads the call in section 1: whichever of Go / Test first / Not yet appears first.
+// "Fresh-entry verdict: ..." is used for brands already in the market (how they'd enter if launching today).
 function readVerdict(text: string) {
   const head = text.slice(0, 400);
+  const fresh = head.match(/fresh[- ]entry verdict:?\**\s*(not yet|test first|go)\b/i);
+  if (fresh) {
+    const v = fresh[1].toLowerCase();
+    return v === "go" ? "Fresh entry: Go" : v === "not yet" ? "Fresh entry: Not yet" : "Fresh entry: Test first";
+  }
   const hits = [
     { label: "Not yet", i: head.search(/\bnot yet\b/i) },
     { label: "Test first", i: head.search(/\btest first\b/i) },
@@ -53,6 +59,9 @@ function readVerdict(text: string) {
 }
 
 function verdictHeadline(verdict: string, country: string) {
+  if (verdict === "Fresh entry: Go") return `Launching today: go.`;
+  if (verdict === "Fresh entry: Not yet") return `Launching today: not yet.`;
+  if (verdict === "Fresh entry: Test first") return `Launching today: test first.`;
   if (verdict === "Go") return `Go to ${country}.`;
   if (verdict === "Not yet") return `Not ${country}, not yet.`;
   return `Test ${country} first.`;
