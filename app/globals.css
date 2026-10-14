@@ -499,3 +499,4 @@ tr.is-disabled td { color: var(--ink-soft); }
 .your-plan-confirm { font-size: 14px; font-weight: 600; }
 .your-plans .danger { border-color: #c2553a; color: #a8432b; }
 .your-plans .error { margin: 12px 0 0; }
+.sources h3 { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); margin: 18px 0 10px; }

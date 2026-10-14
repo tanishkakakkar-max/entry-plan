@@ -7,6 +7,7 @@ import { creditsReady, getCode, normalizeCode, peekCode, refundCredit, reserveCr
 import { briefId, getPlan, savePlan } from "@/lib/saved-plans";
 import { aiCheckBrief } from "@/lib/brief-check";
 import { formatResearch, selectResearch } from "@/lib/research";
+import { formatScholarly, paperCitation, scholarlyResearch } from "@/lib/scholar";
 
 export const runtime = "nodejs";
 export const maxDuration = 300; // Hobby plan maximum with Fluid compute (Vercel docs, Oct 2026)
@@ -246,7 +247,7 @@ Target country: ${countryName}${website ? `\nWebsite: ${website}` : ""}`;
 
   // Live web search runs alongside the research docs (skipped if TAVILY_API_KEY isn't set).
   const searchTopic = body.product.trim() || `${body.brand} ${category ?? ""}`.trim();
-  const [webResults, siteRead] = await Promise.all([
+  const [webResults, siteRead, papers] = await Promise.all([
     webResearch(category ? `${category} ${searchTopic}` : searchTopic, countryName, body.brand, website).catch(() => []),
     siteText !== null
       ? Promise.resolve(siteText)
@@ -256,11 +257,14 @@ Target country: ${countryName}${website ? `\nWebsite: ${website}` : ""}`;
             return "";
           })
         : Promise.resolve(""),
+    // Peer-reviewed papers (OpenAlex), cited as [S#] for lasting insights.
+    scholarlyResearch(picked === OTHER ? otherText : picked, countryName),
   ]);
   siteText = siteRead;
   const web = formatWebResults(webResults);
+  const scholarly = formatScholarly(papers);
   const site = website ? formatWebsite(website, siteText) : "";
-  console.log(`web results: ${webResults.length} (${countryName})${website ? `, website chars: ${siteText.length}` : ""}`);
+  console.log(`web results: ${webResults.length}, papers: ${papers.length} (${countryName})${website ? `, website chars: ${siteText.length}` : ""}`);
 
   // Tagged research notes that match this country or category. Example plans are never included.
   const related = selectResearch(countryKey, category);
@@ -276,6 +280,7 @@ Target country: ${countryName}${website ? `\nWebsite: ${website}` : ""}`;
     ...(relatedBlock ? [relatedBlock] : []),
     ...(site ? [site] : []),
     ...(web ? [web] : []),
+    ...(scholarly ? [scholarly] : []),
   ];
   const cacheIndex = relatedBlock ? 3 : 2;
 
@@ -293,14 +298,24 @@ Target country: ${countryName}${website ? `\nWebsite: ${website}` : ""}`;
         } else {
           await streamGroq(system, brief, send);
         }
-        // The model doesn't reliably write the Sources list, so build it from the [W#] tags it actually cited.
+        // The model doesn't reliably write the Sources list, so build it from the [S#] and [W#] tags it
+        // actually cited: papers under "Research", web pages under "Web".
         // Only skip if the model already wrote a Sources section with real links.
-        if (!/^#+\s*Sources[\s\S]*\]\(http/im.test(output)) {
-          const cited = [...new Set([...output.matchAll(/[\[【]W(\d+)[\]】]/g)].map((m) => Number(m[1])))]
-            .filter((n) => webResults[n - 1])
-            .sort((a, b) => a - b);
-          if (cited.length) {
-            send(`\n\n## Sources\n\n${cited.map((n) => `- [W${n}] [${webResults[n - 1].title.replace(/[[\]]/g, "")}](${webResults[n - 1].url})`).join("\n")}\n`);
+        if (!/^#+\s*Sources[\s\S]*(\]\(http|https?:\/\/doi)/im.test(output)) {
+          const citedOf = (tag: "W" | "S", list: unknown[]) =>
+            [...new Set([...output.matchAll(new RegExp(`[\\[【]${tag}(\\d+)[\\]】]`, "g"))].map((m) => Number(m[1])))]
+              .filter((n) => list[n - 1])
+              .sort((a, b) => a - b);
+          const citedW = citedOf("W", webResults);
+          const citedS = citedOf("S", papers);
+          const research = citedS.map((n) => `- ${paperCitation(papers[n - 1], n)}`).join("\n");
+          const webList = citedW
+            .map((n) => `- [W${n}] [${webResults[n - 1].title.replace(/[[\]]/g, "")}](${webResults[n - 1].url})`)
+            .join("\n");
+          if (research || webList) {
+            send(
+              `\n\n## Sources\n${research ? `\n### Research\n\n${research}\n` : ""}${webList ? `\n### Web\n\n${webList}\n` : ""}`,
+            );
           }
         }
       } catch (err) {

@@ -4,7 +4,8 @@ import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 
 type Section = { id: string; heading: string; body: string };
-type Source = { n: string; title: string; url: string };
+// kind W = web page, S = peer-reviewed paper (shown under "Research").
+type Source = { kind: "W" | "S"; n: string; title: string; url: string };
 
 const slug = (s: string) =>
   "sec-" +
@@ -34,8 +35,11 @@ function parsePlan(md: string) {
   const sourcesIdx = sections.findIndex((s) => /^sources\b/i.test(s.heading));
   const sourcesSection = sourcesIdx >= 0 ? sections.splice(sourcesIdx, 1)[0] : null;
   const sources: Source[] = [];
+  for (const m of (sourcesSection?.body ?? "").matchAll(/\[S(\d+)\]\s*(.+?)\s+(https?:\/\/\S+)\s*$/gm)) {
+    sources.push({ kind: "S", n: m[1], title: m[2], url: m[3] });
+  }
   for (const m of (sourcesSection?.body ?? "").matchAll(/\[W(\d+)\]\s*\[([^\]]+)\]\((https?:[^)\s]+)\)/g)) {
-    sources.push({ n: m[1], title: m[2], url: m[3] });
+    sources.push({ kind: "W", n: m[1], title: m[2], url: m[3] });
   }
   return { title, preamble: preamble.join("\n").trim(), sections, sources, sourcesSection };
 }
@@ -77,17 +81,18 @@ export function cleanDashes(md: string) {
     .replace(/[–—‑‐]/g, "-");
 }
 
-// Some models write 【W4】; treat it as [W4].
-const normalizeCitations = (md: string) => md.replace(/【W(\d+)】/g, "[W$1]");
+// Some models write 【W4】; treat it as [W4] (same for [S#] papers).
+const normalizeCitations = (md: string) => md.replace(/【([WS])(\d+)】/g, "[$1$2]");
 
 // Once the plan is complete, drop any [W#] that has no matching source (the model cited a number
 // that wasn't in the results). While streaming, the Sources list hasn't arrived yet, so keep them.
 export function tidyCitations(md: string, valid: Set<string>) {
-  return md.replace(/ ?\[W(\d+)\](?!\()/g, (m, n) => (valid.has(n) ? m : ""));
+  return md.replace(/ ?\[([WS])(\d+)\](?!\()/g, (m, k, n) => (valid.has(k + n) ? m : ""));
 }
 
-// [W3] -> a link to the matching source, rendered as a small badge.
-const linkCitations = (md: string) => md.replace(/\[W(\d+)\](?!\()/g, "[W$1](#source-w$1)");
+// [W3] / [S1] -> a link to the matching source, rendered as a small badge.
+const linkCitations = (md: string) =>
+  md.replace(/\[([WS])(\d+)\](?!\()/g, (_m, k: string, n) => `[${k}${n}](#source-${k.toLowerCase()}${n})`);
 
 const mdComponents: Components = {
   a: ({ href = "", children, ...props }) =>
@@ -118,13 +123,13 @@ function Markdown({ children }: { children: string }) {
 // The text Copy plan puts on the clipboard: same clean-up as the screen.
 export function cleanPlanText(plan: string) {
   const md = normalizeCitations(cleanDashes(plan));
-  const valid = new Set(parsePlan(md).sources.map((s) => s.n));
+  const valid = new Set(parsePlan(md).sources.map((s) => s.kind + s.n));
   return tidyCitations(md, valid);
 }
 
 export function PlanView({ plan, country, streaming }: { plan: string; country: string; streaming: boolean }) {
   const parsed = parsePlan(normalizeCitations(cleanDashes(plan)));
-  const valid = new Set(parsed.sources.map((s) => s.n));
+  const valid = new Set(parsed.sources.map((s) => s.kind + s.n));
   const { title, preamble, sections, sources, sourcesSection } = streaming
     ? parsed
     : parsePlan(tidyCitations(normalizeCitations(cleanDashes(plan)), valid));
@@ -193,16 +198,37 @@ export function PlanView({ plan, country, streaming }: { plan: string; country: 
         {sources.length > 0 ? (
           <section id="sec-sources" className="sources">
             <h2>Sources</h2>
-            <ol>
-              {sources.map((s) => (
-                <li key={s.n} id={`source-w${s.n}`}>
-                  <span className="cite">W{s.n}</span>
-                  <a href={s.url} target="_blank" rel="noopener noreferrer">
-                    {s.title}
-                  </a>
-                </li>
-              ))}
-            </ol>
+            {(["S", "W"] as const).map((kind) => {
+              const list = sources.filter((s) => s.kind === kind);
+              if (!list.length) return null;
+              return (
+                <div key={kind}>
+                  <h3>{kind === "S" ? "Research" : "Web"}</h3>
+                  <ol>
+                    {list.map((s) => (
+                      <li key={kind + s.n} id={`source-${kind.toLowerCase()}${s.n}`}>
+                        <span className="cite">
+                          {kind}
+                          {s.n}
+                        </span>
+                        {kind === "S" ? (
+                          <span>
+                            {s.title}{" "}
+                            <a href={s.url} target="_blank" rel="noopener noreferrer">
+                              {s.url.replace(/^https?:\/\//, "")}
+                            </a>
+                          </span>
+                        ) : (
+                          <a href={s.url} target="_blank" rel="noopener noreferrer">
+                            {s.title}
+                          </a>
+                        )}
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              );
+            })}
           </section>
         ) : (
           sourcesSection &&
