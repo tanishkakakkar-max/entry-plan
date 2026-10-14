@@ -12,6 +12,14 @@ const EXCLUDE_DOMAINS = [
   "hubspot.com", "semrush.com", "neilpatel.com", "ahrefs.com", "moz.com", "oberlo.com", "sellbrite.com",
   "marketing91.com", "feedough.com", "startupnation.com", "businessmodelanalyst.com", "blogspot.com",
   "wordpress.com", "scribd.com", "slideshare.net", "coursehero.com", "studocu.com", "ivypanda.com", "ukessays.com",
+  "instagram.com", "tiktok.com", "x.com", "twitter.com",
+  // Paid market-report teaser pages: SEO pages with made-up-looking forecasts, not evidence.
+  "wiseguyreports.com", "growthmarketreports.com", "dataintelo.com", "gminsights.com", "marketresearchfuture.com",
+  "alliedmarketresearch.com", "mordorintelligence.com", "fortunebusinessinsights.com", "imarcgroup.com",
+  "expertmarketresearch.com", "precedenceresearch.com", "coherentmarketinsights.com", "verifiedmarketreports.com",
+  "businessresearchinsights.com", "cognitivemarketresearch.com", "marketsandmarkets.com", "researchandmarkets.com",
+  "transparencymarketresearch.com", "futuremarketinsights.com", "persistencemarketresearch.com", "databridgemarketresearch.com",
+  "skyquestt.com", "zionmarketresearch.com", "custommarketinsights.com", "marketresearch.com", "openpr.com", "einpresswire.com",
 ];
 
 // Prefer government, trade bodies and serious news; demote how-to and listicle pages.
