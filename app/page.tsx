@@ -7,10 +7,11 @@ import { LogoMark } from "./components/Logo";
 import { PlanView, cleanPlanText } from "./components/PlanView";
 import { FeedbackForm } from "./components/FeedbackForm";
 import { YourPlans, type SavedPlan } from "./components/YourPlans";
+import { AccessStep } from "./components/AccessStep";
 import { EXAMPLE_BRANDS } from "./components/examples";
 import { exampleKeys } from "@/lib/examples-index.generated";
 import { CATEGORIES, OTHER, OTHER_MAX } from "@/lib/categories";
-import { checkBrief } from "@/lib/brief";
+import { checkBriefFields, type BriefField, type BriefProblems } from "@/lib/brief";
 
 const EMPTY = {
   brand: "",
@@ -58,6 +59,31 @@ const GROUPS: { title: string; fields: Field[] }[] = [
   },
 ];
 
+// "Try with a sample brand": a realistic made-up brief that works for any of the four markets.
+const SAMPLE = {
+  brand: "Tidewell",
+  category: "Beauty & personal care",
+  categoryOther: "",
+  website: "",
+  product: "Reef-safe mineral sunscreens and after-sun gels, made in Australia",
+  identity: "Clean, sunny and science-backed, for people who live outdoors",
+  customer: "Women and men 22-40 who surf, run or travel",
+  price: "$22-34 per tube",
+  stage: "Australia DTC on Shopify plus 40 surf shops",
+};
+
+// The form in three steps. Titles show above the fields; the short names label the progress bar.
+const FORM_STEPS = [
+  { name: "Market", title: "Pick a market.", sub: "Your brand can be based anywhere. Choose the first market you want to enter." },
+  { name: "Your brand", title: "Tell us about your brand.", sub: "Add your website and you can skip most questions: we'll read it for you." },
+  { name: "Your market", title: "Who buys, and where you sell.", sub: "Last step. Then we check your brief and write the plan." },
+];
+// Which fields each form step holds, so problems are shown (and checked) step by step.
+const STEP_FIELDS: Record<number, BriefField[]> = {
+  1: ["website", "brand", "category", "categoryOther", "product", "identity"],
+  2: ["customer", "price", "stage"],
+};
+
 // Must match the rate-limit message streamed by app/api/plan/route.ts.
 const BUSY = "The free AI tier is busy right now";
 const RETRY_SECONDS = 60;
@@ -88,6 +114,11 @@ export default function Home() {
   const [savedNote, setSavedNote] = useState<"" | "repeat" | "opened">("");
   const [planId, setPlanId] = useState("");
   const [plansVersion, setPlansVersion] = useState(0);
+  const [step, setStep] = useState(0);
+  const [errors, setErrors] = useState<BriefProblems>({});
+  const [accessOpen, setAccessOpen] = useState(false);
+  const accessRef = useRef<HTMLDivElement>(null);
+  const stepRef = useRef<HTMLDivElement>(null);
 
   // Remember the access code on this device (a convenience only; it may not be available).
   useEffect(() => {
@@ -120,8 +151,105 @@ export default function Home() {
     };
   }, [loading]);
 
+  // Sections fade in as they scroll into view (CSS skips the motion for prefers-reduced-motion).
+  useEffect(() => {
+    const els = document.querySelectorAll(".reveal");
+    if (!("IntersectionObserver" in window)) {
+      els.forEach((el) => el.classList.add("in"));
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((en) => {
+          if (en.isIntersecting) {
+            en.target.classList.add("in");
+            io.unobserve(en.target);
+          }
+        }),
+      { rootMargin: "0px 0px -8% 0px" },
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+
+  // Opens the "get 3 free plans" step at the top of the form and brings it into view.
+  function openFreeStep() {
+    setAccessOpen(true);
+    setTimeout(() => {
+      accessRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      accessRef.current?.querySelector<HTMLInputElement>("input")?.focus({ preventScroll: true });
+    }, 50);
+  }
+
+  function applyCode(code: string) {
+    changeCode(code);
+    if (code) setAccessOpen(false);
+    setPlansVersion((v) => v + 1);
+  }
+
+  // Updates one answer and clears that field's error.
+  function setField(name: FieldName, value: string) {
+    setForm({ ...form, [name]: value });
+    if (errors[name as BriefField]) setErrors({ ...errors, [name]: undefined });
+  }
+
+  // Shows every problem under its own field and brings the first one into view.
+  function showProblems(problems: BriefProblems) {
+    setErrors(problems);
+    setTimeout(() => {
+      const first = document.querySelector<HTMLElement>(".field.has-error");
+      first?.scrollIntoView({ behavior: "smooth", block: "center" });
+      first?.querySelector<HTMLElement>("input, select, textarea")?.focus({ preventScroll: true });
+    }, 60);
+  }
+
+  const problemsIn = (all: BriefProblems, stepNo: number) =>
+    Object.fromEntries(Object.entries(all).filter(([k]) => STEP_FIELDS[stepNo]?.includes(k as BriefField))) as BriefProblems;
+
+  // Moves between form steps, checking the current step's answers first when going forward.
+  function goTo(next: number) {
+    if (next > step && step > 0) {
+      const found = problemsIn(checkBriefFields(form, !!form.website.trim()), step);
+      if (Object.keys(found).length) {
+        showProblems(found);
+        return;
+      }
+    }
+    setStep(next);
+    setTimeout(() => {
+      const top = formRef.current?.getBoundingClientRect().top ?? 0;
+      if (top < 0) formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      stepRef.current?.querySelector<HTMLElement>("input, select, textarea, button")?.focus({ preventScroll: true });
+    }, 30);
+  }
+
+  // Enter moves to the next step (except in long text boxes, where it adds a new line).
+  function enterNext(e: React.KeyboardEvent<HTMLFormElement>) {
+    const t = e.target as HTMLElement;
+    if (e.key !== "Enter" || e.defaultPrevented || t.tagName === "TEXTAREA" || t.tagName === "BUTTON" || step === 2) return;
+    e.preventDefault();
+    goTo(step + 1);
+  }
+
   async function submit(e: React.FormEvent) {
     e.preventDefault();
+    if (step < 2) {
+      goTo(step + 1);
+      return;
+    }
+    const all = checkBriefFields(form, !!form.website.trim());
+    if (Object.keys(all).length) {
+      // Go back to the first step with a problem; every problem shows under its own field.
+      const firstStep = Object.keys(problemsIn(all, 1)).length ? 1 : 2;
+      setStep(firstStep);
+      showProblems(all);
+      return;
+    }
+    // No code: open the free-code box at the top instead of an error. Nothing they typed is cleared.
+    if (!accessCode.trim()) {
+      openFreeStep();
+      return;
+    }
     setError("");
     setErrorKind("");
     setPlan("");
@@ -132,17 +260,6 @@ export default function Home() {
     setPlanCountry(countryLabel(form.country));
     setPlanBrand(form.brand.trim());
     setTimeout(() => planRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
-
-    const problem = checkBrief(form, !!form.website.trim());
-    if (problem) {
-      setError(problem);
-      return;
-    }
-    if (!accessCode.trim()) {
-      setErrorKind("missing");
-      setError("Live plans need an access code.");
-      return;
-    }
 
     setLoading(true);
     setPhase(0);
@@ -274,8 +391,15 @@ export default function Home() {
           <nav aria-label="Main">
             <a href="#how">How it works</a>
             {exampleBrands.length > 0 && <a href="#examples">Examples</a>}
-            <a href="#get-a-plan" className="nav-cta">
-              Get a plan
+            <a
+              href="#get-a-plan"
+              className="nav-cta"
+              onClick={(e) => {
+                e.preventDefault();
+                openFreeStep();
+              }}
+            >
+              Get 3 free plans
             </a>
           </nav>
         </div>
@@ -306,14 +430,21 @@ export default function Home() {
                   <span key={line}>{line} </span>
                 ))}
               </p>
-              <a href="#get-a-plan" className="btn btn-orange">
-                Get your plan <span aria-hidden="true">→</span>
-              </a>
-              <p className="hero-alt">
-                No access code? <a href="/free-access">Click here to get 3 free plans →</a>
-                <br />
-                Just looking? <a href="#examples">Read an example plan</a> first.
-              </p>
+              <div className="hero-actions">
+                <a
+                  href="#get-a-plan"
+                  className="btn btn-orange"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    openFreeStep();
+                  }}
+                >
+                  Get 3 free plans <span aria-hidden="true">→</span>
+                </a>
+                <a href="#examples" className="btn btn-on-dark">
+                  Read an example
+                </a>
+              </div>
             </div>
             <figure className="hero-map">
               <WorldMap highlight={form.country} onSelect={(key) => setForm({ ...form, country: key })} />
@@ -338,7 +469,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="how" className="wrap how no-print" aria-labelledby="how-title">
+        <section id="how" className="wrap how no-print reveal" aria-labelledby="how-title">
           <p className="label">How it works</p>
           <h2 id="how-title" className="section-title">
             Three steps to a clear call.
@@ -355,7 +486,7 @@ export default function Home() {
         </section>
 
         {exampleBrands.length > 0 && (
-          <section id="examples" className="wrap examples no-print" aria-labelledby="examples-title">
+          <section id="examples" className="wrap examples no-print reveal" aria-labelledby="examples-title">
             <p className="label">Example plans</p>
             <h2 id="examples-title" className="section-title">
               See a finished plan.
@@ -393,25 +524,38 @@ export default function Home() {
           </section>
         )}
 
-        <section id="get-a-plan" ref={formRef} className="wrap get-plan no-print" aria-labelledby="plan-form-title">
+        <section id="get-a-plan" ref={formRef} className="wrap get-plan no-print reveal" aria-labelledby="plan-form-title">
           <div className="pick-head">
             <p className="label">Get a plan</p>
-            <h2 id="plan-form-title" className="section-title">
-              Pick a market.
-            </h2>
-            <p className="pick-sub">Your brand can be based anywhere. Choose the first market you want to enter.</p>
-            <p className="access-callout">
-              <strong>Live plans need an access code.</strong> <a href="/free-access">Get one free</a> with your email
-              {exampleBrands.length > 0 && (
-                <>
-                  , or read the <a href="#examples">example plans</a>
-                </>
-              )}
-              . For a personalised plan, <a href="#contact">get in touch</a>.
-            </p>
-
+            <AccessStep ref={accessRef} code={accessCode} onCode={applyCode} open={accessOpen} refresh={plansVersion} />
           </div>
-          <form onSubmit={submit}>
+          <form onSubmit={submit} onKeyDown={enterNext} noValidate>
+            <ol className="form-steps" aria-label="Form progress">
+              {FORM_STEPS.map((st, i) => (
+                <li key={st.name} className={i < step ? "done" : i === step ? "active" : ""}>
+                  <button type="button" disabled={i > step} aria-current={i === step ? "step" : undefined} onClick={() => goTo(i)}>
+                    <span className="form-step-num">{i < step ? "✓" : i + 1}</span>
+                    {st.name}
+                  </button>
+                </li>
+              ))}
+            </ol>
+            <div className="form-bar" aria-hidden="true">
+              <span style={{ width: `${((step + 1) / FORM_STEPS.length) * 100}%` }} />
+            </div>
+            <div className="step-head">
+              <h2 id="plan-form-title" className="section-title">
+                {FORM_STEPS[step].title}
+              </h2>
+              <p className="pick-sub">{FORM_STEPS[step].sub}</p>
+              {step === 1 && (
+                <button type="button" className="btn btn-quiet sample-btn" onClick={() => setForm({ ...form, ...SAMPLE })}>
+                  Try with a sample brand
+                </button>
+              )}
+            </div>
+            <div ref={stepRef} key={step} className="step-panel">
+            {step === 0 && (
             <div className="country-grid" role="radiogroup" aria-label="Target market">
               {COUNTRIES.map((c) => {
                 const selected = form.country === c.key;
@@ -436,14 +580,16 @@ export default function Home() {
                 );
               })}
             </div>
+            )}
 
+            {step > 0 && (
             <div className="field-groups">
-              {GROUPS.map((g) => (
+              {GROUPS.filter((_, gi) => gi === step - 1).map((g) => (
                 <fieldset key={g.title} className="field-group">
                   <legend>{g.title}</legend>
                   {g.fields.map((f) => (
                     <Fragment key={f.name}>
-                      <label className="field">
+                      <label className={errors[f.name as BriefField] ? "field has-error" : "field"}>
                         <span>
                           {f.label}
                           {f.optional && <em className="optional">Optional</em>}
@@ -455,7 +601,8 @@ export default function Home() {
                           <select
                             value={form[f.name]}
                             required
-                            onChange={(e) => setForm({ ...form, [f.name]: e.target.value })}
+                            aria-invalid={!!errors[f.name as BriefField]}
+                            onChange={(e) => setField(f.name, e.target.value)}
                           >
                             <option value="" disabled>
                               {f.hint}
@@ -473,7 +620,8 @@ export default function Home() {
                             value={form[f.name]}
                             maxLength={1500}
                             required={!f.optional && !(hasWebsite && SKIPPABLE_WITH_WEBSITE.includes(f.name))}
-                            onChange={(e) => setForm({ ...form, [f.name]: e.target.value })}
+                            aria-invalid={!!errors[f.name as BriefField]}
+                            onChange={(e) => setField(f.name, e.target.value)}
                           />
                         ) : (
                           <input
@@ -484,8 +632,14 @@ export default function Home() {
                             value={form[f.name]}
                             maxLength={300}
                             required={!f.optional && !(hasWebsite && SKIPPABLE_WITH_WEBSITE.includes(f.name))}
-                            onChange={(e) => setForm({ ...form, [f.name]: e.target.value })}
+                            aria-invalid={!!errors[f.name as BriefField]}
+                            onChange={(e) => setField(f.name, e.target.value)}
                           />
+                        )}
+                        {errors[f.name as BriefField] && (
+                          <small className="field-error" role="alert">
+                            {errors[f.name as BriefField]}
+                          </small>
                         )}
                         {f.kind === "url" && (
                           <small className="field-note">
@@ -497,7 +651,7 @@ export default function Home() {
                         )}
                       </label>
                       {f.kind === "select" && form.category === OTHER && (
-                        <label className="field">
+                        <label className={errors.categoryOther ? "field has-error" : "field"}>
                           <span>Your category</span>
                           <input
                             placeholder="e.g. pet care, toys, stationery"
@@ -505,8 +659,14 @@ export default function Home() {
                             maxLength={OTHER_MAX}
                             required
                             autoFocus
-                            onChange={(e) => setForm({ ...form, categoryOther: e.target.value })}
+                            aria-invalid={!!errors.categoryOther}
+                            onChange={(e) => setField("categoryOther", e.target.value)}
                           />
+                          {errors.categoryOther && (
+                            <small className="field-error" role="alert">
+                              {errors.categoryOther}
+                            </small>
+                          )}
                         </label>
                       )}
                     </Fragment>
@@ -514,26 +674,45 @@ export default function Home() {
                 </fieldset>
               ))}
             </div>
+            )}
+            </div>
 
-            <label className="field access">
-              <span>Access code</span>
-              <input
-                value={accessCode}
-                onChange={(e) => changeCode(e.target.value)}
-                placeholder="FP-XXXX-XXXX"
-                autoComplete="off"
-                autoCapitalize="characters"
-                spellCheck={false}
-              />
-              <small className="field-note">
-                Needed for live plans. Don&apos;t have one? <a href="#contact">Get in touch</a>.
-              </small>
-            </label>
+            {step === 2 && (
+              <label className="field access">
+                <span>Access code</span>
+                <input
+                  value={accessCode}
+                  onChange={(e) => changeCode(e.target.value)}
+                  placeholder="FP-XXXX-XXXX"
+                  autoComplete="off"
+                  autoCapitalize="characters"
+                  spellCheck={false}
+                />
+                <small className="field-note">
+                  No code?{" "}
+                  <button type="button" className="link-btn" onClick={openFreeStep}>
+                    Get 3 free plans
+                  </button>{" "}
+                  with your email at the top of this form.
+                </small>
+              </label>
+            )}
 
             <div className="form-actions">
-              <button className="btn btn-orange" disabled={loading}>
-                {loading ? "Writing your plan..." : "Let's go"} {!loading && <span aria-hidden="true">→</span>}
-              </button>
+              {step > 0 && (
+                <button type="button" className="btn btn-quiet" onClick={() => goTo(step - 1)}>
+                  <span aria-hidden="true">←</span> Back
+                </button>
+              )}
+              {step < 2 ? (
+                <button type="submit" className="btn btn-orange">
+                  Next <span aria-hidden="true">→</span>
+                </button>
+              ) : (
+                <button type="submit" className="btn btn-orange" disabled={loading}>
+                  {loading ? "Writing your plan..." : "Write my plan"} {!loading && <span aria-hidden="true">→</span>}
+                </button>
+              )}
             </div>
           </form>
           <YourPlans code={accessCode} refresh={plansVersion} openId={planId} onOpen={openSaved} />
@@ -569,12 +748,10 @@ export default function Home() {
                 ) : errorKind === "missing" ? (
                   <>
                     Live plans need an access code.{" "}
-                    {exampleBrands.length > 0 && (
-                      <>
-                        Read an <a href="#examples">example plan</a> for free, or{" "}
-                      </>
-                    )}
-                    <a href="#contact">get in touch</a> for a code.
+                    <button type="button" className="link-btn" onClick={openFreeStep}>
+                      Get 3 free plans with your email
+                    </button>
+                    .
                   </>
                 ) : (
                   error
@@ -586,7 +763,11 @@ export default function Home() {
               <div className="example-label">
                 <span className="example-badge">Example plan · hand-checked</span>
                 <span className="no-print">
-                  Want one for your brand? <a href="#get-a-plan">Fill in the form</a> with your access code.
+                  Want one for your brand?{" "}
+                  <button type="button" className="link-btn" onClick={openFreeStep}>
+                    Get 3 free plans
+                  </button>{" "}
+                  and fill in the form.
                 </span>
               </div>
             )}
@@ -665,8 +846,21 @@ export default function Home() {
       <footer className="footer" id="contact">
         <div className="wrap footer-inner">
           <p className="footer-contact">
-            <strong>Get in touch</strong> for an access code or a personalised plan:{" "}
-            <a href={`mailto:${BRAND.email}?subject=${encodeURIComponent(`${BRAND.name}: access code`)}`}>{BRAND.email}</a>
+            <strong>No code?</strong>{" "}
+            <a
+              href="#access"
+              onClick={(e) => {
+                e.preventDefault();
+                openFreeStep();
+              }}
+            >
+              Get 3 free plans
+            </a>{" "}
+            with your email, then get in touch if you&apos;d like more.
+          </p>
+          <p className="footer-contact">
+            <strong>Get in touch</strong> for a personalised plan or more plans:{" "}
+            <a href={`mailto:${BRAND.email}?subject=${encodeURIComponent(`${BRAND.name}: personalised plan`)}`}>{BRAND.email}</a>
             <span className="dot" aria-hidden="true">
               ·
             </span>

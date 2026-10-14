@@ -94,7 +94,7 @@ export function FreeAccessForm() {
           </label>
           <label className="consent">
             <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} />
-            <span>Yes, I&apos;d like to hear about First Port&apos;s latest offers and updates. (Optional)</span>
+            <span>Yes, I&apos;d like to hear about First Port&apos;s latest offers and updates.</span>
           </label>
           <button className="btn btn-orange" disabled={busy}>
             {busy ? "Getting your code..." : "Get my free code"}

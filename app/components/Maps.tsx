@@ -1,5 +1,8 @@
+"use client";
+
 import { COUNTRY_PATHS, PINS, WORLD_PATH, WORLD_VIEWBOX } from "./geo";
-import { countryLabel } from "./brand";
+import { useEffect, useState } from "react";
+import { COUNTRIES, countryLabel } from "./brand";
 
 type Pt = [number, number];
 
@@ -33,11 +36,35 @@ function arc([x1, y1]: Pt, [x2, y2]: Pt) {
   return `M${x1},${y1} Q${cx.toFixed(1)},${cy.toFixed(1)} ${x2},${y2}`;
 }
 
+const [, , VB_W, VB_H] = WORLD_VIEWBOX.split(" ").map(Number);
+const teaserOf = (key: string) => COUNTRIES.find((c) => c.key === key)?.teaser ?? "";
+
 export function WorldMap({ highlight = "japan", onSelect }: { highlight?: string; onSelect?: (key: string) => void }) {
   const dest = PINS[highlight] ?? PINS.japan;
   const origins = Object.entries(ORIGINS).filter(([, p]) => Math.hypot(p[0] - dest[0], p[1] - dest[1]) > 110);
   const labelLeft = dest[0] > 820;
+  // Country teaser tooltip: on hover/focus, and briefly after a tap selects a country.
+  const [tip, setTip] = useState("");
+  const [tapped, setTapped] = useState("");
+  useEffect(() => {
+    if (!tapped) return;
+    const t = setTimeout(() => setTapped(""), 2800);
+    return () => clearTimeout(t);
+  }, [tapped]);
+  const shown = tip || tapped;
+  const tipAt = shown ? PINS[shown] : null;
+  const choose = (key: string) => {
+    onSelect?.(key);
+    setTapped(key);
+  };
+  const hover = (key: string) => ({
+    onMouseEnter: () => setTip(key),
+    onMouseLeave: () => setTip(""),
+    onFocus: () => setTip(key),
+    onBlur: () => setTip(""),
+  });
   return (
+    <div className="world-map-wrap">
     <svg className="world-map" viewBox={WORLD_VIEWBOX} role={onSelect ? "group" : "img"} aria-label={`Routes from around the world into ${countryLabel(highlight)}`}>
       <path className="world-land" d={WORLD_PATH} />
       <g key={highlight} className="world-routes">
@@ -58,13 +85,14 @@ export function WorldMap({ highlight = "japan", onSelect }: { highlight?: string
               role="button"
               tabIndex={0}
               aria-label={`Choose ${countryLabel(key)}`}
-              onClick={() => onSelect(key)}
+              onClick={() => choose(key)}
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") {
                   e.preventDefault();
-                  onSelect(key);
+                  choose(key);
                 }
               }}
+              {...hover(key)}
             >
               <circle className="port-hit" cx={x} cy={y} r="18" />
               <circle className="port-dot" cx={x} cy={y} r="6" />
@@ -73,7 +101,12 @@ export function WorldMap({ highlight = "japan", onSelect }: { highlight?: string
             <circle key={key} className="port-dot" cx={x} cy={y} r="5" />
           ),
         )}
-      <g key={`port-${highlight}`} className="port-active" transform={`translate(${dest[0]} ${dest[1]})`}>
+      <g
+        key={`port-${highlight}`}
+        className="port-active"
+        transform={`translate(${dest[0]} ${dest[1]})`}
+        {...(onSelect ? { ...hover(highlight), onClick: () => setTapped(highlight) } : {})}
+      >
         <g className="pin-pop">
           <circle r="16" className="pin-halo" />
           <circle r="6" className="pin-dot" />
@@ -83,6 +116,16 @@ export function WorldMap({ highlight = "japan", onSelect }: { highlight?: string
         </text>
       </g>
     </svg>
+      {onSelect && tipAt && (
+        <p
+          className={`map-tip${tipAt[0] > VB_W * 0.62 ? " left" : ""}`}
+          style={{ left: `${(tipAt[0] / VB_W) * 100}%`, top: `${(tipAt[1] / VB_H) * 100}%` }}
+          role="status"
+        >
+          <strong>{countryLabel(shown)}</strong> {teaserOf(shown)}
+        </p>
+      )}
+    </div>
   );
 }
 

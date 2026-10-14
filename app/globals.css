@@ -500,3 +500,96 @@ tr.is-disabled td { color: var(--ink-soft); }
 .your-plans .danger { border-color: #c2553a; color: #a8432b; }
 .your-plans .error { margin: 12px 0 0; }
 .sources h3 { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); margin: 18px 0 10px; }
+
+/* Hero: two equal actions */
+.hero-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 460px; }
+.hero-actions .btn { justify-content: center; width: 100%; }
+.btn-on-dark { background: transparent; color: var(--white); border-color: #4f8593; }
+.btn-on-dark:hover { border-color: var(--aqua); background: rgba(162, 225, 230, 0.1); transform: translateY(-1px); }
+@media (max-width: 380px) { .hero-actions { grid-template-columns: 1fr; } }
+
+/* Map tooltip */
+.world-map-wrap { position: relative; }
+.map-tip {
+  position: absolute; z-index: 2; transform: translate(14px, -50%); width: max-content; max-width: min(240px, 46vw);
+  margin: 0; padding: 8px 12px; border-radius: 10px; background: var(--white); color: var(--ink);
+  font-size: 13px; line-height: 1.4; box-shadow: 0 6px 20px rgba(9, 37, 44, 0.25); pointer-events: none;
+  animation: tip-in 0.15s ease-out;
+}
+.map-tip.left { transform: translate(calc(-100% - 14px), -50%); }
+.map-tip strong { display: block; font-size: 13px; }
+@keyframes tip-in { from { opacity: 0; } to { opacity: 1; } }
+
+/* Access step at the top of the form */
+.link-btn { background: none; border: 0; padding: 0; font: inherit; font-weight: 600; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.access-step { margin-top: 12px; max-width: 760px; border: 1px solid var(--leaf); border-radius: var(--radius); background: var(--mist); padding: 18px; transition: box-shadow 0.2s, border-color 0.2s; }
+@media (min-width: 768px) { .access-step { padding: 20px 24px; } }
+.access-step.is-open { border-color: var(--orange); box-shadow: 0 0 0 4px rgba(242, 140, 64, 0.22); }
+.access-title { margin: 0 0 10px; font-size: 16px; }
+.access-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; }
+.access-row input { flex: 1 1 220px; min-width: 0; }
+.access-row .btn { flex: 0 0 auto; }
+.access-free .consent { font-size: 14px; margin-bottom: 8px; }
+.access-error { margin: 0 0 10px; padding: 10px 14px; font-size: 14px; }
+.access-saved { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; font-size: 16px; }
+.access-tick { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--leaf); font-weight: 700; }
+.access-code { margin-left: 10px; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 14px; color: var(--ink-soft); }
+.access-saved .link-btn { margin-left: auto; font-size: 14px; }
+
+/* Three-step form */
+.form-steps { list-style: none; margin: 28px 0 10px; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.form-steps button { display: flex; align-items: center; gap: 8px; width: 100%; background: none; border: 0; padding: 4px 0; font: inherit; font-size: 14px; font-weight: 600; color: var(--ink-soft); cursor: pointer; text-align: left; }
+.form-steps button:disabled { cursor: default; opacity: 0.6; }
+.form-steps .active button { color: var(--ink); }
+.form-step-num { display: inline-grid; place-items: center; flex: none; width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid var(--line-strong); font-size: 13px; background: var(--white); }
+.form-steps .active .form-step-num { background: var(--ink); border-color: var(--ink); color: var(--white); }
+.form-steps .done .form-step-num { background: var(--aqua); border-color: var(--aqua); color: var(--ink); }
+@media (max-width: 420px) { .form-steps button { font-size: 12px; gap: 6px; } .form-step-num { width: 22px; height: 22px; font-size: 12px; } }
+.form-bar { height: 4px; border-radius: 4px; background: var(--line); overflow: hidden; margin-bottom: 28px; }
+.form-bar span { display: block; height: 100%; background: var(--orange); border-radius: 4px; transition: width 0.35s ease; }
+.step-head { margin-bottom: 22px; }
+.step-head .section-title { margin-bottom: 10px; }
+.step-head .pick-sub { margin-bottom: 0; }
+.sample-btn { margin-top: 14px; min-height: 40px; padding: 8px 16px; font-size: 15px; }
+.step-panel { animation: step-in 0.3s ease-out; }
+@keyframes step-in { from { opacity: 0; transform: translateX(12px); } to { opacity: 1; transform: none; } }
+.get-plan .field-groups { grid-template-columns: 1fr; max-width: 760px; }
+.get-plan .country-grid { margin-bottom: 8px; }
+.form-error { margin: 20px 0 0; }
+.step-code-note { margin-top: 18px; font-size: 15px; }
+.form-actions .btn-quiet span { margin-right: 2px; }
+
+/* Motion: fade sections in, lift cards and buttons on hover */
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.in { opacity: 1; transform: none; }
+.step, .example-brand, .country-card { transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s, background 0.18s; }
+.step:hover, .example-brand:hover, .country-card:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(9, 37, 44, 0.08); }
+.btn { transition: background 0.15s, transform 0.15s, border-color 0.15s, box-shadow 0.15s; }
+.btn-quiet:hover:not(:disabled) { transform: translateY(-1px); }
+.port-chip { transition: background 0.15s, border-color 0.15s, transform 0.15s; }
+.port-chip:hover { transform: translateY(-1px); }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .step-panel, .map-tip { animation: none; }
+  .form-bar span { transition: none; }
+  .step:hover, .example-brand:hover, .country-card:hover, .btn:hover, .port-chip:hover, .btn-on-dark:hover { transform: none !important; }
+}
+@media print { .reveal { opacity: 1; transform: none; } }
+
+/* Field problems: red outline and a short message right under the field */
+.field.has-error input, .field.has-error select, .field.has-error textarea { border-color: #c2553a; box-shadow: 0 0 0 3px rgba(194, 85, 58, 0.15); }
+.field-error { display: block; margin-top: 6px; font-size: 13px; font-weight: 600; color: #a8432b; line-height: 1.4; }
+.access-step.has-code { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; font-size: 16px; }
+.access-step.has-code .link-btn { font-size: 14px; }
+.access-step .access-code { margin-left: 4px; }
+.access-note { margin: 0 0 10px; font-size: 14px; color: #a8432b; }
+.access-more { animation: tip-in 0.2s ease-out; }
+.access-step:not(.is-open) .access-row { margin-bottom: 0; }
+@media (prefers-reduced-motion: reduce) { .access-more { animation: none; } }
+
+/* Phone nav: keep the wordmark on one line and the free-plans button visible */
+.wordmark { white-space: nowrap; }
+@media (max-width: 560px) {
+  .nav nav a:not(.nav-cta) { display: none; }
+  .nav .nav-cta { background: var(--orange); border-color: var(--orange); font-weight: 600; }
+}
