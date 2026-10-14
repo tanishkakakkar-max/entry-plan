@@ -6,7 +6,7 @@ export const BRAND = {
   description: "An expert guide to entering new markets. Built on real research.",
   author: "Tanishka Kakkar",
   authorUrl: "https://www.linkedin.com/in/tanishka-kakkar98",
-  email: "tanishka.kakkar05@gmail.com",
+  email: "contact@findyourfirstport.com",
   version: "v0",
   url: "https://www.findyourfirstport.com",
 };
