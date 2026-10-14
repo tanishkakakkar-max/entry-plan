@@ -32,6 +32,17 @@ function parsePlan(md: string) {
       preamble.push(line);
     }
   }
+  // If the model skipped the "## 1. The call" heading and wrote the call above section 2, treat that text as
+  // the call (keeping an "Already in market" line, if any, as the preamble).
+  if (!sections.some((s) => /^1\./.test(s.heading)) && preamble.join("").trim()) {
+    const text = preamble.join("\n").trim();
+    const m = text.match(/^(Already in market:[^\n]*)\n+([\s\S]+)$/i);
+    if (!/^Already in market:/i.test(text) || m) {
+      sections.unshift({ id: slug("1. The call"), heading: "1. The call", body: (m ? m[2] : text) + "\n" });
+      preamble.length = 0;
+      if (m) preamble.push(m[1]);
+    }
+  }
   const sourcesIdx = sections.findIndex((s) => /^sources\b/i.test(s.heading));
   const sourcesSection = sourcesIdx >= 0 ? sections.splice(sourcesIdx, 1)[0] : null;
   const sources: Source[] = [];
@@ -46,9 +57,9 @@ function parsePlan(md: string) {
 
 // Reads the call in section 1: whichever of Go / Test first / Not yet appears first.
 // "Fresh-entry verdict: ..." is used for brands already in the market (how they'd enter if launching today).
-function readVerdict(text: string) {
+function readVerdict(text: string, inMarket = true) {
   const head = text.slice(0, 400);
-  const fresh = head.match(/fresh[- ]entry verdict:?\**\s*(not yet|test first|go)\b/i);
+  const fresh = inMarket && head.match(/fresh[- ]entry verdict:?\**\s*(not yet|test first|go)\b/i);
   if (fresh) {
     const v = fresh[1].toLowerCase();
     return v === "go" ? "Fresh entry: Go" : v === "not yet" ? "Fresh entry: Not yet" : "Fresh entry: Test first";
@@ -144,7 +155,8 @@ export function PlanView({ plan, country, streaming }: { plan: string; country: 
   }
 
   const [call, ...rest] = /the call/i.test(sections[0]?.heading ?? "") ? sections : [null, ...sections];
-  const verdict = call ? readVerdict(call.body) : null;
+  // "Fresh entry" verdicts only make sense for a brand the plan says is already in the market.
+  const verdict = call ? readVerdict(call.body, /already in market/i.test(preamble)) : null;
 
   return (
     <div className="plan-layout">

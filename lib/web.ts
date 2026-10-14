@@ -27,13 +27,17 @@ const GOV = /(^|\.)(gov|gov\.[a-z]{2}|go\.jp|gob\.[a-z]{2}|nic\.in|int|europa\.e
 const TRADE = /(^|\.)(jetro\.go\.jp|ibef\.org|wto\.org|oecd\.org|worldbank\.org|enterprisesg\.gov\.sg|investindia\.gov\.in|trade\.gov|amcham[a-z.]*|[a-z]+chamber[a-z.]*)$/i;
 const NEWS = /(^|\.)(reuters\.com|bloomberg\.com|nikkei\.com|ft\.com|wsj\.com|cnbc\.com|bbc\.(com|co\.uk)|apnews\.com|nytimes\.com|economist\.com|japantimes\.co\.jp|straitstimes\.com|businesstimes\.com\.sg|channelnewsasia\.com|economictimes\.indiatimes\.com|livemint\.com|business-standard\.com|thehindubusinessline\.com|techcrunch\.com|businesswire\.com|prnewswire\.com)$/i;
 const FLUFF = /\/(blog|blogs)\/|\b(ultimate-guide|how-to|tips|top-\d+|best-\d+|step-by-step)\b/i;
+// Paid market-report teaser pages, whatever the domain: "Pimple Patch Market Size... Forecast to 2032".
+const REPORT_PATH = /\/(reports?|industry-reports?|industry-analysis|market-reports?)\//i;
+const REPORT_TITLE = /\b(market (size|share|report|forecast|growth|trends?|analysis|outlook)|forecast (to |20\d\d)|cagr|industry (analysis|report))\b/i;
 
-function sourceScore(url: string): number {
+function sourceScore(url: string, title = ""): number {
   try {
     const u = new URL(url);
     const host = u.hostname.replace(/^www\./, "");
     if (GOV.test(host) || TRADE.test(host)) return 3;
     if (NEWS.test(host)) return 2;
+    if (REPORT_PATH.test(u.pathname) || REPORT_TITLE.test(title)) return -2;
     return FLUFF.test(u.pathname) ? -2 : 0;
   } catch {
     return -2;
@@ -118,7 +122,7 @@ export async function webResearch(
     }
     for (const r of s.value) {
       const key = pageKey(r.url);
-      if (r.url && !seen.has(key) && !isBrandOwn(r, brand, website) && sourceScore(r.url) > -2) {
+      if (r.url && !seen.has(key) && !isBrandOwn(r, brand, website) && sourceScore(r.url, r.title) > -2) {
         seen.add(key);
         out.push(r);
       }
@@ -126,7 +130,7 @@ export async function webResearch(
   }
   // Best sources first (stable within a score, so search order breaks ties). Fewer is fine: no padding.
   return out
-    .map((r, i) => ({ r, i, score: sourceScore(r.url) }))
+    .map((r, i) => ({ r, i, score: sourceScore(r.url, r.title) }))
     .sort((a, b) => b.score - a.score || a.i - b.i)
     .slice(0, 6)
     .map((x) => x.r);
