@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 // Shown under a finished plan: a comment box, saved through /api/feedback. Submit appears once they type.
-export function FeedbackForm({ brand, country, kind }: { brand: string; country: string; kind: "live" | "example" }) {
+export function FeedbackForm({ country, kind }: { country: string; kind: "live" | "example" }) {
   const [comment, setComment] = useState("");
   const [trap, setTrap] = useState("");
   const [busy, setBusy] = useState(false);
@@ -19,7 +19,7 @@ export function FeedbackForm({ brand, country, kind }: { brand: string; country:
       const res = await fetch("/api/feedback", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ comment, brand, country, kind, website: trap }),
+        body: JSON.stringify({ comment, country, kind, website: trap }),
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {

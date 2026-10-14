@@ -1,5 +1,5 @@
 // Feedback left under a finished plan, stored in the same Upstash Redis as the codes. Keys:
-//   fp:feedback:<id>              hash {comment, brand, country, kind, created}
+//   fp:feedback:<id>              hash {comment, country, kind, created}  (no brand: we don't keep anyone's idea)
 //   fp:feedbacks                  list of ids, newest first
 //   fp:feedback-ip:<hash>:<day>   messages from one IP today (expires after 2 days)
 // IPs are stored only as a salted hash, and only in the short-lived counter.
@@ -12,7 +12,6 @@ export const COMMENT_MAX = 2000;
 export type Feedback = {
   id: string;
   comment: string;
-  brand: string;
   country: string;
   kind: "live" | "example";
   created: string;
@@ -52,7 +51,6 @@ export async function saveFeedback(body: Record<string, unknown>, ip: string): P
   const item: Feedback = {
     id: randomUUID(),
     comment,
-    brand: clean(body.brand, 120),
     country: clean(body.country, 60),
     kind: body.kind === "example" ? "example" : "live",
     created: new Date().toISOString(),
@@ -78,7 +76,6 @@ export async function listFeedback(limit = 500): Promise<Feedback[]> {
       return {
         id,
         comment: s("comment"),
-        brand: s("brand"),
         country: s("country"),
         kind: s("kind") === "example" ? "example" : "live",
         created: s("created"),

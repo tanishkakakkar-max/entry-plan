@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { BRAND, COUNTRIES, countryLabel } from "./components/brand";
 import { CountryOutline, WorldMap } from "./components/Maps";
 import { LogoMark } from "./components/Logo";
@@ -9,12 +9,13 @@ import { FeedbackForm } from "./components/FeedbackForm";
 import { YourPlans, type SavedPlan } from "./components/YourPlans";
 import { EXAMPLE_BRANDS } from "./components/examples";
 import { exampleKeys } from "@/lib/examples-index.generated";
-import { CATEGORIES } from "@/lib/categories";
+import { CATEGORIES, OTHER, OTHER_MAX } from "@/lib/categories";
 import { checkBrief } from "@/lib/brief";
 
 const EMPTY = {
   brand: "",
   category: "",
+  categoryOther: "",
   website: "",
   product: "",
   identity: "",
@@ -441,61 +442,74 @@ export default function Home() {
                 <fieldset key={g.title} className="field-group">
                   <legend>{g.title}</legend>
                   {g.fields.map((f) => (
-                    <label key={f.name} className="field">
-                      <span>
-                        {f.label}
-                        {f.optional && <em className="optional">Optional</em>}
-                        {hasWebsite && SKIPPABLE_WITH_WEBSITE.includes(f.name) && (
-                          <em className="optional">Optional with your website</em>
-                        )}
-                      </span>
-                      {f.kind === "select" ? (
-                        <select
-                          value={form[f.name]}
-                          required
-                          onChange={(e) => setForm({ ...form, [f.name]: e.target.value })}
-                        >
-                          <option value="" disabled>
-                            {f.hint}
-                          </option>
-                          {CATEGORIES.map((c) => (
-                            <option key={c} value={c}>
-                              {c}
+                    <Fragment key={f.name}>
+                      <label className="field">
+                        <span>
+                          {f.label}
+                          {f.optional && <em className="optional">Optional</em>}
+                          {hasWebsite && SKIPPABLE_WITH_WEBSITE.includes(f.name) && (
+                            <em className="optional">Optional with your website</em>
+                          )}
+                        </span>
+                        {f.kind === "select" ? (
+                          <select
+                            value={form[f.name]}
+                            required
+                            onChange={(e) => setForm({ ...form, [f.name]: e.target.value })}
+                          >
+                            <option value="" disabled>
+                              {f.hint}
                             </option>
-                          ))}
-                        </select>
-                      ) : f.kind === "long" ? (
-                        <textarea
-                          rows={3}
-                          placeholder={f.hint}
-                          value={form[f.name]}
-                          maxLength={1500}
-                          required={!f.optional && !(hasWebsite && SKIPPABLE_WITH_WEBSITE.includes(f.name))}
-                          onChange={(e) => setForm({ ...form, [f.name]: e.target.value })}
-                        />
-                      ) : (
-                        <input
-                          type={f.kind === "url" ? "text" : undefined}
-                          inputMode={f.kind === "url" ? "url" : undefined}
-                          autoComplete={f.kind === "url" ? "url" : undefined}
-                          placeholder={f.hint}
-                          value={form[f.name]}
-                          maxLength={300}
-                          required={!f.optional && !(hasWebsite && SKIPPABLE_WITH_WEBSITE.includes(f.name))}
-                          onChange={(e) => setForm({ ...form, [f.name]: e.target.value })}
-                        />
+                            {CATEGORIES.map((c) => (
+                              <option key={c} value={c}>
+                                {c}
+                              </option>
+                            ))}
+                          </select>
+                        ) : f.kind === "long" ? (
+                          <textarea
+                            rows={3}
+                            placeholder={f.hint}
+                            value={form[f.name]}
+                            maxLength={1500}
+                            required={!f.optional && !(hasWebsite && SKIPPABLE_WITH_WEBSITE.includes(f.name))}
+                            onChange={(e) => setForm({ ...form, [f.name]: e.target.value })}
+                          />
+                        ) : (
+                          <input
+                            type={f.kind === "url" ? "text" : undefined}
+                            inputMode={f.kind === "url" ? "url" : undefined}
+                            autoComplete={f.kind === "url" ? "url" : undefined}
+                            placeholder={f.hint}
+                            value={form[f.name]}
+                            maxLength={300}
+                            required={!f.optional && !(hasWebsite && SKIPPABLE_WITH_WEBSITE.includes(f.name))}
+                            onChange={(e) => setForm({ ...form, [f.name]: e.target.value })}
+                          />
+                        )}
+                        {f.kind === "url" && (
+                          <small className="field-note">
+                            Add your website and you can skip most of the questions below: we&apos;ll read it for you.
+                          </small>
+                        )}
+                        {f.kind === "select" && form.category !== OTHER && (
+                          <small className="field-note">Not on the list? Choose Other and type your own.</small>
+                        )}
+                      </label>
+                      {f.kind === "select" && form.category === OTHER && (
+                        <label className="field">
+                          <span>Your category</span>
+                          <input
+                            placeholder="e.g. pet care, toys, stationery"
+                            value={form.categoryOther}
+                            maxLength={OTHER_MAX}
+                            required
+                            autoFocus
+                            onChange={(e) => setForm({ ...form, categoryOther: e.target.value })}
+                          />
+                        </label>
                       )}
-                      {f.kind === "url" && (
-                        <small className="field-note">
-                          Add your website and you can skip most of the questions below: we&apos;ll read it for you.
-                        </small>
-                      )}
-                      {f.kind === "select" && (
-                        <small className="field-note">
-                          v0 covers consumer brands in these categories. Not on the list? Get in touch below.
-                        </small>
-                      )}
-                    </label>
+                    </Fragment>
                   ))}
                 </fieldset>
               ))}
@@ -638,7 +652,6 @@ export default function Home() {
                 {!loading && plan.trimStart().startsWith("#") && (
                   <FeedbackForm
                     key={`${planBrand}-${planCountry}-${plan.length}`}
-                    brand={planBrand}
                     country={planCountry}
                     kind={savedExample ? "example" : "live"}
                   />

@@ -5,7 +5,7 @@ import { BRAND } from "../components/brand";
 
 type Code = { code: string; name: string; total: number; used: number; disabled: boolean; created: string };
 type Signup = { email: string; code: string; consent: boolean; created: string; used: number; total: number };
-type Feedback = { id: string; comment: string; brand: string; country: string; kind: "live" | "example"; created: string };
+type Feedback = { id: string; comment: string; country: string; kind: "live" | "example"; created: string };
 
 // CSV for importing into a newsletter tool. Quotes every field so commas in emails/dates are safe.
 function toCsv(rows: Signup[]) {
@@ -126,8 +126,8 @@ export default function Admin() {
 
   function downloadFeedbackCsv() {
     const q = (v: string) => `"${v.replace(/"/g, '""')}"`;
-    const rows = feedback.map((f) => [f.created, f.brand, f.country, f.kind, f.comment].map(q).join(","));
-    const blob = new Blob([["date,brand,country,plan,comment", ...rows].join("\n")], { type: "text/csv;charset=utf-8" });
+    const rows = feedback.map((f) => [f.created, f.country, f.kind, f.comment].map(q).join(","));
+    const blob = new Blob([["date,country,plan,comment", ...rows].join("\n")], { type: "text/csv;charset=utf-8" });
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
     a.download = `first-port-feedback-${new Date().toISOString().slice(0, 10)}.csv`;
@@ -380,7 +380,7 @@ export default function Admin() {
                 <tr key={f.id}>
                   <td className="admin-comment">{f.comment}</td>
                   <td>
-                    {f.brand || "Unnamed"} · {f.country}
+                    {f.country}
                     <small className="admin-date">{f.kind === "example" ? "Example plan" : "Live plan"}</small>
                   </td>
                   <td>{f.created ? new Date(f.created).toLocaleDateString() : ""}</td>

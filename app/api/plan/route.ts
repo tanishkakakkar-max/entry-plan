@@ -1,10 +1,10 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { instructions, samplePlan, countries } from "@/lib/knowledge.generated";
 import { webResearch, formatWebResults, cleanWebsiteUrl, readWebsite, formatWebsite } from "@/lib/web";
-import { CATEGORIES } from "@/lib/categories";
+import { CATEGORIES, OTHER, OTHER_MAX } from "@/lib/categories";
 import { checkBrief } from "@/lib/brief";
 import { creditsReady, getCode, normalizeCode, peekCode, refundCredit, reserveCredit } from "@/lib/credits";
-import { briefId, getPlan, getSharedPlan, savePlan } from "@/lib/saved-plans";
+import { briefId, getPlan, savePlan } from "@/lib/saved-plans";
 import { aiCheckBrief } from "@/lib/brief-check";
 import { formatResearch, selectResearch } from "@/lib/research";
 
@@ -21,7 +21,7 @@ const COUNTRY_NAMES: Record<string, string> = {
 const FIELDS = ["brand", "product", "identity", "customer", "price", "stage", "country"] as const;
 // Answers a brand can skip when it gives its website (the plan reads the site instead).
 const OPTIONAL_WITH_WEBSITE = ["product", "identity", "customer", "price", "stage"] as const;
-type Form = Record<(typeof FIELDS)[number], string> & { accessCode?: string; category?: string; website?: string };
+type Form = Record<(typeof FIELDS)[number], string> & { accessCode?: string; category?: string; categoryOther?: string; website?: string };
 
 // Backup per-IP limit on top of access-code credits. Serverless instances don't share memory,
 // so it's best-effort; the credits in Redis are the real limit.
@@ -176,10 +176,14 @@ export async function POST(req: Request) {
   if (problem) return new Response(problem, { status: 400 });
 
   // Optional extras: category must be one we support; website must be a plain http(s) link.
-  const category = CATEGORIES.find((c) => c === body.category);
-  if (body.category && !category) {
+  const picked = CATEGORIES.find((c) => c === body.category);
+  if (body.category && !picked) {
     return new Response("Please pick a category from the list.", { status: 400 });
   }
+  // "Other": the founder's own category, e.g. "pet care". Used as the category everywhere below.
+  const otherText = typeof body.categoryOther === "string" ? body.categoryOther.trim().slice(0, OTHER_MAX) : "";
+  body.categoryOther = picked === OTHER ? otherText : "";
+  const category = picked === OTHER ? otherText.toLowerCase() : picked;
   const countryKey = body.country.toLowerCase();
   const research = countries[countryKey];
   if (!research) {
@@ -220,25 +224,6 @@ export async function POST(req: Request) {
         : codeError(403, "invalid", "That access code isn't right. Check it and try again.");
   if (!codeState.ok) return refuse(codeState);
 
-  // Someone else already made a plan from exactly this brief: reuse it (no AI call), but it still costs
-  // a credit, and it's saved to this code's Your plans. Only Your plans copies of your own are free.
-  const shared = await getSharedPlan(planId).catch(() => null);
-  if (shared) {
-    const taken = await reserveCredit(code);
-    if (!taken.ok) return refuse(taken);
-    await savePlan(code, planId, { brand: body.brand.trim(), country: countryKey, category: category ?? "", text: shared }).catch((e) =>
-      console.error("saving plan failed", e),
-    );
-    console.log(`reused shared plan ${planId} for another code`);
-    return new Response(shared, {
-      headers: {
-        "Content-Type": "text/plain; charset=utf-8",
-        "Cache-Control": "no-store",
-        "X-Credits-Left": String(taken.left),
-        "X-Plan-Id": planId,
-      },
-    });
-  }
 
   // Blank answers + website: read the site now, before any credit is spent, and stop if it's unreadable.
   const blanks = OPTIONAL_WITH_WEBSITE.filter((f) => !body[f].trim());
@@ -258,7 +243,7 @@ export async function POST(req: Request) {
 
   // Does the brief make enough sense to build a strategy on? Rejections cost no credit.
   const notUsable = await aiCheckBrief(
-    { ...body, category, country: countryName, website, websiteText: siteText ?? undefined },
+    { ...body, category: picked === OTHER ? `Other: ${otherText}` : category, country: countryName, website, websiteText: siteText ?? undefined },
     provider,
   );
   if (notUsable) return new Response(notUsable, { status: 400, headers: { "X-Brief": "not_usable" } });
@@ -271,7 +256,7 @@ export async function POST(req: Request) {
   const brief = `Write the market-entry plan for this brand.
 
 Brand: ${body.brand}
-${category ? `Category: ${category}\n` : ""}What they sell: ${fromSite(body.product)}
+${category ? `Category: ${category}${picked === OTHER || picked === "Technology" ? " (no category-specific research: use the country research, web results and the brief, and mark category rules [verify])" : ""}\n` : ""}What they sell: ${fromSite(body.product)}
 Brand identity: ${fromSite(body.identity)}
 Target customer: ${fromSite(body.customer)}
 Price point: ${fromSite(body.price)}
@@ -299,7 +284,7 @@ Target country: ${countryName}${website ? `\nWebsite: ${website}` : ""}`;
   // Tagged research notes that match this country or category. Example plans are never included.
   const related = selectResearch(countryKey, category);
   console.log(
-    `research used (${related.length}, ${category ?? "no category"} -> ${countryName}): ${related.map((n) => `${n.file} [${n.why}]`).join(", ") || "none"}`,
+    `research used (${related.length}, ${picked ?? "no category"} -> ${countryName}): ${related.map((n) => `${n.file} [${n.why}]`).join(", ") || "none"}`,
   );
   const relatedBlock = formatResearch(related);
 

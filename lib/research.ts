@@ -7,12 +7,13 @@ import { researchNotes, type ResearchNote } from "./research.generated";
 
 // App categories -> the category tags used in research front matter.
 const CATEGORY_TAGS: Record<string, string[]> = {
-  "Apparel & accessories": ["apparel", "accessories", "fashion"],
+  // Jewellery sits under accessories.
+  "Apparel & accessories": ["apparel", "accessories", "fashion", "jewellery", "jewelry"],
   "Beauty & personal care": ["beauty", "personal care", "skincare", "cosmetics"],
-  Jewellery: ["jewellery", "jewelry"],
   "Home & living": ["home goods", "home & living", "ceramics"],
   "Food & beverage": ["food & beverage", "restaurants", "food"],
   "Health & wellness": ["health & wellness", "wellness", "supplements"],
+  Technology: ["technology", "tech", "electronics", "consumer electronics", "gadgets"],
 };
 
 const TOKEN_CAP = 20_000;

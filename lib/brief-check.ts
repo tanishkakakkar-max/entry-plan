@@ -32,7 +32,10 @@ Not usable (say no) only if ANY of these is true:
 - What they sell is not an identifiable product or service, or is gibberish or a placeholder ("test", "asdf", "product", "stuff").
 - A target customer is given but is not an identifiable group of people or businesses (e.g. "people who buy", "everyone").
 - The brand identity is gibberish or a placeholder.
-- The answers contradict each other so badly no plan could follow (e.g. category Jewellery but they sell car insurance).
+- The answers contradict each other so badly no plan could follow (e.g. category Apparel & accessories but they sell car insurance).
+- The category was typed by the founder ("Other: ...") and is not a real product or service category (gibberish, a
+  joke, a person's name, "anything"), or it clearly doesn't fit what they sell (e.g. "pet care" but they sell laptops).
+  Close or broad fits are fine ("pet care" for dog shampoo, "toys" for board games).
 - The text is a joke, test input, or not about a brand at all.
 
 If the founder gave a website, the plan will read the site to fill gaps, so thin, short or blank answers
@@ -123,7 +126,7 @@ export async function aiCheckBrief(b: BriefInput, provider: string): Promise<str
     const raw = provider === "anthropic" ? await askClaude(b) : await askGroq(b);
     const start = raw.indexOf("{");
     const end = raw.lastIndexOf("}");
-    if (start < 0 || end < start) throw new Error(`no JSON in reply: ${raw.slice(0, 200)}`);
+    if (start < 0 || end < start) throw new Error(`no JSON in reply (${raw.length} chars)`);
     const json = JSON.parse(raw.slice(start, end + 1));
     console.log(`brief check: usable=${json.usable}`);
     if (json.usable === false) {

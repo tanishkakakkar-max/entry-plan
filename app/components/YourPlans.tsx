@@ -99,7 +99,7 @@ export function YourPlans({
             <div className="your-plan-actions">
               {confirming === p.id ? (
                 <>
-                  <span className="your-plan-confirm">Delete this plan?</span>
+                  <span className="your-plan-confirm">Delete for good? It&apos;s removed from First Port too and can&apos;t be recovered.</span>
                   <button type="button" className="btn btn-quiet admin-small danger" disabled={busy === p.id} onClick={() => remove(p.id)}>
                     {busy === p.id ? "Deleting..." : "Delete"}
                   </button>

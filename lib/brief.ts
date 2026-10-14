@@ -2,7 +2,7 @@
 // Shared by the page (instant feedback) and the API (the real gate). Deliberately simple: it stops
 // nonsense like "sjdb" or "kuku", not every bad brief.
 
-type Brief = { brand: string; product: string; identity: string; customer: string; price: string; stage: string };
+type Brief = { brand: string; product: string; identity: string; customer: string; price: string; stage: string; category?: string; categoryOther?: string };
 
 const WORD = /[\p{L}\p{N}][\p{L}\p{N}'’&.\-]*/gu;
 const NON_LATIN = /[^\p{Script=Latin}\p{N}\p{P}\p{S}\s]/u; // Hindi, Japanese etc: don't judge spelling
@@ -35,6 +35,11 @@ export function checkBrief(b: Brief, hasWebsite = false): string | null {
   const skip = (v: string) => hasWebsite && !v.trim();
   const min = hasWebsite ? 1 : 2;
   if (!/\p{L}/u.test(b.brand) || b.brand.trim().length < 2) return "Add your brand name.";
+  if (b.category === "Other") {
+    const c = (b.categoryOther ?? "").trim();
+    if (c.length < 3 || !looksReal(c, 1) || /^(other|others|misc|n\/?a|none|test|testing|stuff|things|products?|asdf\w*|qwerty|abc|xyz|blah|idk|whatever|anything|everything|category)$/i.test(c))
+      return 'Type your category, for example "pet care", "toys" or "stationery".';
+  }
   if (!skip(b.product) && !looksReal(b.product, min))
     return hasWebsite
       ? 'That doesn\'t look like a product. Leave it blank (we\'ll read your site) or write something like "skincare".'
