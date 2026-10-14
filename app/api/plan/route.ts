@@ -21,7 +21,8 @@ const COUNTRY_NAMES: Record<string, string> = {
 
 const FIELDS = ["brand", "product", "identity", "customer", "price", "stage", "country"] as const;
 // Answers a brand can skip when it gives its website (the plan reads the site instead).
-const OPTIONAL_WITH_WEBSITE = ["product", "identity", "customer", "price", "stage"] as const;
+// Where they sell today stays required: a website can't show stage, stores or wholesale reliably.
+const OPTIONAL_WITH_WEBSITE = ["product", "identity", "customer", "price"] as const;
 type Form = Record<(typeof FIELDS)[number], string> & { accessCode?: string; category?: string; categoryOther?: string; website?: string };
 
 type Send = (text: string) => void;

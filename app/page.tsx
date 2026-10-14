@@ -29,8 +29,9 @@ const EMPTY = {
 
 type FieldName = Exclude<keyof typeof EMPTY, "country">;
 type Field = { name: FieldName; label: string; hint: string; kind?: "long" | "select" | "url"; optional?: boolean };
-// With a website, these can be left blank: the plan reads the site instead.
-const SKIPPABLE_WITH_WEBSITE: FieldName[] = ["product", "identity", "customer", "price", "stage"];
+// With a website, these can be left blank: the plan reads the site and searches the web instead.
+// Brand name, category and where they sell today stay required: a website can't show those reliably.
+const SKIPPABLE_WITH_WEBSITE: FieldName[] = ["product", "identity", "customer", "price"];
 
 const GROUPS: { title: string; fields: Field[] }[] = [
   {
@@ -79,9 +80,11 @@ const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 const STEPS = [
   { title: "Pick a market", text: "Japan, Singapore, India or the United States." },
-  { title: "Tell us about your brand", text: "Six short answers about what you sell and who buys it." },
+  { title: "Tell us about your brand", text: "Seven short answers about what you sell and who buys it, or just your website plus three." },
   { title: "Get a clear plan with sources", text: "One verdict, nine sections, and live web sources you can check." },
 ];
+
+const revealAll = () => document.querySelectorAll(".reveal").forEach((el) => el.classList.add("in"));
 
 export default function Home() {
   const [form, setForm] = useState(EMPTY);
@@ -107,6 +110,7 @@ export default function Home() {
   const [exampleKey, setExampleKey] = useState("");
   const [isExample, setIsExample] = useState(false);
   const [accessOpen, setAccessOpen] = useState(false);
+  const [accessNotice, setAccessNotice] = useState(""); // why we sent them to the code box
   const accessRef = useRef<HTMLDivElement>(null);
   const stepRef = useRef<HTMLDivElement>(null);
 
@@ -139,6 +143,13 @@ export default function Home() {
   }, [loading]);
 
   // Sections fade in as they scroll into view (CSS skips the motion for prefers-reduced-motion).
+  // Jumping somewhere (a nav link, "Get 3 free plans", "See an example") shows every section at once instead,
+  // so the place you land on is never still fading in.
+  useEffect(() => {
+    window.addEventListener("hashchange", revealAll);
+    if (window.location.hash) revealAll();
+    return () => window.removeEventListener("hashchange", revealAll);
+  }, []);
   useEffect(() => {
     const els = document.querySelectorAll(".reveal");
     if (!("IntersectionObserver" in window)) {
@@ -168,6 +179,7 @@ export default function Home() {
 
   // Fills the form with one of the example brands (random, or the next one after `after`), keeping the market.
   function fillExample(after?: string) {
+    revealAll();
     const i = EXAMPLE_BRANDS.findIndex((b) => b.key === after);
     const pick =
       after !== undefined && i >= 0
@@ -213,7 +225,9 @@ export default function Home() {
   }
 
   // Opens the "get 3 free plans" step at the top of the form and brings it into view.
-  function openFreeStep() {
+  function openFreeStep(notice = "") {
+    revealAll();
+    setAccessNotice(notice);
     setAccessOpen(true);
     setTimeout(() => {
       accessRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -223,7 +237,10 @@ export default function Home() {
 
   function applyCode(code: string) {
     changeCode(code);
-    if (code) setAccessOpen(false);
+    if (code) {
+      setAccessOpen(false);
+      setAccessNotice("");
+    }
     setPlansVersion((v) => v + 1);
   }
 
@@ -290,9 +307,9 @@ export default function Home() {
       showProblems(all);
       return;
     }
-    // No code: open the free-code box at the top instead of an error. Nothing they typed is cleared.
+    // No code: open the free-code box at the top, with a line saying why. Nothing they typed is cleared.
     if (!accessCode.trim()) {
-      openFreeStep();
+      openFreeStep("Get your free code to continue. Your answers are saved.");
       return;
     }
     setError("");
@@ -505,7 +522,7 @@ export default function Home() {
         <section id="get-a-plan" ref={formRef} className="wrap get-plan no-print reveal" aria-labelledby="plan-form-title">
           <div className="pick-head">
             <p className="label">Get a plan</p>
-            <AccessStep ref={accessRef} code={accessCode} onCode={applyCode} open={accessOpen} refresh={plansVersion} />
+            <AccessStep ref={accessRef} code={accessCode} onCode={applyCode} open={accessOpen} notice={accessNotice} refresh={plansVersion} />
             <h2 id="plan-form-title" className="section-title market-title">
               Pick a market.
             </h2>
@@ -652,7 +669,7 @@ export default function Home() {
                         )}
                         {f.kind === "url" && (
                           <small className="field-note">
-                            Add your website and you can skip most of the questions below: we&apos;ll read it for you.
+                            Add your website and you only need your brand name, category and where you sell today: we&apos;ll read the rest from your site.
                           </small>
                         )}
                         {f.kind === "select" && form.category !== OTHER && (
@@ -699,7 +716,7 @@ export default function Home() {
                 />
                 <small className="field-note">
                   No code?{" "}
-                  <button type="button" className="link-btn" onClick={openFreeStep}>
+                  <button type="button" className="link-btn" onClick={() => openFreeStep()}>
                     Get 3 free plans
                   </button>{" "}
                   with your email at the top of this form.
@@ -758,7 +775,7 @@ export default function Home() {
                 ) : errorKind === "missing" ? (
                   <>
                     Live plans need an access code.{" "}
-                    <button type="button" className="link-btn" onClick={openFreeStep}>
+                    <button type="button" className="link-btn" onClick={() => openFreeStep()}>
                       Get 3 free plans with your email
                     </button>
                     .
@@ -774,7 +791,7 @@ export default function Home() {
                 <span className="example-badge">Example plan · hand-checked</span>
                 <span className="no-print">
                   Want one for your brand?{" "}
-                  <button type="button" className="link-btn" onClick={openFreeStep}>
+                  <button type="button" className="link-btn" onClick={() => openFreeStep()}>
                     Get 3 free plans
                   </button>{" "}
                   and fill in your own answers.

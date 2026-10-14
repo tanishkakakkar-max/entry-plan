@@ -6,8 +6,10 @@ const CODE = /^[A-Z0-9]{2,}-[A-Z0-9-]{4,}$/;
 
 // Top of "Get a plan": get a free code by email right here (same /api/access as /free-access), or see the
 // code saved on this device and how many plans are left. The code also fills the Access code field below.
-export const AccessStep = forwardRef<HTMLDivElement, { code: string; onCode: (code: string) => void; open: boolean; refresh: number }>(
-  function AccessStep({ code, onCode, open, refresh }, ref) {
+export const AccessStep = forwardRef<
+  HTMLDivElement,
+  { code: string; onCode: (code: string) => void; open: boolean; notice?: string; refresh: number }
+>(function AccessStep({ code, onCode, open, notice, refresh }, ref) {
     const [email, setEmail] = useState("");
     const [consent, setConsent] = useState(false);
     const [expanded, setExpanded] = useState(false);
@@ -178,6 +180,11 @@ export const AccessStep = forwardRef<HTMLDivElement, { code: string; onCode: (co
     return (
       <div ref={ref} id="access" className={`access-step${expanded ? " is-open" : ""}`}>
         <p className="card-eyebrow">Free access</p>
+        {notice && (
+          <p className="access-why" role="alert">
+            {notice}
+          </p>
+        )}
         <p className="access-title">Get 3 free plans</p>
         <p className="access-sub">Enter your email and your code appears right here.</p>
         {status === "bad" && <p className="access-note">The code saved on this device isn&apos;t valid, so get a free one below.</p>}
@@ -222,5 +229,4 @@ export const AccessStep = forwardRef<HTMLDivElement, { code: string; onCode: (co
         </p>
       </div>
     );
-  },
-);
+  });

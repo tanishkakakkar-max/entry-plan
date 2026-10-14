@@ -565,7 +565,7 @@ tr.is-disabled td { color: var(--ink-soft); }
 .form-actions .btn-quiet span { margin-right: 2px; }
 
 /* Motion: fade sections in, lift cards and buttons on hover */
-.reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.35s ease, transform 0.35s ease; }
 .reveal.in { opacity: 1; transform: none; }
 .step, .example-brand, .country-card { transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s, background 0.18s; }
 .step:hover, .example-brand:hover, .country-card:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(9, 37, 44, 0.08); }
@@ -710,3 +710,4 @@ main a:not(.btn):not(.cite):hover, .link-btn:hover { text-decoration-thickness: 
   .country-card:hover .country-outline, .btn:hover:not(:disabled) span[aria-hidden="true"], .form-steps button:hover .form-step-num { transform: none; }
   .nav nav a:not(.nav-cta)::after { transition: none; }
 }
+.access-why { margin: 2px 0 10px; padding: 10px 14px; border-radius: 12px; background: #fdf0e4; color: var(--ink); font-size: 15px; font-weight: 600; }

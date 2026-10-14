@@ -40,7 +40,8 @@ export type BriefField = "website" | "brand" | "category" | "categoryOther" | "p
 export type BriefProblems = Partial<Record<BriefField, string>>;
 
 // Every problem in the brief, keyed by field, so the form can show each one under its own field.
-// With a website, the other answers are optional (the plan reads the site).
+// With a website, what they sell, identity, customer and price are optional (the plan reads the site);
+// brand, category and where they sell today are always required.
 export function checkBriefFields(b: Brief, hasWebsite = false): BriefProblems {
   const out: BriefProblems = {};
   const skip = (v: string) => hasWebsite && !v.trim();
@@ -67,7 +68,8 @@ export function checkBriefFields(b: Brief, hasWebsite = false): BriefProblems {
     out.customer = `Say who buys, like "busy parents" or "students 18-24".${orBlank}`;
   if (!skip(b.price) && !/\d/.test(b.price) && !PRICE_WORDS.test(b.price) && !(hasWebsite && looksReal(b.price, 1)))
     out.price = `Add a price or a level, like "$15-25" or "premium".${orBlank}`;
-  if (!skip(b.stage) && !STAGE_WORDS.test(b.stage) && !looksReal(b.stage, min))
+  // Always required, website or not: a site can't show if they're pre-launch, in stores, wholesale or abroad.
+  if (!STAGE_WORDS.test(b.stage) && !looksReal(b.stage, min))
     out.stage = `Say where you sell today, like "pre-launch" or "own website and Amazon".${orBlank}`;
   return out;
 }
