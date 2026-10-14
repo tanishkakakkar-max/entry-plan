@@ -1,6 +1,6 @@
 # First Port (repo: entry-plan)
 
-Next.js app that writes market-entry plans. Live at https://www.findyourfirstport.com (findyourfirstport.com redirects to www). The old https://first-port-plans.vercel.app and https://entry-plan.vercel.app addresses still reach the same site.
+Next.js app that writes market-entry plans. Live at https://www.findyourfirstport.com (findyourfirstport.com redirects to www). The old https://first-port-plans.vercel.app redirects there (set in Vercel > Domains); https://entry-plan.vercel.app no longer works.
 
 ## Rules
 
