@@ -23,6 +23,16 @@ const FIELDS = ["brand", "product", "identity", "customer", "price", "stage", "c
 // Answers a brand can skip when it gives its website (the plan reads the site instead).
 // Where they sell today stays required: a website can't show stage, stores or wholesale reliably.
 const OPTIONAL_WITH_WEBSITE = ["product", "identity", "customer", "price"] as const;
+// Plain-English names for the form fields, used in the server's messages (same wording as the form).
+const FIELD_NAMES: Record<(typeof FIELDS)[number], string> = {
+  brand: "your brand name",
+  product: "what you sell",
+  identity: "your brand identity",
+  customer: "your target customer",
+  price: "your price point",
+  stage: "where you sell today",
+  country: "the market you want to enter",
+};
 type Form = Record<(typeof FIELDS)[number], string> & { accessCode?: string; category?: string; categoryOther?: string; website?: string };
 
 type Send = (text: string) => void;
@@ -152,10 +162,10 @@ export async function POST(req: Request) {
       continue;
     }
     if (typeof v !== "string" || !v.trim()) {
-      return new Response(`Please fill in: ${f}.`, { status: 400 });
+      return new Response(`Please add ${FIELD_NAMES[f]}.`, { status: 400 });
     }
     if (v.length > 1500) {
-      return new Response(`"${f}" is too long - keep it under 1,500 characters.`, { status: 400 });
+      return new Response(`Please keep ${FIELD_NAMES[f]} under 1,500 characters.`, { status: 400 });
     }
   }
 
