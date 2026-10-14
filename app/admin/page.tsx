@@ -5,6 +5,7 @@ import { BRAND } from "../components/brand";
 
 type Code = { code: string; name: string; total: number; used: number; disabled: boolean; created: string };
 type Signup = { email: string; code: string; consent: boolean; created: string; used: number; total: number };
+type Feedback = { id: string; comment: string; brand: string; country: string; kind: "live" | "example"; created: string };
 
 // CSV for importing into a newsletter tool. Quotes every field so commas in emails/dates are safe.
 function toCsv(rows: Signup[]) {
@@ -20,6 +21,7 @@ export default function Admin() {
   const [authed, setAuthed] = useState(false);
   const [codes, setCodes] = useState<Code[]>([]);
   const [signups, setSignups] = useState<Signup[]>([]);
+  const [feedback, setFeedback] = useState<Feedback[]>([]);
   const [message, setMessage] = useState("");
   const [busy, setBusy] = useState(false);
   const [name, setName] = useState("");
@@ -38,9 +40,14 @@ export default function Admin() {
   }
 
   async function load(pw = password) {
-    const [data, su] = await Promise.all([api("/api/admin/codes", {}, pw), api("/api/admin/signups", {}, pw)]);
+    const [data, su, fb] = await Promise.all([
+      api("/api/admin/codes", {}, pw),
+      api("/api/admin/signups", {}, pw),
+      api("/api/admin/feedback", {}, pw),
+    ]);
     setCodes(data.codes);
     setSignups(su.signups);
+    setFeedback(fb.feedback);
   }
 
   useEffect(() => {
@@ -113,6 +120,17 @@ export default function Admin() {
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
     a.download = `first-port-signups${onlyOptedIn ? "-opted-in" : ""}-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  function downloadFeedbackCsv() {
+    const q = (v: string) => `"${v.replace(/"/g, '""')}"`;
+    const rows = feedback.map((f) => [f.created, f.brand, f.country, f.kind, f.comment].map(q).join(","));
+    const blob = new Blob([["date,brand,country,plan,comment", ...rows].join("\n")], { type: "text/csv;charset=utf-8" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `first-port-feedback-${new Date().toISOString().slice(0, 10)}.csv`;
     a.click();
     URL.revokeObjectURL(a.href);
   }
@@ -322,6 +340,50 @@ export default function Admin() {
                   </td>
                   <td>{r.consent ? <span className="admin-status active">Yes</span> : <span className="admin-status disabled">No</span>}</td>
                   <td>{r.created ? new Date(r.created).toLocaleDateString() : ""}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section className="admin-signups" aria-labelledby="feedback-title">
+        <div className="admin-head">
+          <div>
+            <h2 id="feedback-title" className="admin-h2">
+              Feedback
+            </h2>
+            <p className="admin-sub">{feedback.length} comments left under plans</p>
+          </div>
+          <div className="admin-actions">
+            <button className="btn btn-quiet admin-small" onClick={downloadFeedbackCsv} disabled={!feedback.length}>
+              Download CSV
+            </button>
+          </div>
+        </div>
+        <div className="table-wrap admin-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Comment</th>
+                <th>Plan</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {feedback.length === 0 && (
+                <tr>
+                  <td colSpan={3}>No feedback yet.</td>
+                </tr>
+              )}
+              {feedback.map((f) => (
+                <tr key={f.id}>
+                  <td className="admin-comment">{f.comment}</td>
+                  <td>
+                    {f.brand || "Unnamed"} · {f.country}
+                    <small className="admin-date">{f.kind === "example" ? "Example plan" : "Live plan"}</small>
+                  </td>
+                  <td>{f.created ? new Date(f.created).toLocaleDateString() : ""}</td>
                 </tr>
               ))}
             </tbody>

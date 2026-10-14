@@ -29,19 +29,27 @@ const STAGE_WORDS = /\b(pre[- ]?launch|launching|idea|prototype|dtc|d2c|online|s
 const PRICE_WORDS = /\b(premium|luxury|budget|mass|mid|affordable|value|cheap|expensive|high[- ]end|entry[- ]level|free)\b/i;
 
 // Returns a friendly message for the first field that looks wrong, or null if the brief looks real.
-// With a website, the other answers are optional (the plan reads the site); anything typed is still checked.
+// With a website, the other answers are optional (the plan reads the site), and anything typed only needs to
+// be a real word or two ("Skincare", "Gen Z", "DTC"); keyboard mash is still caught.
 export function checkBrief(b: Brief, hasWebsite = false): string | null {
   const skip = (v: string) => hasWebsite && !v.trim();
+  const min = hasWebsite ? 1 : 2;
   if (!/\p{L}/u.test(b.brand) || b.brand.trim().length < 2) return "Add your brand name.";
-  if (!skip(b.product) && !looksReal(b.product, 2))
-    return 'Describe what you sell in a short phrase, for example "organic cotton basics made in India".';
-  if (!skip(b.identity) && !looksReal(b.identity, 2))
-    return 'Describe your brand identity in a few words, for example "calm, crafted, made to last".';
-  if (!skip(b.customer) && !looksReal(b.customer, 2))
-    return 'Describe your target customer in a few words, for example "women 25-40 who buy natural fabrics".';
-  if (!skip(b.price) && !/\d/.test(b.price) && !PRICE_WORDS.test(b.price))
+  if (!skip(b.product) && !looksReal(b.product, min))
+    return hasWebsite
+      ? 'That doesn\'t look like a product. Leave it blank (we\'ll read your site) or write something like "skincare".'
+      : 'Describe what you sell in a short phrase, for example "organic cotton basics made in India".';
+  if (!skip(b.identity) && !looksReal(b.identity, min))
+    return hasWebsite
+      ? 'That doesn\'t look like a brand identity. Leave it blank or write something like "playful".'
+      : 'Describe your brand identity in a few words, for example "calm, crafted, made to last".';
+  if (!skip(b.customer) && !looksReal(b.customer, min))
+    return hasWebsite
+      ? 'That doesn\'t look like a customer. Leave it blank or write something like "students".'
+      : 'Describe your target customer in a few words, for example "women 25-40 who buy natural fabrics".';
+  if (!skip(b.price) && !/\d/.test(b.price) && !PRICE_WORDS.test(b.price) && !(hasWebsite && looksReal(b.price, 1)))
     return 'Add a price point with a number or a level, for example "$40-90 per piece" or "premium".';
-  if (!skip(b.stage) && !STAGE_WORDS.test(b.stage) && !looksReal(b.stage, 2))
+  if (!skip(b.stage) && !STAGE_WORDS.test(b.stage) && !looksReal(b.stage, min))
     return 'Say where you sell today, for example "pre-launch" or "US DTC and Amazon".';
   return null;
 }

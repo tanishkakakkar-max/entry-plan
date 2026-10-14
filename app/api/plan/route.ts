@@ -3,7 +3,8 @@ import { instructions, samplePlan, countries } from "@/lib/knowledge.generated";
 import { webResearch, formatWebResults, cleanWebsiteUrl, readWebsite, formatWebsite } from "@/lib/web";
 import { CATEGORIES } from "@/lib/categories";
 import { checkBrief } from "@/lib/brief";
-import { creditsReady, normalizeCode, peekCode, refundCredit, reserveCredit } from "@/lib/credits";
+import { creditsReady, getCode, normalizeCode, peekCode, refundCredit, reserveCredit } from "@/lib/credits";
+import { briefId, getPlan, getSharedPlan, savePlan } from "@/lib/saved-plans";
 import { aiCheckBrief } from "@/lib/brief-check";
 import { formatResearch, selectResearch } from "@/lib/research";
 
@@ -186,6 +187,24 @@ export async function POST(req: Request) {
   }
   const countryName = COUNTRY_NAMES[countryKey];
 
+  // Same brief, same country, same code: hand back the saved plan. No credit, no AI call.
+  // (Works even when the code is used up, as long as it exists and isn't switched off.)
+  const planId = briefId({ ...body, website: website ?? "", category: category ?? "", country: countryKey });
+  const codeInfo = await getCode(code);
+  if (codeInfo && !codeInfo.disabled) {
+    const saved = await getPlan(code, planId).catch(() => null);
+    if (saved) {
+      return new Response(saved.text, {
+        headers: {
+          "Content-Type": "text/plain; charset=utf-8",
+          "Cache-Control": "no-store",
+          "X-Saved-Plan": saved.id,
+          "X-Credits-Left": String(Math.max(0, codeInfo.total - codeInfo.used)),
+        },
+      });
+    }
+  }
+
   const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
   if (rateLimited(ip)) {
     return new Response("You've hit the limit of 5 plans an hour. Try again later.", { status: 429 });
@@ -200,6 +219,26 @@ export async function POST(req: Request) {
         ? codeError(403, "disabled", "This code has been switched off.")
         : codeError(403, "invalid", "That access code isn't right. Check it and try again.");
   if (!codeState.ok) return refuse(codeState);
+
+  // Someone else already made a plan from exactly this brief: reuse it (no AI call), but it still costs
+  // a credit, and it's saved to this code's Your plans. Only Your plans copies of your own are free.
+  const shared = await getSharedPlan(planId).catch(() => null);
+  if (shared) {
+    const taken = await reserveCredit(code);
+    if (!taken.ok) return refuse(taken);
+    await savePlan(code, planId, { brand: body.brand.trim(), country: countryKey, category: category ?? "", text: shared }).catch((e) =>
+      console.error("saving plan failed", e),
+    );
+    console.log(`reused shared plan ${planId} for another code`);
+    return new Response(shared, {
+      headers: {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Cache-Control": "no-store",
+        "X-Credits-Left": String(taken.left),
+        "X-Plan-Id": planId,
+      },
+    });
+  }
 
   // Blank answers + website: read the site now, before any credit is spent, and stop if it's unreadable.
   const blanks = OPTIONAL_WITH_WEBSITE.filter((f) => !body[f].trim());
@@ -312,6 +351,10 @@ Target country: ${countryName}${website ? `\nWebsite: ${website}` : ""}`;
           output.trimStart().startsWith("#") && /^##\s*9\./m.test(output) && !output.includes("Something went wrong while writing");
         if (!finished) console.log(`plan not finished (${output.length} chars), credit refunded`);
         if (!finished) await refundCredit(code).catch((e) => console.error("refund failed", e));
+        else
+          await savePlan(code, planId, { brand: body.brand.trim(), country: countryKey, category: category ?? "", text: output }).catch((e) =>
+            console.error("saving plan failed", e),
+          );
         try {
           controller.close();
         } catch {}
@@ -325,6 +368,7 @@ Target country: ${countryName}${website ? `\nWebsite: ${website}` : ""}`;
       "Cache-Control": "no-store",
       // Credits left if this plan finishes; the page only shows it after a successful plan.
       "X-Credits-Left": String(reservation.left),
+      "X-Plan-Id": planId,
     },
   });
 }

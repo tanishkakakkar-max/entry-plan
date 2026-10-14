@@ -5,6 +5,8 @@ import { BRAND, COUNTRIES, countryLabel } from "./components/brand";
 import { CountryOutline, WorldMap } from "./components/Maps";
 import { LogoMark } from "./components/Logo";
 import { PlanView, cleanPlanText } from "./components/PlanView";
+import { FeedbackForm } from "./components/FeedbackForm";
+import { YourPlans, type SavedPlan } from "./components/YourPlans";
 import { EXAMPLE_BRANDS } from "./components/examples";
 import { exampleKeys } from "@/lib/examples-index.generated";
 import { CATEGORIES } from "@/lib/categories";
@@ -74,12 +76,17 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [phase, setPhase] = useState(0);
   const [planCountry, setPlanCountry] = useState("");
+  const [planBrand, setPlanBrand] = useState("");
   const [copied, setCopied] = useState(false);
   const [exampleBrand, setExampleBrand] = useState<string>("");
   const [retryIn, setRetryIn] = useState(0);
   const [errorKind, setErrorKind] = useState<"" | "missing" | "used_up">("");
   const [creditsLeft, setCreditsLeft] = useState<number | null>(null);
   const [savedExample, setSavedExample] = useState(false);
+  // A plan from "Your plans": "repeat" = same brief asked again (no credit used), "opened" = opened from the list.
+  const [savedNote, setSavedNote] = useState<"" | "repeat" | "opened">("");
+  const [planId, setPlanId] = useState("");
+  const [plansVersion, setPlansVersion] = useState(0);
 
   // Remember the access code on this device (a convenience only; it may not be available).
   useEffect(() => {
@@ -119,7 +126,10 @@ export default function Home() {
     setPlan("");
     setCreditsLeft(null);
     setSavedExample(false);
+    setSavedNote("");
+    setPlanId("");
     setPlanCountry(countryLabel(form.country));
+    setPlanBrand(form.brand.trim());
     setTimeout(() => planRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
 
     const problem = checkBrief(form, !!form.website.trim());
@@ -150,6 +160,14 @@ export default function Home() {
           return;
         }
         const left = Number(res.headers.get("X-Credits-Left"));
+        const savedId = res.headers.get("X-Saved-Plan");
+        if (savedId) {
+          setPlan(await res.text());
+          setPlanId(savedId);
+          setSavedNote("repeat");
+          if (Number.isFinite(left)) setCreditsLeft(left);
+          return;
+        }
         const reader = res.body.getReader();
         const decoder = new TextDecoder();
         let text = "";
@@ -163,6 +181,10 @@ export default function Home() {
         }
         if (!text.startsWith(BUSY)) {
           if (text.trimStart().startsWith("#") && Number.isFinite(left)) setCreditsLeft(left);
+          if (/^##\s*9\./m.test(text)) {
+            setPlanId(res.headers.get("X-Plan-Id") ?? "");
+            setPlansVersion((v) => v + 1); // show it in Your plans
+          }
           return;
         }
         if (attempt === 2) {
@@ -190,7 +212,10 @@ export default function Home() {
     setError("");
     setErrorKind("");
     setCreditsLeft(null);
+    setSavedNote("");
+    setPlanId("");
     setPlanCountry(countryLabel(country));
+    setPlanBrand(EXAMPLE_BRANDS.find((b) => b.key === brand)?.name ?? brand);
     try {
       const { examplePlans } = await import("@/lib/examples.generated");
       const text = examplePlans[`${brand}-${country}`];
@@ -208,6 +233,20 @@ export default function Home() {
     await navigator.clipboard.writeText(cleanPlanText(plan));
     setCopied(true);
     setTimeout(() => setCopied(false), 1500);
+  }
+
+  function openSaved(p: SavedPlan) {
+    if (loading) return;
+    setError("");
+    setErrorKind("");
+    setCreditsLeft(null);
+    setSavedExample(false);
+    setSavedNote("opened");
+    setPlanId(p.id);
+    setPlanCountry(countryLabel(p.country));
+    setPlanBrand(p.brand);
+    setPlan(p.text);
+    setTimeout(() => planRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
   }
 
   function startOver() {
@@ -483,6 +522,7 @@ export default function Home() {
               </button>
             </div>
           </form>
+          <YourPlans code={accessCode} refresh={plansVersion} openId={planId} onOpen={openSaved} />
         </section>
 
         {showResults && (
@@ -537,6 +577,17 @@ export default function Home() {
               </div>
             )}
 
+            {savedNote && plan && (
+              <div className="example-label">
+                <span className="example-badge">{savedNote === "repeat" ? "Saved plan · no credit used" : "Saved plan"}</span>
+                <span className="no-print">
+                  {savedNote === "repeat"
+                    ? "You've made this plan before, so here it is again. For a fresh one, change your answers or delete it from Your plans."
+                    : "From Your plans. It's kept for 30 days."}
+                </span>
+              </div>
+            )}
+
             {plan && (
               <>
                 <PlanView plan={plan} country={planCountry} streaming={loading} />
@@ -584,6 +635,14 @@ export default function Home() {
                     </p>
                   )}
                 </div>
+                {!loading && plan.trimStart().startsWith("#") && (
+                  <FeedbackForm
+                    key={`${planBrand}-${planCountry}-${plan.length}`}
+                    brand={planBrand}
+                    country={planCountry}
+                    kind={savedExample ? "example" : "live"}
+                  />
+                )}
               </>
             )}
           </section>
