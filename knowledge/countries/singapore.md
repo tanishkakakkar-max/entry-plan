@@ -33,12 +33,44 @@ Brands typically enter Singapore as a Southeast Asia beachhead, not a destinatio
 Default recommendation: use Singapore as a low-friction test (English, simple customs, strong logistics), with a plan for which SEA market comes next.
 
 ## 5. Regulations, tariffs, costs
-- GST: 9% from 2024 [VERIFY]; GST also applies to low-value imported goods sold to consumers via overseas vendors above registration thresholds [VERIFY].
-- Customs duties: most goods, including apparel, enter duty-free; duties mainly on alcohol, tobacco, motor vehicles, petroleum [VERIFY].
-- (Beauty) ASEAN Cosmetic Directive; product notification to HSA by a local company before sale [VERIFY].
 - Medical devices: HSA registration, risk-class based; local registrant needed [VERIFY].
-- (Health & wellness) Health supplements: HSA rules on claims; no medicinal claims.
 - Advertising: ASAS code governs claims; environmental and health claims need substantiation [VERIFY].
+
+### Import duties, taxes and entry rules (checked October 2026)
+From the Oct 15, 2026 import-duty research (official customs and regulator sources where available; third-party lookups labeled).
+
+#### How landed cost is built
+- **Only four categories are dutiable:** intoxicating liquor, tobacco products, motor vehicles, and petroleum products and biodiesel blends. Everything else is non-dutiable, though GST and permits can still apply. [Singapore Customs, dutiable goods (updated Mar 2026)](https://www.customs.gov.sg/doing-business/valuation-duties-and-fees/duties-and-dutiable-goods/duties-and-dutiable-goods-overview/)
+- **GST: 9%**, normally on customs value (or the applicable last selling price); for dutiable goods, duty is included in the GST base. [Singapore Customs, GST on imports](https://www.customs.gov.sg/doing-business/valuation-duties-and-fees/goods-and-services-tax-gst/), [IRAS](https://www.iras.gov.sg/taxes/goods-services-tax-%28gst%29/basics-of-gst/current-gst-rates)
+- Trade agreements add no duty benefit for non-dutiable goods.
+
+#### Small parcels and cross-border online sales
+- Low-value goods are items of **S$400 or less** imported by air or post. If the seller or marketplace is GST-registered, GST is charged at checkout and not again at import. If not, import GST is charged when the shipment's total CIF value exceeds S$400; shipments of S$400 or less (not liquor or tobacco) keep import GST relief. [Singapore Customs, GST on low-value goods](https://www.customs.gov.sg/personal-shipment/buying-from-overseas/gst-on-low-value-goods/)
+- An overseas seller must register for GST when global turnover exceeds S$1M **and** sales to Singapore customers exceed S$100,000 in 12 months (within 30 days). [ASEAN Briefing, Oct 2025](https://www.aseanbriefing.com/news/gst-in-singapore-when-overseas-vendors-must-register-and-collect-tax/)
+
+#### Commercial imports
+- Importers need a Unique Entity Number, an activated Customs account and the right TradeNet import permit; controlled goods also need the competent authority's approval. [Singapore Customs, import permits](https://www.customs.gov.sg/doing-business/import-operations/import-procedures/obtain-a-customs-import-permit/), [controlled goods](https://www.customs.gov.sg/doing-business/import-operations/import-procedures/controlled-and-prohibited-goods-for-imports/)
+
+#### Entry rules by category (non-tariff)
+- (Beauty) No pre-market approval, but a **Singapore-registered company must notify HSA** through PRISM before supply (S$13 per product, S$28 for eye, lip, oral or hair-dye products; renewed yearly). Follows the ASEAN Cosmetic Directive; labels need INCI ingredients, country of manufacture, batch and the local company's name. [Artixio, HSA cosmetics](https://www.artixio.com/health-sciences-authority-hsa-regulation-of-cosmetics-in-singapore/)
+- (Health & wellness) No pre-market approval, but dealers are responsible for safety, quality, labelling and permitted claims; medicinal claims or ingredients change the classification. [HSA, health supplements](https://www.hsa.gov.sg/health-supplements/overview/) Notification is voluntary today (664 products by June 2026); HSA proposed **mandatory notification** (consultation July 2026; phased from Q3 2028; full by Q3 2030). [NutraIngredients, Jul 2026](https://www.nutraingredients.com/Article/2026/07/02/singapore-regulator-proposes-mandatory-health-supplements-notification/) Therapeutic products need an HSA dealer's or import licence. [HSA](https://www.hsa.gov.sg/therapeutic-products/manufacturing-import-wholesale/)
+- (Food, Restaurants) Importers must register with SFA and get a **permit for every consignment** through TradeNet; permitted additives only; SFA labelling rules; meat and eggs only from approved sources with health certificates. Protein bars and teas are food, not "just supplements". [SFA, commercial food imports](https://sfa.gov.sg/food-import-export/commercial-food-imports)
+- (Technology) Telecom and radio equipment (routers, wireless earbuds) may need IMDA dealer licensing and equipment registration; chargers and power banks have safety and transport rules [VERIFY]. [IMDA, equipment registration](https://www.imda.gov.sg/regulations-and-licensing-listing/equipment-registration)
+
+#### Worked example
+- **Vitamins** (Singapore Customs' own example of a non-dutiable good): customs value S$1,000, duty S$0, GST 9% = S$90, before permit, courier and compliance costs.
+
+**So what:** budget 0% duty plus 9% GST for almost everything except alcohol. The real launch gate is a local importer, permits and HSA/SFA/IMDA classification, not tariffs.
+
+#### Quick reference by brand origin (into Singapore)
+| Goods made in | Duty and tax into Singapore |
+|---|---|
+| India | 0% duty, 9% GST |
+| U.S. | 0% duty, 9% GST |
+| U.K. / EU | 0% duty, 9% GST |
+| China | 0% duty, 9% GST |
+| ASEAN, Australia | 0% duty, 9% GST |
+| Switzerland / Norway | 0% duty, 9% GST |
 
 ## 6. Cultural fit risks
 - Treating SEA as one market. Singapore success does not predict Indonesia, Vietnam or the Philippines (all Southeast Asian, all very different).
