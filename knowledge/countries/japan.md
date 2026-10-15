@@ -81,10 +81,10 @@ From the Oct 15, 2026 import-duty research (official customs and regulator sourc
 | (Technology) laptops (8471.30), other computers (8471.41/.49/.80), smartphones (8517.13), routers (8517.62), chargers (8504.40), lithium-ion batteries (8507.60), headphones and earbuds (8518.30), chips (8542) | Free | 10% consumption tax still applies. [Japan tariff schedule, ch. 84](https://www.customs.go.jp/english/tariff/2026_08_08/data/e_84.htm), [ch. 85](https://www.customs.go.jp/english/tariff/2026_08_08/data/e_85.htm) |
 | (Food) chocolate | 10% | [Japan Customs, major products](https://www.customs.go.jp/english/c-answer_e/imtsukan/1204_e.htm) |
 | (Food) oolong and black tea (raw, ch. 9) | 3-17% | same |
-| (Food) tea extracts and preparations (2101.20) | Instant tea 10% WTO; other extracts 8% WTO; milk or sugar preparations from 15% up to 29.8% plus a yen/kg charge | [Japan tariff schedule, ch. 21](https://www.customs.go.jp/english/tariff/2026_08_01/data/e_21.htm) |
+| (Food) tea extracts and preparations (2101.20) | Instant tea 10% WTO; other extracts 8% WTO; milk or sugar preparations from 15% up to 29.8% plus a yen/kg charge | [Japan tariff schedule, ch. 21](https://www.customs.go.jp/english/tariff/2026_08_08/data/e_21.htm) |
 | (Food) coffee | Free-12% | [Japan Customs, major products](https://www.customs.go.jp/english/c-answer_e/imtsukan/1204_e.htm) |
 | (Food) wine | ¥45-182 per liter | same |
-| (Health & wellness) food supplements with a vitamin basis (2106.90-261/262/269) | 12.5%; free in many EPA columns | Formulas with 30%+ milk solids move to other lines: 12% (beverage or supplement bases), 21%, or 29.8% plus ¥679-1,159/kg. [Japan tariff schedule, ch. 21](https://www.customs.go.jp/english/tariff/2026_08_01/data/e_21.htm) [VERIFY classification per product] |
+| (Health & wellness) food supplements with a vitamin basis (2106.90-261/262/269) | 12.5%; free in many EPA columns | Formulas with 30%+ milk solids move to other lines: 12% (beverage or supplement bases), 21%, or 29.8% plus ¥679-1,159/kg. [Japan tariff schedule, ch. 21](https://www.customs.go.jp/english/tariff/2026_08_08/data/e_21.htm) [VERIFY classification per product] |
 | (Health & wellness) protein concentrates (2106.10) | Vegetable-protein lines 10.6-12.5%; other lines 15-25%, or 29.8% plus ¥1,155/kg if milk-based | Milk content, added sugar, protein level and pack size change the line. Same source. [VERIFY classification per product] |
 
 #### Trade agreements: the rate depends on where goods are made, with proof
@@ -92,7 +92,7 @@ From the Oct 15, 2026 import-duty research (official customs and regulator sourc
 - Example, (Apparel) cotton dresses, HS 6204.42-200: general 11.2%, WTO 9.1%. **Free** under the EPAs with India, Vietnam, ASEAN, Singapore, Thailand, Malaysia, Indonesia, the Philippines, Australia, Switzerland, the EU and the U.K., under CPTPP, and under RCEP for ASEAN/Australia/NZ. **5.7%** from China under RCEP. No U.S. preference listed, so U.S.-made dresses pay 9.1%. Free for least-developed countries. [Kanzei, HS 6204.42](https://www.kanzei.or.jp/statistical/tariff/detail/index/e/6204422000)
 - Example, (Health & wellness) protein preparation, HS 2106.90-296: 12.5%; **free** under most EPAs (India, ASEAN, Australia, EU, U.K., CPTPP, Japan-US Trade Agreement); 7.8% under RCEP for ASEAN/Australia/NZ. [Kanzei, HS 2106.90-296](https://www.kanzei.or.jp/statistical/tariff/detail/index/e/2106902965)
 - Under RCEP, Japan phases out apparel duties over about 21 years and is slowest for China; its Asian agreements generally use fabric-forward origin rules. [Sheng Lu Fashion, 2022](https://shenglufashion.com/tag/rcep)
-- **So what:** an Indian, Vietnamese, EU, U.K. or Australian apparel brand can enter Japan duty-free with origin proof (OLVAE: India-made garments under the Japan-India CEPA). Technology is already duty-free, so origin brings no duty advantage there.
+- **So what:** specific qualifying apparel lines made in India, Vietnam, the EU, the U.K. or Australia can enter Japan duty-free with origin proof. Not every apparel line does, so check each product's HS line and the agreement's origin rule (OLVAE: check each India-made garment under the Japan-India CEPA). Technology is already duty-free, so origin brings no duty advantage there.
 
 #### Small parcels and cross-border online sales
 - Shipments with a total customs value of **¥10,000 or less** are exempt from duty and consumption tax (not from liquor or tobacco tax). **Excluded:** leather bags, handbags and gloves; knitted apparel (T-shirts, sweaters); ski boots; leather shoes and leather-soled footwear. Values combine per invoice, per package and across parcels sent together, so don't split consignments to qualify. [Japan Customs FAQ 1006](https://www.customs.go.jp/english/c-answer_e/imtsukan/1006_e.htm)
@@ -112,7 +112,7 @@ From the Oct 15, 2026 import-duty research (official customs and regulator sourc
 #### Quick reference by brand origin (into Japan)
 | Goods made in | Duty and tax into Japan |
 |---|---|
-| India | EPA: many lines free (e.g. apparel) |
+| India | EPA: many lines free (e.g. cotton dresses, 6204.42) |
 | U.S. | MFN/WTO (e.g. cotton dress 9.1%); tech free |
 | U.K. / EU | EPA: many lines free |
 | China | RCEP partial (e.g. dress 5.7%) |

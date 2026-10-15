@@ -40,20 +40,22 @@ From the Oct 15, 2026 import-duty research (official customs and regulator sourc
 3. **AIDC, Health Cess, anti-dumping, safeguard or other levies** where applicable.
 4. **IGST** at the domestic GST rate for the product, on value plus BCD and customs levies. [GST Council, imports](https://gstcouncil.gov.in/sites/default/files/e-version-gst-flyers/Imports_in_GST_Regime.pdf)
 
-**Rule:** never give a single "India tariff" for a category. Indicative rates below show the scale only; the plan must tell the brand to run the live [ICEGATE Customs Duty Calculator](https://www.icegate.gov.in/cdc) or [Trade Guide](https://www.icegate.gov.in/Webappl/Trade-Guide-on-Imports) with its 8-digit code, origin and date, because exemption notifications and FTA rates override the schedule.
+**Rule:** never give a single "India tariff" for a category. The plan must tell the brand to run the live [ICEGATE Customs Duty Calculator](https://www.icegate.gov.in/cdc) or [Trade Guide](https://www.icegate.gov.in/Webappl/Trade-Guide-on-Imports) with its 8-digit code, origin and date, because exemption notifications and FTA rates override the schedule.
 
 #### Indicative rates and gates by category (commercial imports)
-| Category | Indicative BCD (third-party lookups) | Main non-tariff gate |
+**Indicative and unverified.** The apparel, beauty, protein and mobile-phone numbers below come from third-party lookups (Cusbuzz, Treayo, Taxscan), not from CBIC or ICEGATE. They show the scale of costs only. The plan writer must not quote them as the rate; it applies the ICEGATE rule above.
+
+| Category | Indicative BCD, unverified (third-party lookups) | Main non-tariff gate |
 |---|---|---|
-| (Apparel) e.g. women's suits, HS 6204.51 | 20% or ₹485 per piece, whichever higher; SWS shown as 0% [VERIFY]. [Cusbuzz](https://cusbuzz.com/custom-duty-india-hs-62045100) | BIS QCOs on some textiles and footwear (see below) |
-| (Beauty) moisturizing lotion, HS 3304.99.30 | 20%, SWS 2%, IGST 18%: about 44% total. [Treayo, citing DGFT ITC-HS 2025-26](https://treayo.com/en/hs/india/33049930) | CDSCO import registration |
-| (Health & wellness) protein concentrates, HS 2106.10 | 40%, SWS 4%, IGST 5%: about 51% total. [Treayo](https://treayo.com/en/hs/india/21061000) [VERIFY IGST after GST 2.0] | FSSAI licence and clearance |
+| (Apparel) e.g. women's suits, HS 6204.51 | 20% or ₹485 per piece, whichever higher; SWS shown as 0%. [Cusbuzz](https://cusbuzz.com/custom-duty-india-hs-62045100) [VERIFY on ICEGATE] | BIS QCOs on some textiles and footwear (see below) |
+| (Beauty) moisturizing lotion, HS 3304.99.30 | 20%, SWS 2%, IGST 18%: about 44% total. [Treayo, citing DGFT ITC-HS 2025-26](https://treayo.com/en/hs/india/33049930) [VERIFY on ICEGATE] | CDSCO import registration |
+| (Health & wellness) protein concentrates, HS 2106.10 | 40%, SWS 4%, IGST 5%: about 51% total. [Treayo](https://treayo.com/en/hs/india/21061000) [VERIFY on ICEGATE, including IGST after GST 2.0] | FSSAI licence and clearance |
 | (Health & wellness) finished supplements, often HS 2106.90 | Query ICEGATE. Budget 2026 moved the existing effective rate into the First Schedule from May 1, 2026 without changing it. [Budget 2026-27 rate changes](https://www.indiabudget.gov.in/doc/cen/dojstru1.pdf) | FSSAI standards, labels, claims, clearance |
 | (Food) tea and botanicals (ch. 9, 13, 21 or 30) | Query ICEGATE | FSSAI; plant quarantine, AYUSH or drug rules depending on form and claims [VERIFY] |
-| (Technology) mobile phones and chargers | 15% (cut from 20% in Budget 2024). [Taxscan](https://www.taxscan.in/budget-2024-fm-proposes-to-reduce-customs-rate-on-mobile-phone-and-chargers/421326) [VERIFY current] | BIS registration; WPC for radio [VERIFY] |
+| (Technology) mobile phones and chargers | 15% (cut from 20% in Budget 2024). [Taxscan](https://www.taxscan.in/budget-2024-fm-proposes-to-reduce-customs-rate-on-mobile-phone-and-chargers/421326) [VERIFY on ICEGATE] | BIS registration; WPC for radio [VERIFY] |
 | (Technology) laptops, tablets, routers, power banks, earbuds, chips | Query ICEGATE | BIS registration for most; WPC for wireless [VERIFY] |
-- Worked stack: BCD 20%, SWS 2%, IGST 18% → 100 × 1.22 × 1.18 = **about 44%** above value; with IGST 5%, about 28%.
-- **So what:** imported consumer goods typically land 28-51% above value before margin, which is why brands that scale in India manufacture locally or partner with an Indian manufacturer.
+- How the stack compounds (formula illustration, not a rate): BCD 20%, SWS 2%, IGST 18% → 100 × 1.22 × 1.18 = **about 44%** above value; with IGST 5%, about 28%.
+- **So what:** on these indicative numbers, imported consumer goods can land roughly 28-51% above value before margin, which is why brands that scale in India manufacture locally or partner with an Indian manufacturer. Confirm the actual figure on ICEGATE.
 
 #### GST after the Sept 22, 2025 rationalization (also the IGST rate on imports)
 | Product | GST |
@@ -91,7 +93,7 @@ Source: [Khaitan & Co, Sep 2025](https://www.khaitanco.com/sites/default/files/2
 | Goods made in | Duty and tax into India |
 |---|---|
 | India | Home market |
-| U.S. | MFN (e.g. apparel 20% + IGST) |
+| U.S. | MFN; run the HS code on ICEGATE |
 | U.K. / EU | U.K.: CETA phased cuts; EU: MFN [VERIFY EU-India FTA status] |
 | China | MFN; watch anti-dumping duties |
 | ASEAN, Australia | India-ASEAN and India-Australia ECTA [VERIFY per line] |

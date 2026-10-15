@@ -60,7 +60,7 @@ From the Oct 15, 2026 import-duty research (official customs and regulator sourc
 #### Worked example
 - **Vitamins** (Singapore Customs' own example of a non-dutiable good): customs value S$1,000, duty S$0, GST 9% = S$90, before permit, courier and compliance costs.
 
-**So what:** budget 0% duty plus 9% GST for almost everything except alcohol. The real launch gate is a local importer, permits and HSA/SFA/IMDA classification, not tariffs.
+**So what:** budget 0% duty plus 9% GST for ordinary consumer goods. Liquor, tobacco, motor vehicles and petroleum products are the dutiable exceptions. The real launch gate is a local importer, permits and HSA/SFA/IMDA classification, not tariffs.
 
 #### Quick reference by brand origin (into Singapore)
 | Goods made in | Duty and tax into Singapore |
