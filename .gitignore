@@ -15,3 +15,6 @@ lib/examples.generated.ts
 .DS_Store
 lib/research.generated.ts
 drafts/
+
+# Scratch copies of research notes (never commit; the real notes live in knowledge/)
+Claude outputs/
