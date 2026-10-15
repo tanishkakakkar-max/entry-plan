@@ -30,7 +30,21 @@ Legend: [VERIFY] = check against a primary source. [TANI] = needs Tanishka's own
 | Distributor / importer | Food, beverage, regulated goods | Margin stacking (three-tier system for alcohol) |
 
 ## 5. Regulations, tariffs, costs (fast-moving - re-verify each quarter)
-- Tariffs: the regime changed repeatedly in 2025-2026. As of an Oct 2026 check of secondary sources: the Supreme Court struck down IEEPA tariffs (Feb 20, 2026); a 10% Section 122 surcharge ran Feb-Jul 2026; since Jul 24, 2026 a tiered Section 301 tariff (10% or 12.5% by country) applies on top of normal MFN duty, with India in the 10% tier and under legal challenge [VERIFY with CBP / a customs broker]. Example: cotton knit tops (HTS 6109.10.00) carry 16.5% MFN duty plus the 10% surcharge [VERIFY].
+- Tariffs: the regime changed repeatedly in 2025-2026. As of an Oct 2026 check of secondary sources: the Supreme Court struck down IEEPA tariffs (Feb 20, 2026); a 10% Section 122 surcharge ran Feb-Jul 2026; since Jul 24, 2026 a tiered Section 301 tariff (10% or 12.5% by country) applies on top of normal MFN duty, with India in the 10% tier (confirmed in the notice; see the table below) and under legal challenge [VERIFY with CBP / a customs broker]. Example: cotton knit tops (HTS 6109.10.00) carry 16.5% MFN duty plus the 10% surcharge [VERIFY].
+### Section 301 tariffs from July 24, 2026
+Source: USTR final notice, 91 FR 47318 (Jul 28, 2026), checked economy by economy in the notice text: https://www.federalregister.gov/documents/2026/07/28/2026-15181/notice-of-actions-in-section-301-investigations-of-acts-policies-and-practices-of-various-economies. The tariff is added on top of the normal MFN duty, except where a combined cap applies. All 60 investigated economies are listed; an economy not listed here is not covered by this action.
+
+| Rate | Economies |
+|---|---|
+| **10%** (17) | Argentina, Bangladesh, Cambodia, Canada, Ecuador, El Salvador, Guatemala, Honduras, India, Indonesia, Jordan, Malaysia, Mexico, Pakistan, Sri Lanka, Trinidad and Tobago, United Kingdom |
+| **10% combined cap** (2) | European Union, Taiwan |
+| **12.5% combined cap** (3) | Japan, South Korea, Switzerland |
+| **12.5%** (38) | Algeria, Angola, Australia, Bahrain, Brazil, Chile, China, Colombia, Costa Rica, Dominican Republic, Egypt, Guyana, Hong Kong, Iraq, Israel, Kazakhstan, Kuwait, Libya, Morocco, New Zealand, Nicaragua, Nigeria, Norway, Oman, Peru, Philippines, Qatar, Russia, Saudi Arabia, Singapore, South Africa, Thailand, The Bahamas, Türkiye, United Arab Emirates, Uruguay, Venezuela, Vietnam |
+
+- **Combined-cap rule (EU, Taiwan, Japan, South Korea, Switzerland):** the Section 301 tariff tops the normal MFN duty up to the cap (10% for the EU and Taiwan, 12.5% for Japan, South Korea and Switzerland). If a product's MFN duty is already at or above the cap, the Section 301 tariff is zero. Example: an EU product with 4% MFN duty pays 6% Section 301 (10% total); one with 16.5% MFN pays no Section 301.
+- **Exempt for all 60 economies (Annex II, Part A, no scope limitation):** smartphones (8517.13.00), computers (all of 8471, including laptops 8471.30.01), computer parts (8473.30), routers (8517.62.00), semiconductors (8541, 8542), bulk vitamins and vitamin mixes (2936) and vitamin medicaments in dosage form (3004.50). See `research/us-technology.md` and `research/us-health-wellness.md`.
+- **Not exempt, so they pay the rate above:** finished supplements under 2106.90.99 (that line is exempt only for açaí preparations for beverages), botanical extracts (1302), protein concentrates and isolates (2106.10, 3504), and consumer tech accessories: chargers (8504.40), lithium-ion batteries and power banks (8507.60), earbuds and headphones (8518.30.20) and speakers, which are exempt only as civil-aircraft parts. See the same two notes.
+- Also exempt: goods already under Section 232 tariffs; some countries have extra exemptions in their own part of Annex II. Older China Section 301 lists (2018-19) may still stack on Chinese goods. [VERIFY the HTS code and stacking with a customs broker]
 - De minimis: the $800 duty-free exemption for low-value shipments was suspended for all countries from Aug 29, 2025 [VERIFY current status]. -> Shipping single orders cross-border into the US now carries duties and brokerage; bulk import to a US warehouse is usually cheaper.
 - (Apparel) Textile labeling: Textile Fiber Products Identification Act - fiber content, country of origin, manufacturer identity; care labeling rule [VERIFY].
 - Environmental claims: FTC Green Guides govern claims like "eco-friendly" or "organic"; vague claims are risky [VERIFY latest update status].
@@ -52,5 +66,6 @@ Legend: [VERIFY] = check against a primary source. [TANI] = needs Tanishka's own
 - TikTok, Instagram, YouTube, Pinterest (strong for home and fashion), Reddit for research-heavy categories, podcasts.
 
 ## 9. Sources
+- Section 301 rates and exemptions: USTR final notice, 91 FR 47318, Jul 28, 2026 (Federal Register doc 2026-15181), including Annex II, Part A.
 - Tariff timeline (secondary, Oct 2026): firstresort.in "India Apparel Export Tariffs 2026: The Timeline"; tariffstool.com India tariff guide.
 - [TANI] Primary sources: CBP, USITC HTS, FTC, FDA.
