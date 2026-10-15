@@ -54,8 +54,8 @@ From the Oct 15, 2026 import-duty research (official customs and regulator sourc
 | (Food) tea and botanicals (ch. 9, 13, 21 or 30) | Query ICEGATE | FSSAI; plant quarantine, AYUSH or drug rules depending on form and claims [VERIFY] |
 | (Technology) mobile phones and chargers | 15% (cut from 20% in Budget 2024). [Taxscan](https://www.taxscan.in/budget-2024-fm-proposes-to-reduce-customs-rate-on-mobile-phone-and-chargers/421326) [VERIFY on ICEGATE] | BIS registration; WPC for radio [VERIFY] |
 | (Technology) laptops, tablets, routers, power banks, earbuds, chips | Query ICEGATE | BIS registration for most; WPC for wireless [VERIFY] |
-- How the stack compounds (formula illustration, not a rate): BCD 20%, SWS 2%, IGST 18% → 100 × 1.22 × 1.18 = **about 44%** above value; with IGST 5%, about 28%.
-- **So what:** on these indicative numbers, imported consumer goods can land roughly 28-51% above value before margin, which is why brands that scale in India manufacture locally or partner with an Indian manufacturer. Confirm the actual figure on ICEGATE.
+- How the stack compounds: landed cost = value × (1 + 1.1 × BCD) × (1 + IGST), when SWS is 10% of BCD and no cess applies. Get BCD and IGST from ICEGATE.
+- **So what:** duty, surcharge and IGST compound, so imported consumer goods can land well above value before margin. This is why brands that scale in India manufacture locally or partner with an Indian manufacturer.
 
 #### GST after the Sept 22, 2025 rationalization (also the IGST rate on imports)
 | Product | GST |
