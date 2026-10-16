@@ -1,6 +1,7 @@
 // Picks which research notes (knowledge/research) go into a live plan. Category-first:
 // - a note is included only if its categories match the brand's category, or it's tagged [all];
-// - countries are used for ranking only: notes tagged with the target country (or [all]) come first;
+// - countries are used for ranking only: notes tagged with the target country (or [all]) come first,
+//   and among those, notes tagged with only the target country come before multi-country notes;
 // - the set is capped at about 20,000 tokens.
 // Example plans (knowledge/examples) are never used here.
 import { researchNotes, type ResearchNote } from "./research.generated";
@@ -8,8 +9,8 @@ import { researchNotes, type ResearchNote } from "./research.generated";
 // App categories -> the category tags used in research front matter.
 const CATEGORY_TAGS: Record<string, string[]> = {
   // Jewellery sits under accessories.
-  "Apparel & accessories": ["apparel", "accessories", "fashion", "jewellery", "jewelry"],
-  "Beauty & personal care": ["beauty", "personal care", "skincare", "cosmetics"],
+  "Apparel & accessories": ["apparel", "apparel & accessories", "accessories", "fashion", "jewellery", "jewelry"],
+  "Beauty & personal care": ["beauty", "beauty & personal care", "personal care", "skincare", "cosmetics"],
   "Home & living": ["home goods", "home & living", "ceramics"],
   "Food & beverage": ["food & beverage", "restaurants", "food"],
   "Health & wellness": ["health & wellness", "wellness", "supplements"],
@@ -28,14 +29,17 @@ export function selectResearch(countryKey: string, category?: string): PickedNot
       const all = n.categories.includes("all");
       const catMatch = n.categories.some((c) => wantedCats.includes(c));
       const countryMatch = n.countries.includes("all") || n.countries.includes(countryKey);
-      const why = `${catMatch ? "category match" : "all"}${countryMatch ? " + country" : ""}`;
-      return { n, include: catMatch || all, countryMatch, catMatch, why };
+      const countryOnly = n.countries.length === 1 && n.countries[0] === countryKey;
+      const why = `${catMatch ? "category match" : "all"}${countryOnly ? " + country only" : countryMatch ? " + country" : ""}`;
+      return { n, include: catMatch || all, countryMatch, countryOnly, catMatch, why };
     })
     .filter((x) => x.include)
-    // Target country first; then specific category matches before [all] notes; then by name.
+    // Target country first; then single-country notes before multi-country ones;
+    // then specific category matches before [all] notes; then by name.
     .sort(
       (a, b) =>
         Number(b.countryMatch) - Number(a.countryMatch) ||
+        Number(b.countryOnly) - Number(a.countryOnly) ||
         Number(b.catMatch) - Number(a.catMatch) ||
         a.n.file.localeCompare(b.n.file),
     );
