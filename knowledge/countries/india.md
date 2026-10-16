@@ -71,7 +71,7 @@ Source: [Khaitan & Co, Sep 2025](https://www.khaitanco.com/sites/default/files/2
 - **So what:** the ₹2,500 line (about US$28-30) is a pricing lever: a garment just above it pays 18% instead of 5%.
 
 #### Personal-use imports (heading 9804): not for inventory
-- From **April 1, 2026**, BCD on dutiable goods imported for personal use is **10%** (previously 10% or 20%). [Budget speech 2026-27](https://www.indiabudget.gov.in/doc/budget_speech.pdf), [LKS](https://www.lkslaw.com/insights/news/union-budget-2026-changes-in-customs-law-and-duty-rates) Customs guidance applies SWS at 10% of BCD and IGST at 28% on 9804. [CBIC courier guidance](https://courier.cbic.gov.in/PN%20Bengaluru/PN%20issued%20by%20Bangalore%20Customs%20on%20duty%20structure.pdf) Illustration: ₹100,000 → BCD ₹10,000 + SWS ₹1,000 + IGST ₹31,080 = **about 42%**.
+- From **April 1, 2026**, BCD on dutiable goods imported for personal use is **10%** (previously 10% or 20%). [Budget speech 2026-27](https://www.indiabudget.gov.in/doc/budget_speech.pdf), [LKS](https://www.lkslaw.com/insights/news/union-budget-2026-changes-in-customs-law-and-duty-rates) Customs guidance applies SWS at 10% of BCD and IGST at 28% on 9804. [CBIC courier guidance](https://courier.cbic.gov.in/PN%20Bengaluru/PN%20issued%20by%20Bangalore%20Customs%20on%20duty%20structure.pdf) These compound: IGST is charged on value plus BCD and SWS.
 - Caution: the 28% GST slab was abolished in the Sept 2025 rationalization (except a 40% rate for specified goods), so the 28% IGST on 9804 may be outdated [VERIFY current IGST on 9804 with CBIC]. Never use 9804 rates for commercial stock, and don't treat the ₹10,000 gift and sample definitions in courier rules as an e-commerce de minimis.
 
 #### Trade agreements now in force
