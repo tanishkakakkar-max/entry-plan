@@ -52,6 +52,15 @@ Source: USTR final notice, 91 FR 47318 (Jul 28, 2026), checked economy by econom
 - (Food, Restaurants) FDA registration, labeling, allergen rules; restaurants also need state and city health permits [VERIFY].
 - Sales tax: varies by state; economic nexus thresholds after Wayfair [VERIFY].
 
+### Section 232 tariffs on wooden furniture, cabinets and vanities (checked October 2026)
+Sources: Proclamation 10976, 90 FR 48127 (Oct 6, 2025), https://www.federalregister.gov/documents/2025/10/06/2025-19482/adjusting-imports-of-timber-lumber-and-their-derivative-products-into-the-united-states ; amendment, 91 FR 1039 (Jan 9, 2026), https://www.federalregister.gov/documents/2026/01/09/2026-00327/amendments-to-adjusting-imports-of-timber-lumber-and-their-derivative-products-into-the-united
+
+- (Home) Since Oct 14, 2025: **25%** on certain upholstered wooden products (upholstered furniture) and **25%** on kitchen cabinets and vanities, plus **10%** on softwood timber and lumber. Only products listed in the proclamation's Annex I are covered; non-upholstered wooden furniture such as a solid-wood dining table is not named [VERIFY the HTS line against Annex I].
+- (Home) The increase to **30%** (upholstered furniture) and **50%** (kitchen cabinets and vanities) was moved from Jan 1, 2026 to **Jan 1, 2027** by the December 31, 2025 amendment, except for countries that reach a wood-products agreement with the US.
+- (Home) Caps: for **EU and Japan** goods, the Section 232 duty plus the normal MFN duty may not exceed **15%** in total; for **UK** goods the Section 232 duty may not exceed **10%**. Other countries pay the full rate on top of MFN duty.
+- (Home) Goods under these Section 232 tariffs are not subject to the reciprocal (IEEPA) tariffs, and the Section 301 action from July 24, 2026 exempts goods already under Section 232 (see above) [VERIFY stacking per HTS line with a customs broker].
+- **So what:** upholstered furniture from outside the EU, Japan and the UK lands with 25% on top of MFN duty now and 30% from January 2027; model both in pricing. EU and Japanese makers face a 15% all-in ceiling, which narrows the gap with US-made furniture.
+
 ## 6. Cultural fit risks
 - Under-investing in a market this size and expecting organic traction.
 - Messaging that doesn't feel native (tone too formal, too modest).

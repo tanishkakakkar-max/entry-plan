@@ -1,283 +1,175 @@
 ---
 countries: [us]
-categories: [apparel & accessories]
-topics: [customer psychology, competitors, market access, entry cases, failures, ai future]
-research_date: 2026-10-16
-coverage_period: 2016-2026 for entry cases; earlier peer-reviewed research where relevant
-status: complete with verification gaps
+categories: [apparel, accessories, fashion, jewelry]
+topics: [customer psychology, competitors, entry cases, failures, regulation, tariffs, ai future]
+updated: 2026-10-15
 ---
 
-# Apparel & accessories in the United States: market-entry research
+# Apparel and accessories in the United States: psychology, rules, competitors, foreign entry history, AI outlook (checked October 2026)
 
-## 1. Executive summary
+Scope: this note is about **foreign (non-U.S.) apparel, footwear, bag and jewelry brands entering the U.S.**, roughly 2016 to October 2026. U.S. brands appear only as competitors. It adds to `apparel-category-notes.md` (organic cotton, Gen Z sustainable fashion, India tariffs, organic textile claims) and section 5 of the US country doc without repeating them. It merges two research passes; peer-reviewed findings come first, and community sources (Reddit, articles) are kept as qualitative evidence of how people think.
 
-The U.S. is attractive because it combines enormous demand, mature e-commerce, influential specialty communities, and multiple routes from direct-to-consumer trial to national retail. It is difficult because shoppers can compare almost every entrant with Amazon-level convenience, fast-fashion pricing, and deeply established brands at the same time.
+## Customer psychology
 
-Five findings matter most:
+### Fact
+- **Size of the wallet.** U.S. households spent an average of $2,001 on apparel and services in 2024, 2.5% of total spending. [BLS Consumer Expenditures 2024](https://www.bls.gov/news.release/cesan.htm)
+- **Free returns are expected, and online returns are high.** 82% of U.S. consumers call free returns a major purchase consideration (up from 76%). Retailers expected 15.8% of 2025 sales to come back, and 19.3% of online sales. Close to two-thirds of shoppers admit at least one costly habit such as bracketing (buying several sizes to return most). [NRF, Oct 2025](https://nrf.com/media-center/press-releases/consumers-expected-to-return-nearly-850-billion-in-merchandise-in-2025)
+- **Charging for returns costs future sales.** In field studies with two leading U.S. online retailers over 49 months, free return shipping raised customers' purchases over the next two years by 58% to 357%; paid return shipping cut them by 74% to 100%. [Bower and Maxham, Journal of Marketing, 2012](https://doi.org/10.1509/jm.10.0419)
+- **Fit and size are the main online worry.** A study of young female college shoppers calls fit and size "the most important concern in online apparel shopping"; results may not generalize beyond young women. [Kim and Damhorst, Journal of Textile and Apparel, Technology and Management, 2013](https://jtatm.textiles.ncsu.edu/index.php/JTATM/article/view/4566)
+- **Fit reviews work mostly when the shopper already likes the item.** In an experiment with 418 women on a mock shopping site, positive fit reviews were more persuasive than negative ones when consumers liked the product; review and site credibility and decision confidence shaped future purchase intention through attitude toward the retailer. [Shin, Chung and Damhorst, Journal of Fashion Marketing and Management 25(1), 2021](https://emerald.com/insight/content/doi/10.1108/JFMM-02-2020-0027)
+- **Size finders and returns** are studied in high-end fashion e-commerce (Finland), with the tool treated as a conversion and confidence lever as much as a returns fix. [Fits like a glove? Journal of Innovation & Knowledge, 2025](https://www.elsevier.es/en-revista-journal-innovation-knowledge-376-articulo-fits-like-glove-knowledge-use-S2444569X25001246) [VERIFY exact findings; abstract not opened]
+- **Returns are an operations problem, not just a policy.** A study of the U.K.'s second-largest pure-play fashion retailer maps return patterns and reasons; U.K. fashion returns cost an estimated £7B in 2022. [Marriott et al., Transportation Research Part E 194, 2025](https://livrepository.liverpool.ac.uk/3188988/) (U.K. data; directional for the U.S.)
+- **Virtual try-on helps some shoppers.** A U.S. nationwide survey found shoppers use virtual try-on to reduce product risk and for enjoyment; innovativeness and technology anxiety moderated use. [Kim and Forsythe, Journal of Interactive Marketing, 2008](https://doi.org/10.1002/dir.20113)
+- **Origin helps through perceived quality, not automatically.** A meta-analysis of country-of-origin research found origin affects perceived quality more strongly than attitude or purchase intention. [Verlegh and Steenkamp, Journal of Economic Psychology, 1999](https://doi.org/10.1016/S0167-4870(99)00023-9)
+- **Off-price sets the value anchor.** TJX passed $60B in sales in fiscal 2026. Its 5,214 stores price "generally 20% to 60% below full-price retailers'" every day as a "treasure hunt," buying from about 21,000 vendors, including brand closeouts and overruns. [TJX 10-K FY2026](https://www.sec.gov/Archives/edgar/data/109198/000010919826000008/tjx-20260131.htm)
+- **Green claims meet skepticism.** 54% of Americans said they are skeptical of most brands' green claims (Oct 2022). [YouGov, Feb 2023](https://yougov.com/articles/46193-global-are-consumers-mistrustful-of-brands-green-claims) U.S. students knew more about apparel's environmental than social issues, but responsible purchasing was low. [Kozar and Hiller Connell, Social Responsibility Journal, 2013](https://doi.org/10.1108/SRJ-09-2011-0076)
+- **Resale is mainstream and social.** U.S. secondhand apparel grew nearly 4x faster than the clothing market in 2025; Gen Z and Millennials drive 71% of growth, and nearly 50% of shoppers find secondhand items through social media and creators. [ThredUp, Apr 2026](https://newsroom.thredup.com/news/thredup-14th-resale-report) Secondhand shoppers were more price-sensitive and environmentally conscious and also bought for vintage style and self-expression. [Yan, Bae and Xu, Young Consumers, 2015](https://doi.org/10.1108/YC-02-2014-00429)
+- **Social commerce is a fashion shelf.** TikTok Shop's U.S. GMV reached an estimated $15.1B in 2025 (up 68%); womenswear was the second-largest category after beauty. [Momentum Works, Feb 2026](https://thelowdown.momentum.asia/new-report-tiktok-shop-u-s-gmv-grew-68-to-reach-us15-1b-in-2025/) (vendor estimate)
 
-1. **Fit is an operating system, not a size chart.** In online apparel, inconsistent sizing and uncertainty drive hesitation, multi-size ordering, returns, and distrust. A foreign entrant needs U.S.-specific garment measurements, model measurements, fit notes, and feedback loops by SKU.
-2. **Style earns attention; quality, comfort, and value close the sale.** Peer-reviewed evidence finds conventional attributes such as fit, comfort, price-performance, and quality often outrank sustainability at purchase, even among shoppers who express pro-environmental attitudes. [P1](https://www.sciencedirect.com/science/article/pii/S0969698921002472)
-3. **Imported identity works only when translated into a concrete benefit.** “French,” “Scandinavian,” “Japanese,” or “Italian” can signal design, but country-of-origin effects operate through perceived quality and familiarity rather than nationality alone. [P12](https://www.sciencedirect.com/science/article/pii/S0167487099000239)
-4. **The strongest recent entries sequenced channels.** Sézane built U.S. online demand before a New York store; Ganni, Nanushka, and Self-Portrait used flagships after wholesale or digital awareness; Mango paired a New York statement store with broader U.S. expansion. Physical retail worked as trust, content, fitting, and returns infrastructure, not only as sales space.
-5. **The main failure mode is a broken promise after acquisition.** Poor fit information, slow delivery, expensive returns, fabric disappointment, weak customer service, and opaque duties can erase the value of a distinctive brand story.
+### Customer language (Reddit and articles, qualitative only)
+- Threads in r/femalefashionadvice and brand communities keep returning to the same questions about foreign and newer brands: has quality declined, does the fabric justify the price, do shoes survive real walking, will duties appear at delivery, and are returns easy. [Reddit search](https://www.reddit.com/r/femalefashionadvice/search/?q=quality%20international%20brands&restrict_sr=1) These are language cues for copy and FAQs, not prevalence data.
+- Background reading on how cheap, fast trends reset what Americans think a garment is worth: Elizabeth Cline, *Overdressed*; on identity and perception, Carolyn Mair, *The Psychology of Fashion*.
 
-**Provisional recommendation:** enter through one sharply defined wardrobe job - for example, office-to-evening separates, petite/tall fit, climate-specific outerwear, occasionwear, culturally distinctive jewelry, or technically superior basics. Launch with a small U.S.-measured assortment, domestic returns, landed-price transparency, and a 90-day fit-learning program before broadening the line.
+### Inference
+- **Every price is compared with off-price.** A new foreign brand's full price must be justified by what TJ Maxx cannot offer: newness, fit certainty, a story or service.
+- **Fit is the barrier; free returns are the entry fee.** Fix it with garment measurements, model measurements and fit notes per SKU, not return fees. Optimize for profitable confidence: a fit tool that converts more shoppers can pay off even if some of them return.
+- **Origin must become a concrete benefit** (tailoring, knitwear, technical construction, craft), because origin works through perceived quality. "Eco" and "ethical" claims support the offer; they rarely carry it.
+- **Likely first customers:**
 
-**So what for an entrant:** the first investment should be in fit, landed experience, and a recognizable hero product; a large collection and expensive flagship should come later.
-
-## 2. Research question, scope, and evidence rules
-
-**Question:** how can a foreign apparel or accessories company enter the U.S. with a differentiated proposition, credible fit and quality signals, and a repeatable path from discovery to profitable retention?
-
-Scope includes clothing, footwear, jewelry, bags, and fashion accessories sold through DTC, marketplaces, department stores, specialty retail, pop-ups, or owned stores. Luxury-only houses and used-fashion platforms are considered only where their mechanics illuminate entry.
-
-The evidence hierarchy is: peer-reviewed research for durable behavioral mechanisms; government and regulator material for rules; company records and reputable trade reporting for dated entries; Reddit and reviews for customer language; books for historical interpretation. Reddit is directional and non-representative. “Fact,” “inference,” and “[VERIFY]” are separated.
-
-**Peer-review audit:** 12 of 14 counted analytical articles/case studies are peer-reviewed (85.7%). Government pages, company releases, annual reports, event-verification journalism, books, preprints, and Reddit are separately classified and excluded from that denominator. Entry events are verified from primary or reputable dated records because recent launches are rarely the subject of peer-reviewed case studies.
-
-**So what for an entrant:** use academic evidence to design the proposition and primary/event records to understand execution; do not mistake social buzz for representative demand.
-
-## 3. Market context
-
-U.S. households spent an average of $2,001 on apparel and services in 2024, equal to about 2.5% of household expenditure. [G1](https://www.bls.gov/news.release/cesan.nr0.htm) Census data should be used for channel-level sizing because the category crosses clothing stores, accessory stores, department stores, electronic shopping, footwear, and general merchandise. The 2024 Annual Integrated Economic Survey provides current employer-firm tables, while monthly retail data are better for trend checks. [G2](https://data.census.gov/table/AIESMISCSECTOR2024.AIES44BASIC) [G3](https://www.census.gov/retail/index.html)
-
-The market is fragmented by price, use occasion, gender expression, age, body shape, climate, and channel. A useful entry frame is not “U.S. fashion,” but a combination of:
-
-- wardrobe job: work, occasion, everyday basics, active, outdoor, modest, adaptive, streetwear, or accessories;
-- price/value logic: ultra-low price, attainable design, premium quality, technical performance, or luxury status;
-- fit risk: low in jewelry and bags, medium in knitwear, high in footwear, trousers, denim, bras, and tailored garments;
-- replenishment: frequent basics versus occasional statement pieces;
-- channel dependency: creator/DTC, marketplace, wholesale, specialty retail, or owned stores.
-
-Import economics changed materially in 2025-2026. CBP states that duty-free de minimis treatment was suspended for all countries from August 29, 2025, and that low-value shipment processing is being modernized. [G4](https://www.cbp.gov/newsroom/national-media-release/cbp-modernizes-low-value-shipment-processing) Apparel also remains subject to product-specific HTS duty, origin rules, and any applicable trade action. The final landed rate depends on fiber, construction, gender/age classification, origin, and current trade measures. **[VERIFY with a licensed customs broker before pricing.]**
-
-**So what for an entrant:** build a category-by-channel model using landed cost and return-adjusted contribution margin, not retail price or gross margin alone.
-
-## 4. Customer psychology and purchase journey
-
-### Fit, comfort, and risk reduction
-
-Peer-reviewed evidence finds that fit, comfort, price-performance, and quality can be more important than sustainability attributes in online apparel decisions. [P1](https://www.sciencedirect.com/science/article/pii/S0969698921002472) Fit reviews affect confidence and future purchase intention, particularly when shoppers already like the item. [P2](https://www.sciencedirect.com/org/science/article/pii/S1361202620000253) Research on digital fitting shows that reducing fit uncertainty can lower supply-chain costs, but newer work also warns that a size finder can increase conversion and lifetime value even if it does not reduce every return. [P3](https://www.sciencedirect.com/org/science/article/pii/S0960003521000222) [P4](https://www.sciencedirect.com/science/article/pii/S2444569X25001246)
-
-**Inference:** an entrant should optimize for profitable confidence, not the narrow metric of “fewest returns.” A tool that makes more customers willing to buy may be valuable even if some newly converted customers return.
-
-### Identity, novelty, and social proof
-
-Fashion purchases communicate identity and group membership. Social media can accelerate awareness of sustainable or distinctive fashion, but credibility depends on perceived authenticity, expertise, and consistency between message and product. [P5](https://link.springer.com/article/10.1007/s43621-025-01135-x) Systematic reviews of sustainable fashion show an attitude-behavior gap: stated concern does not consistently overcome price, convenience, style, and quality. [P6](https://journals.sagepub.com/doi/10.1177/0887302X241249330) [P7](https://www.mdpi.com/2071-1050/15/2/1546)
-
-### Quality signals and the imported halo
-
-Shoppers infer quality from fabric composition, construction close-ups, price, reviews, retailer endorsement, and country of design or manufacture. A meta-analysis of country-of-origin research finds measurable effects on perceived quality, attitudes, and purchase intention, but those effects are conditional rather than automatic. [P12](https://www.sciencedirect.com/science/article/pii/S0167487099000239) A foreign-origin story should therefore explain a design method, craft, material, climate solution, or cultural point of view.
-
-### Sustainability and circularity
-
-Reviews of sustainable apparel behavior consistently find that knowledge and positive attitudes are insufficient without acceptable price, design, availability, and convenience. [P6](https://journals.sagepub.com/doi/10.1177/0887302X241249330) [P8](https://www.mdpi.com/2071-1050/16/7/2863) Returns also carry material and emissions costs that are often omitted from e-commerce sustainability claims. [P9](https://www.sciencedirect.com/science/article/pii/S0921344924004051)
-
-### Returns, ownership, and service
-
-Fashion returns are driven by fit, expectation gaps, quality, color, and opportunistic behavior. A mixed-method study of fashion e-commerce returns shows why returns must be treated as a design and operations problem. [P10](https://www.sciencedirect.com/science/article/pii/S1366554524004952) Reddit discussions in r/femalefashionadvice and brand-specific communities repeatedly focus on whether quality declined, fabrics justify the price, shoes survive walking, duties appear at delivery, and returns are easy. [R1](https://www.reddit.com/r/femalefashionadvice/search/?q=quality%20international%20brands&restrict_sr=1) These are hypotheses and language cues, not prevalence estimates.
-
-### Books as interpretive context
-
-Elizabeth Cline’s *Overdressed* helps explain how low prices and rapid trend cycles changed expectations about garment value and disposal. [B1](https://www.penguinrandomhouse.com/books/311988/overdressed-by-elizabeth-l-cline/) Carolyn Mair’s *The Psychology of Fashion* provides a behavioral lens on identity, perception, and clothing. [B2](https://www.routledge.com/The-Psychology-of-Fashion/Mair/p/book/9781138658677) Books are interpretive sources and are excluded from the peer-review ratio.
-
-**So what for an entrant:** show exactly how the garment fits, feels, wears, and arrives. Sustainability should reinforce the core value proposition, not substitute for it.
-
-## 5. First-customer hypotheses
-
-| Segment / job | Motivation | Barrier | Entry message | Best initial channel | Confidence |
-|---|---|---|---|---|---|
-| Design-aware professional | Distinctive, polished wardrobe without luxury pricing | Fit and quality uncertainty | A repeatable capsule with precise fit notes and fabric proof | DTC plus appointment pop-up | Medium-high |
-| Fit-frustrated shopper | Reliable petite, tall, plus, adaptive, or shape-specific fit | Prior disappointment and costly returns | Measurements on real bodies, free exchange, visible fit learning | DTC, community creators, selective retail | High on problem; niche size [VERIFY] |
-| Occasion buyer | Memorable look for weddings, events, or travel | Delivery deadline and one-time-use value | Guaranteed delivery, styling, alterations, resale/rental option | Search, creators, showroom/pop-up | Medium |
-| Technical-value buyer | Performance, durability, climate utility | Feature skepticism | Test results, warranty, repair, use-case demo | Specialty retail and expert creators | Medium-high |
-| Cultural-style community | Heritage, diaspora connection, distinctive craft | Tokenism, authenticity, availability | Specific maker/material story with community participation | Community retail, events, DTC | Medium |
-| Accessory-led entrant | Design signal with low fit risk | Crowded discovery environment | One recognizable silhouette/material and giftability | DTC, boutiques, department-store test | Medium-high |
-
-**So what for an entrant:** accessories or forgiving-fit hero products are lower-risk beachheads; high-fit categories require local try-on and exchange infrastructure from day one.
-
-## 6. Competitor and channel map
-
-| Arena | Benchmarks | What they train customers to expect | Opening for an entrant |
+| Segment | Main barrier | Message that fits | First channel |
 |---|---|---|---|
-| Marketplaces / ultra-value | Amazon, SHEIN, Temu | Endless assortment, reviews, low price, fast discovery | Do not compete on breadth; compete on trust, curation, quality, or community |
-| Mass / private label | Walmart, Target, Costco | Accessible price, easy returns, store convenience | Retailer-specific capsule with clear proof of value |
-| Global fast fashion | Zara, H&M, Mango, Uniqlo | Frequent newness, global design, omnichannel convenience | Narrower identity, better fit consistency, stronger material or service promise |
-| U.S. specialty | Gap/Old Navy, American Eagle, Abercrombie, Lululemon, Nike | Familiar sizing, loyalty, promotions, stores | Serve a job or identity incumbents treat generically |
-| Premium DTC | Everlane, Reformation, Quince, niche labels | Editorial storytelling, simple online purchase, returns | Stronger product truth and less generic “premium basics” positioning |
-| Department / multi-brand | Nordstrom, Macy’s, Bloomingdale’s, specialty boutiques | Curation, try-on, service, legitimacy | Use wholesale as trust and sampling, not only volume |
-| Resale | ThredUp, Poshmark, The RealReal, local vintage | Price discovery, circularity, access to past styles | Design for resale value; authenticate and support repair |
+| Design-aware professional | Fit and quality doubt | A capsule with precise fit notes and fabric proof | Own site plus appointment pop-up |
+| Fit-frustrated (petite, tall, plus, adaptive) | Past disappointment, costly returns | Measured on real bodies, free exchanges | Own site, community creators |
+| Occasion buyer | Delivery deadline, one-wear value | Guaranteed delivery, styling, resale or rental | Search, creators, pop-up |
+| Accessory or jewelry buyer | Crowded discovery | One recognizable silhouette or material, giftable | Own site, boutiques, department-store test |
 
-Competitor analysis should be performed at SKU and search-query level. A dress does not compete only with dresses in its nominal segment; it competes with rental, resale, lower-priced duplicates, and “wear something already owned.”
+**So what for an entrant:** Budget for free returns and invest early in size data. Accessories and forgiving-fit hero products are the lower-risk first move; high-fit categories (trousers, denim, footwear) need try-on and exchanges from day one. Set an off-price policy before launch, and expect resale to compete with new product.
 
-**So what for an entrant:** define the alternative the shopper would choose if the brand did not exist, then win on one or two dimensions the alternative cannot copy easily.
+## Rules and regulatory risk (2025-2026)
 
-## 7. Market access, compliance, and operating model
+### Fact: tariffs and de minimis
+- **MFN (normal) duty examples, 2026 HTS Revision 21:**
 
-- **Textile labeling:** most textile and wool products require fiber content, country of origin, and responsible company identity; care labeling rules also apply. [G5](https://www.ftc.gov/business-guidance/industry/clothing-and-textiles) [G6](https://www.ftc.gov/news-events/topics/tools-consumers/apparel-labeling)
-- **Flammability:** 16 C.F.R. Part 1610 covers clothing textiles; children’s sleepwear has additional standards. [G7](https://www.cpsc.gov/FAQ/Clothing)
-- **Claims:** “Made in USA” and qualified U.S.-content claims must meet FTC standards; imported products also face CBP marking requirements. [G8](https://www.ftc.gov/business-guidance/resources/complying-made-usa-standard)
-- **Reviews and influencers:** the FTC rule effective October 21, 2024 prohibits specified fake reviews, undisclosed insider reviews, review suppression, and buying sentiment-conditioned reviews. [G9](https://www.ftc.gov/business-guidance/resources/consumer-reviews-testimonials-rule-questions-answers)
-- **Privacy/AI:** body scans, virtual try-on, and recommendation systems require transparent data handling; U.S. obligations vary by state and use case. **[VERIFY with privacy counsel.]**
-- **Tariffs:** classify every SKU at the 10-digit HTS level and model country-specific duties and trade actions. **[VERIFY with a customs broker; never use one blended “apparel tariff.”]**
+| HTS line | Product | MFN duty | Extra on China-origin (older Section 301) |
+|---|---|---|---|
+| 6109.10.00 | Cotton knit T-shirts | 16.5% | +7.5% ([HTS Hub](https://www.htshub.com/us-hs/detail/61091000)) |
+| 6204.62.80 | Women's cotton trousers (other) | 16.6% | +7.5% ([HTS Hub](https://www.htshub.com/us-hs/detail/6204628003)) |
+| 6403.99.60 / .90 | Leather-upper athletic shoes / other, over $2.50 a pair | 8.5% / 10% | [VERIFY] ([HTS Hub](https://www.htshub.com/us-hs/head/6403-6)) |
+| 4202.21.60 | Leather handbags up to $20 | 10% | [VERIFY] ([US Tariff Rates](https://ustariffrates.com/hts/4202.21.60.00)) |
+| 7113.19.50 | Precious-metal (non-silver) jewelry | 5.5% | +7.5% ([TariffLens](https://www.tarifflens.ai/hts/71131950)) |
 
-Preferred launch sequence:
+  These come from commercial mirrors of the USITC schedule; hts.usitc.gov could not be opened from this session [VERIFY each line there]. Classify every SKU at 10 digits: fiber, construction, gender and age all change the line, so never use one blended "apparel tariff".
+- **Apparel is not exempt from the July 24, 2026 Section 301 tariffs** (see the Section 301 table in the US country doc). Until tariff-rate quotas are set for Bangladesh, Cambodia, Indonesia and Malaysia, "the 10 percent rate applies to the covered textiles and apparel" of those four. [Federal Register, Jul 28 2026](https://www.federalregister.gov/documents/2026/07/28/2026-15181/notice-of-actions-in-section-301-investigations-of-acts-policies-and-practices-of-various-economies) Quotas start no earlier than Sep 1, 2026 [Holland & Knight, Jul 2026](https://www.hklaw.com/en/insights/publications/2026/07/and-the-tariff-beat-goes-on); publication status [VERIFY]. Annex II, Part O exempts 1,737 textile and apparel codes only for Jordan, and for El Salvador and Guatemala on CAFTA-DR goods. [Global Trade Alert](https://globaltradealert.org/blog/forced-labour-section-301-final-action) Whether footwear, handbags or jewelry are on the all-country exemption list [VERIFY].
+- **China stacks.** The new duty adds to existing Section 301 duties on China; a Chinese cotton T-shirt pays 16.5% + 7.5% + 12.5% = 36.5% (calculation) [VERIFY with a customs broker]. Importers sued in the Court of International Trade the day the tariffs took effect. [Holland & Knight](https://www.hklaw.com/en/insights/publications/2026/07/and-the-tariff-beat-goes-on)
+- **Caps favor high-duty apparel from the EU and Japan.** Applying the country doc's cap rule (calculation): an EU or Japanese cotton T-shirt (16.5% MFN) pays no Section 301 duty; EU gold jewelry (5.5%) pays 4.5% more. One commercial guide cites a 15% all-in ceiling for EU garments from Jul 1, 2026, which conflicts with the doc's 10% EU cap; the Federal Register is primary, so the guide is likely outdated [VERIFY]. [Tariffs Tool](https://www.tariffstool.com/guides/tariff-on-clothing-imports-2026)
+- **De minimis is gone for all countries.** The $800 exemption has been suspended since Aug 29, 2025 (EO 14324); EO 14388 kept it suspended on Feb 20, 2026, the day of the Supreme Court IEEPA ruling. CBP made the suspension indefinite by rule: non-postal shipments from Jun 24, 2026 [Federal Register, Jun 24 2026](https://www.federalregister.gov/documents/2026/06/24/2026-12670/indefinite-suspension-of-the-de-minimis-exemption-for-merchandise-arriving-through-all-modes-other) and mail from Jul 24, 2026. [GAO, Jul 2026](https://www.gao.gov/products/b-338571) [CBP](https://www.cbp.gov/newsroom/national-media-release/cbp-modernizes-low-value-shipment-processing) The One Big Beautiful Bill Act ends it by law from Jul 1, 2027. This resolves the country doc's "[VERIFY current status]".
+- **It hurt foreign fashion brands, not only Shein.** Aritzia (Canada) said tariffs and the end of de minimis cost 260 basis points of adjusted EBITDA margin in fiscal 2026. [Aritzia Q4 FY2026](https://s21.q4cdn.com/489771965/files/doc_financials/2026/q4/Aritzia-Inc-Q4-2026-ER.pdf)
 
-1. U.S.-measured DTC test with duties included in price and domestic returns.
-2. Pop-up or trunk-show validation in one city with a clear audience hypothesis.
-3. Selective wholesale or shop-in-shop to build trust and try-on.
-4. Owned store only after repeat demand and local contribution economics are proven.
+### Fact: labels, claims and product safety
+- **Textile labels** must show fiber content (generic names, fibers of 5% or more by weight, in order), country of origin and the maker's name or RN number. [16 CFR Part 303](https://www.law.cornell.edu/cfr/text/16/part-303), [FTC, clothing and textiles](https://www.ftc.gov/business-guidance/industry/clothing-and-textiles) Care labeling also applies (16 CFR Part 423) [VERIFY details].
+- **Flammability:** 16 CFR Part 1610 covers clothing textiles; children's sleepwear has stricter standards. [CPSC, clothing FAQ](https://www.cpsc.gov/FAQ/Clothing)
+- **Origin claims:** "Made in USA" claims must meet the FTC standard; imports need CBP origin marking. [FTC, Made in USA](https://www.ftc.gov/business-guidance/resources/complying-made-usa-standard)
+- **Fiber and eco claims are enforced.** In 2022 the FTC sought $5.5M from Kohl's and Walmart for selling rayon as "bamboo" with false eco claims. [FTC, Apr 2022](https://www.ftc.gov/news-events/news/press-releases/2022/04/ftc-uses-penalty-offense-authority-seek-largest-ever-civil-penalty-bogus-bamboo-marketing-kohls) Green Guides last revised 2012; the review opened Dec 2022 covers "sustainable," "organic" and "recycled content"; no finished update found [VERIFY]. [Federal Register, Dec 2022](https://www.govinfo.gov/content/pkg/FR-2022-12-20/html/2022-27558.htm)
+- **Reviews and influencers:** the FTC rule effective Oct 21, 2024 bans fake reviews, undisclosed insider reviews, review suppression and buying positive-only reviews. [FTC Q&A](https://www.ftc.gov/business-guidance/resources/consumer-reviews-testimonials-rule-questions-answers)
+- **UFLPA:** the Entity List grew to 187 entities on Aug 3, 2026, naming apparel and cotton among sectors; CBP has denied more than 24,300 shipments (about $1B) since 2022. [Shapiro, Jul 2026](https://www.shapiro.com/alerts/uflpa-entity-list-expands-by-43-companies-in-largest-update-to-date/)
+- **PFAS:** California bans regulated PFAS in apparel, accessories, handbags and backpacks from Jan 2025 (100 ppm total organic fluorine, 50 ppm from Jan 2027); New York bans intentionally added PFAS in apparel from Jan 2025; Maine, Vermont, Rhode Island, Colorado and Connecticut follow by 2028. [Morgan Lewis, Nov 2024](https://www.morganlewis.com/pubs/2024/11/new-york-and-california-bans-on-pfas-in-textiles-and-apparel-begin-january-1-2025)
+- **CPSC eFiling:** from Jul 8, 2026 importers file certificate data, including Children's Product Certificates, at entry regardless of shipment size. [Foley, 2026](https://www.foley.com/?p=120147)
+- **Prop 65 (accessories):** settlement standards include cadmium of 75 ppm or less in earrings and BPA of 50 ppb or less in polyester-spandex leggings. [SGS, Jul 2026](https://www.sgs.com/en/news/2026/07/safeguards-09726-california-proposition-65-chemical-reformulation-in-consumer-products)
+- **California textile EPR (SB 707):** producers had to join the Landbell USA program by Jul 1, 2026; under $1M global turnover is exempt; obligations start by Jul 1, 2030. [Sidley, 2026](https://environmentalhealthsafetybrief.sidley.com/?p=6883)
+- **Body scans and try-on data** fall under state privacy and biometric laws that vary by state and use [VERIFY with privacy counsel].
 
-**So what for an entrant:** compliance, returns, and customer service belong in the commercial plan, not in a post-launch checklist.
+### Inference
+- Landed cost now depends more on **where you manufacture** than on brand origin; China-made goods carry the heaviest stack.
+- Chemical rules are state by state; PFAS, cadmium and BPA testing belongs in supplier contracts.
 
-## 8. Verified entry cases, 2016-present
+**So what for an entrant:** Ship in bulk to a U.S. warehouse, not parcel by parcel. Run landed-cost math on your exact HTS lines and factory country, trace cotton to the farm if any could touch China, and label in U.S. format before goods ship.
 
-This casebook prioritizes foreign companies and material U.S. entries or channel expansions. The evidence does not support five credible first-entry cases for every year without mixing in old entrants or weak announcements; missing years are evidence gaps, not zero activity.
+## Competitors
 
-| Year | Company / origin | Entry or scale move | Outcome signal | Lesson | Source confidence |
-|---|---|---|---|---|---|
-| 2017 | Sézane / France | First New York store after U.S. online demand | Continued U.S. retail presence | Use digital demand to de-risk experiential retail | High [C1](https://www.vogue.com/article/sezane-french-fashion-brand-opening-in-new-york) |
-| 2017 | Ba&sh / France | First U.S. store on Bleecker Street; local team and department-store distribution | U.S. reached a reported 10% of business by 2019 | Translate origin into a concrete lifestyle; localize CRM and channels | Medium-high [C2](https://www.voguebusiness.com/companies/bash-quadrupled-sales-by-becoming-more-than-a-french-brand-china-dtc) |
-| 2018 | Rouje / France | First U.S. pop-up in Los Angeles, followed by New York testing | Later opened a permanent New York boutique | Temporary retail can test whether a digital aesthetic survives physical trial | High [C3](https://frenchly.us/jeanne-damass-brand-rouje-opens-its-first-u-s-pop-up-in-l-a/) |
-| 2018 | RYU / Canada | U.S. store expansion from Venice to a New York flagship | Later outcome not established in reviewed evidence | Community-led retail still requires long-run store economics | Medium [C4](https://www.newswire.ca/news-releases/ryu-opens-flagship-us-store-in-new-york-701249781.html) |
-| 2019 | Ganni / Denmark | First U.S. stores in New York and Los Angeles | Continued U.S. operation | Pair cultural identity with high-visibility cities and wholesale awareness | High [C5](https://us.fashionnetwork.com/news/Ganni-to-open-first-u-s-stores-in-new-york-and-los-angeles%2C1102512.html) |
-| 2019 | Nanushka / Hungary | New York flagship after international wholesale recognition | Continued brand presence; U.S.-only economics undisclosed | Retail can deepen an already-legible design language | Medium [C6](https://fashionista.com/2019/12/international-brands-new-york-city-stores) |
-| 2019 | Self-Portrait / United Kingdom | New York flagship | Continued U.S. distribution | Occasionwear can travel when the hero silhouette is recognizable | Medium [C6](https://fashionista.com/2019/12/international-brands-new-york-city-stores) |
-| 2019-2020 | Missoma / United Kingdom | U.S. planning, creator-led jewelry demand and local expansion | Continued U.S. availability | Low-fit-risk accessories can scale through social proof before stores | Medium [C7](https://www.thezoereport.com/p/fashions-most-popular-international-brands-are-finally-coming-to-the-us-19354805) |
-| 2021-2022 | Mango / Spain | Fifth Avenue flagship and accelerated U.S. store plan | Continued expansion | A statement store needs a wider regional and digital rollout to matter | High [C8](https://www.icsc.com/news-and-views/icsc-exchange/6-international-retailers-expanding-in-the-u.s-cbls-rotating-food-court-pop-ups-weekday-mall-visits-and-more) |
-| 2022-2024 | GU / Japan | 2022 New York pop-up followed by 2024 U.S. e-commerce and Soho flagship | Continued operation | Pop-up can test awareness; permanent entry should add local digital convenience | High [C9](https://www.fashiondive.com/news/uniqlo-fast-retailing-gu-us-launch/724840/) |
-| 2025 | M&S Fashion / United Kingdom | First U.S. in-store fashion distribution through Nordstrom after food-product recognition | Too early for outcome | A trusted retailer can reduce the cost of educating the market | High [C10](https://corporate.marksandspencer.com/newsroom/press-releases/marks-spencer-takes-style-stores-stateside-fashion-launch-nordstrom) |
-| 2026 | Human Made / Japan | Established a wholly owned U.S. division and announced retail expansion | Too early for outcome | Local entity signals commitment but does not replace city/SKU testing | Medium [C11](https://www.complex.com/style/a/jaelaniturnerwilliams/human-made-expands-usa) |
+### Fact
+- **Off-price:** TJX names department, specialty, off-price, discount, warehouse and outlet stores as competitors. [TJX 10-K FY2026](https://www.sec.gov/Archives/edgar/data/109198/000010919826000008/tjx-20260131.htm)
+- **Cross-border ultra-cheap:** after de minimis ended, Shein's price gap with fast-fashion rivals narrowed; it expanded U.S. warehousing and launched "Xcelerator," offering brands its manufacturing network. [FashionUnited, Oct 2025](https://fashionunited.com/news/business/sheins-us-momentum-stalls-as-de-minimis-tariff-exemption-ends/2025101368667) Fast Retailing names Shein and Temu as rivals. [eMarketer, Oct 2025](https://emarketer.com/content/uniqlo-parent-fast-retailing-looks-us-europe-growth)
+- **Foreign chains building fleets:** Uniqlo (planned 89 U.S. stores by mid-2026; target 200 in North America by 2027) [Inside Retail, Oct 2025](https://insideretail.com.au/sectors/how-uniqlos-creative-direction-is-powering-record-global-profits-202510); Primark (40 stores, May 2026) [FashionUnited](https://fashionunited.com/news/retail/primark-opens-manhattan-store-amid-broader-us-growth/2026051272300); Mango (over 40 company stores at end-2024, aiming for about 65 by end-2025). [Mango, Feb 2025](https://mangofashiongroup.com/en/w/mango-expands-its-footprint-in-new-york-city-with-a-new-store-in-lincoln-square)
+- **Social and resale shelves:** TikTok Shop had over 800,000 U.S. shops, more than half with no 2025 sales. [Momentum Works](https://thelowdown.momentum.asia/new-report-tiktok-shop-u-s-gmv-grew-68-to-reach-us15-1b-in-2025/)
 
-### Failure and caution overlays
+### Competitor map (inference)
+| Arena | Examples | What they train shoppers to expect | Opening for an entrant |
+|---|---|---|---|
+| Marketplaces, ultra-value | Amazon, Shein, Temu | Endless choice, reviews, low price | Win on trust, curation or quality, never breadth |
+| Mass and private label | Walmart, Target, Costco | Low price, easy returns | A retailer-specific capsule with clear value proof |
+| Global fast fashion | Zara, H&M, Mango, Uniqlo | Constant newness, omnichannel | Narrower identity, more consistent fit, better materials |
+| U.S. specialty | Gap, American Eagle, Abercrombie, Lululemon, Nike | Familiar sizing, loyalty, promotions | Serve a job or identity they treat generically |
+| Premium DTC | Everlane, Reformation, Quince | Editorial story, simple returns | Stronger product proof than "premium basics" |
+| Department and multi-brand | Nordstrom, Macy's, Bloomingdale's, boutiques | Curation, try-on, legitimacy | Wholesale as trust and sampling, not only volume |
+| Off-price and resale | TJ Maxx, ThredUp, Poshmark, The RealReal | Known brands 20-60% off, circularity | Design for resale value; control where excess stock goes |
 
-- **SHEIN/Temu-style cross-border economics:** the suspension of duty-free de minimis treatment for all countries changes the economics and data requirements of low-value cross-border shipments. [G4](https://www.cbp.gov/newsroom/national-media-release/cbp-modernizes-low-value-shipment-processing)
-- **Sizing and return exposure:** fit-related uncertainty can turn growth into reverse-logistics cost; peer-reviewed work supports digital fit tools but not as a complete cure. [P3](https://www.sciencedirect.com/org/science/article/pii/S0960003521000222) [P10](https://www.sciencedirect.com/science/article/pii/S1366554524004952)
-- **Greenwashing risk:** sustainability messaging that outruns product evidence can undermine trust. Use material-specific and auditable claims, not generic “eco” language. [P6](https://journals.sagepub.com/doi/10.1177/0887302X241249330)
-- **Retail overreach:** large lease commitments before SKU-level repeat demand create fixed-cost risk. This is an inference from the sequence of successful digital-to-store cases, not a claim that every store-led entry fails.
+- **White space:** fit certainty for U.S. bodies, mid-price "buy fewer, better" pieces above fast fashion and below Aritzia, verified materials, and regional assortments (Mango: "every state in the U.S. is like a country in Europe" [CNBC via NBC New York](https://www.nbcnewyork.com/news/business/money-report/spanish-retailer-mango-to-open-60-new-u-s-stores-as-it-looks-to-elevate-the-brand/6015527/)). Each item also competes with rental, resale, cheaper dupes and "wear something I already own."
 
-**So what for an entrant:** copy the sequence, not the surface: establish demand, localize operations, validate fit, then add physical retail where it improves trust and economics.
+**So what for an entrant:** Do not fight Shein on price or Uniqlo on basics. Name what the shopper would buy if your brand did not exist, then win on one or two things it cannot copy fast. Check which brands in your category sit at TJ Maxx; that is your real price anchor.
 
-## 9. Pattern synthesis
+## Foreign entry cases since 2016
 
-### What travels well
+Method: non-U.S. brands whose U.S. entry, push or exit falls in 2016-2026; some entered earlier and appear for a post-2016 turnaround. "Success" means active and growing in October 2026, not proven profitable.
 
-- a recognizable hero silhouette or material;
-- a clear country-linked capability, such as tailoring, knitwear, technical construction, or craft;
-- products with lower fit risk or strong adjustability;
-- editorial storytelling backed by product evidence;
-- wholesale or pop-ups that let shoppers touch and try.
+### Successes
+- **Uniqlo / Japan / entered 2005; turnaround 2020-22**
+  - Entry mode: own big-city flagships plus e-commerce. Positioning: functional basics, fabric innovation.
+  - Key moves: a Covid reset that nearly stopped discounting, focused on basics, ran lean inventory and linked store and online stock. [Reuters via Malay Mail, Sep 2022](https://www.malaymail.com/news/money/2022/09/02/amid-us-retail-gloom-uniqlo-shines-on-covid-triggered-revamp/26064)
+  - Outcome: thriving. In 2015 it booked U.S. store impairments and cut openings to five [Retail Insight Network, Oct 2015](https://www.retail-insight-network.com/news/newsuniqlo-curbs-store-expansions-in-us-4690156); it expected a first North American profit in fiscal 2022, after 17 years. FY2025 North America sales rose 24.5% and profit 35.1%. [Inside Retail](https://insideretail.com.au/sectors/how-uniqlos-creative-direction-is-powering-record-global-profits-202510)
+  - Why (source): 2015 problems were low recognition and weak suburban stores; then the reset; price rises and cost cuts offset 2025 tariffs. [Business Day/Reuters, Oct 2025](https://www.businessday.co.za/bd/companies/2025-10-09-us-expansion-helps-uniqlo-to-another-record-profit/)
+- **Aritzia / Canada / U.S. entry year [VERIFY]** - own boutiques, e-commerce and app; "Everyday Luxury." Fiscal 2026 U.S. revenue C$2.28B, up 43.8%, about 61% of the total (calculated); 11-12 of 12-13 new fiscal 2027 boutiques are U.S. Why (company): real estate expansion, comparable sales and marketing. [Aritzia, May 2026](https://investors.aritzia.com/investor-news/press-release-details/2026/Aritzia-Reports-Fourth-Quarter-and-Fiscal-2026-Financial-Results/default.aspx)
+- **On / Switzerland / U.S. entry year [VERIFY]** - wholesale (58.2% of 2025 sales) plus direct; "premium performance brand." 2025 sales CHF 3.01B (up 30%); the Americas were 57.7%, growth slowing to 17.6%. Why: cause not reported. [On 20-F 2025](https://www.sec.gov/Archives/edgar/data/1858985/000185898526000008/onholdingag-20251231.htm)
+- **Pandora / Denmark / U.S. before 2016 [VERIFY year]** - concept stores (452 of 495 Pandora-operated, Q2 2025) plus online; Las Vegas flagship, "Be Love" campaign, three price increases Oct 2024-Aug 2025. The U.S. was 33-34% of revenue and its strongest market. Why (company): store and online traffic growth. [Pandora H1 2025](https://filings.xbrl.org/5299007OWYZ6I1E46843/2025-06-30/ESEF/DK/0/PAND-2025-06-30-en/reports/PAND-2025-06-30-en.xhtml)
 
-### What breaks
+### Mixed
+- **Shein / ships from China** - grew on direct parcels under de minimis. U.S. sales fell 8% year on year in Sep 2025, the first full month without it [FashionUnited](https://fashionunited.com/news/business/sheins-us-momentum-stalls-as-de-minimis-tariff-exemption-ends/2025101368667); Shein cited an "adverse impact on our sales in the US." [PA via Express & Star, Jul 2026](https://www.expressandstar.com/uk-news/shein-slumps-to-loss-as-sales-hit-by-trumps-tariff-blow-8822659) Why: policy removed its cost edge.
+- **Primark / Ireland-UK / 2015** - large own stores; Morgan Stanley called the U.S. "a harder market to crack" in 2017 and Primark resized stores. [FashionNetwork, Nov 2017](https://ww.fashionnetwork.com/news/Morgan-stanley-downgrades-primark-owner-on-us-store-concerns,896188.html) 40 stores by May 2026, U.S. sales up 12% in the 24 weeks to Feb 2026. [FashionUnited](https://fashionunited.com/news/retail/primark-opens-manhattan-store-amid-broader-us-growth/2026051272300) U.S. profit not reported.
+- **Mango / Spain / U.S. since 2006; push from 2022** - Fifth Avenue flagship, 42 new stores by end-2024 and 20 in 2025, an LA logistics center, and a move upmarket on price. U.S. sales grew over 10% in 2024; target: top-three market by end-2026. [CNBC via NBC New York](https://www.nbcnewyork.com/news/business/money-report/spanish-retailer-mango-to-open-60-new-u-s-stores-as-it-looks-to-elevate-the-brand/6015527/) Profit not reported.
+- **Ba&sh / France / 2016** - entered through about ten Neiman Marcus corners in 2016, then opened its first own U.S. stores in September 2017 in the Miami Design District and at 403 Bleecker Street, New York. [FashionNetwork, 2017](https://hk.fashionnetwork.com/news/Ba-sh-opens-first-US-stores-in-Miami-New-York,885815.html) It opened its first U.S. flagship in New York in September 2024. [FashionUnited, Sep 2024](https://fashionunited.com/news/retail/ba-sh-opens-first-us-flagship-store-in-new-york/2024091761917) U.S. sales share not reported [VERIFY].
 
-- direct translation of home-market sizing;
-- duties, fees, and return shipping revealed after checkout;
-- broad assortments that dilute the reason to care;
-- sustainability claims that ask shoppers to compromise on style or value;
-- customer service that operates in the wrong time zone or lacks local authority;
-- scaling paid acquisition before return-adjusted repeat economics are known.
+### Recent and smaller entries (outcome not reported)
+- **Sézane / France / 2017** - tested U.S. demand online and through a Madewell collaboration, then opened "L'Appartement New York" in Nolita in September 2017. [Business of Fashion](https://www.businessoffashion.com/articles/news-analysis/sezane-to-open-new-york-store-launch-benjamin-millepied-capsule), [Glossy](https://www.glossy.co/fashion/i-dont-believe-in-having-a-big-strategy-morgane-sezalory-on-sezanes-u-s-expansion)
+- **Ganni / Denmark / 2019** - announced its first U.S. stores in New York and Los Angeles in May 2019 [FashionUnited, May 2019](https://fashionunited.uk/news/retail/ganni-to-open-first-u-s-stores-in-new-york-and-los-angeles/2019052243325); New York opened in October 2019 and Los Angeles followed. [Refinery29, Oct 2019](https://refinery29.com/en-us/2019/10/8602471/ganni-new-york-los-angeles-stores)
+- **Rouje / France / 2019** - first U.S. pop-up in Culver City, Los Angeles, in April 2019 (not 2018) [Uncover LA, Apr 2019](https://uncoverla.com/2019/04/09/rouje-first-la-pop-up-shop-platform-culver-city/), later a Fred Segal pop-up (2021) and a New York store [L'Officiel USA](https://www.lofficielusa.com/fashion/jeanne-damas-rouje-nyc-store-opening-french-girl-style-fashion) [VERIFY New York opening year].
+- **GU (Fast Retailing) / Japan / 2024** - launched U.S. e-commerce, an app and a SoHo flagship in September 2024 after earlier pop-up tests. [FashionUnited, Sep 2024](https://fashionunited.com/news/business/gu-launches-in-the-us-with-e-commerce-site-and-flagship-store/2024092061982)
+- **M&S Fashion / U.K. / 2026** - over 60 bestselling womenswear pieces launched on Mar 27, 2026 in 30 Nordstrom stores and online, the first time M&S clothing was sold in U.S. stores; M&S Food entered through Target in 2022. [M&S, Mar 2026](https://corporate.marksandspencer.com/newsroom/press-releases/marks-spencer-takes-style-stores-stateside-fashion-launch-nordstrom)
+- Also reported but not yet checked: Nanushka and Self-Portrait New York flagships (2019) [Fashionista, Dec 2019](https://fashionista.com/2019/12/international-brands-new-york-city-stores); Missoma, RYU and Human Made (2026) [VERIFY].
 
-### Contradictions to preserve
+### Struggles and exits
+- **Topshop and Topman (Arcadia) / U.K. / exited 2019** - 11 U.S. stores plus Nordstrom online. Arcadia filed Chapter 15 in May 2019 and closed all 11 stores, citing "high levels of product returns," an "aggressive discounting environment" and the shift online (company-wide reasons). [Retail TouchPoints, May 2019](https://www.retailtouchpoints.com/news/arcadia-group-will-close-11-u-s-topshop-stores-amid-bankruptcy-filing/21602/)
+- **Joe Fresh (Loblaw) / Canada / exited 2016** - about 700 J.C. Penney shop-in-shops at the 2013 launch, 200 by 2015, plus six New York-area stores. It left J.C. Penney when the deal expired on Jan 30, 2016 and closed its last U.S. store in 2016, to focus on its own stores, e-commerce and Latin America. Why the J.C. Penney footprint shrank was not reported. [Retail TouchPoints, May 2015](https://www.retailtouchpoints.com/news/joe-fresh-to-end-partnership-with-j-c-penney/15152/), [Chain Store Age, Jun 2016](https://www.chainstoreage.com/news/us-shoppers-bid-joe-fresh-stores-adieu)
 
-- Customers say they want sustainability, but fit, price, and quality frequently dominate actual choice.
-- Free returns reduce purchase risk but can increase over-ordering and destroy margin.
-- Scarcity can create desire, but stockouts can also train customers not to rely on the brand.
-- A store can signal commitment and solve fit, but it can lock an entrant into cost before national demand exists.
+### Patterns (found 4 successes, 4 mixed, 5 recent with no outcome, 2 struggles or exits)
+- **Winners share** own U.S. stores starting in big cities, price discipline (Uniqlo stopped discounting, Pandora and Mango raised prices) and patience (Uniqlo took 17 years).
+- **They sequence channels.** Demand was proven before big leases: Sézane online and a Madewell collaboration before a store, Ba&sh department-store corners before its own stores, GU pop-ups before a flagship, M&S through a trusted retailer.
+- **What separates winners from failures:** channel control. Joe Fresh depended on one department-store partner; Shein depended on a tariff loophole.
+- **Repeated failure patterns:** returns and discounting (Arcadia), weak awareness outside big cities (Uniqlo 2015), stores sized wrongly for U.S. demand (Primark 2017).
+- **Tensions to keep in mind:** shoppers say they want sustainability but choose on fit, price and quality; free returns lower purchase risk but encourage over-ordering; a store builds trust and solves fit but locks in cost before national demand exists.
+- **Survivorship bias:** failures are under-reported. Leads not checked: ASOS, Boohoo, Muji USA, Daniel Wellington, Gymshark, Mejuri.
 
-**So what for an entrant:** define success as repeat purchase and contribution after returns, not traffic, followers, or gross sales.
+**So what for an entrant:** Start in a channel you control (own site with U.S. stock and domestic returns), test one city with a pop-up or trunk show, then add a store only after repeat demand is proven. Judge success by repeat purchase and margin after returns, not traffic or followers. Never build the model on a policy loophole.
 
-## 10. AI and technology outlook
+## AI outlook (analysis)
 
-### Documented present
+### Scenario 1: AI fit and try-on tools cut returns
+- **Evidence:** fit is the top online concern (Kim and Damhorst); online returns run 19.3%, and 85% of retailers already use AI against return fraud. [NRF, Oct 2025](https://nrf.com/media-center/press-releases/consumers-expected-to-return-nearly-850-billion-in-merchandise-in-2025) AR shopping raised perceived informativeness and enjoyment, which lifted brand responses, but also raised perceived intrusiveness. [Smink et al., "Try online before you buy," Electronic Commerce Research and Applications, 2019](https://www.sciencedirect.com/science/article/pii/S1567422319300316)
+- **Signals to watch:** try-on inside major marketplaces and search, reported return rates, return fees for heavy returners, biometric privacy suits.
 
-Virtual try-on, recommendation engines, computer vision, review summarization, demand forecasting, and returns prediction are already part of fashion retail. Research finds that AR can increase informativeness, enjoyment, product liking, and choice confidence, but can also increase perceived intrusiveness and data concerns. [P11](https://www.sciencedirect.com/science/article/pii/S1567422319300316) Newer work on virtual try-on suggests that confidence and return reduction depend on usable, privacy-respecting implementation. [P13](https://www.sciencedirect.com/science/article/pii/S2666188826003849)
+### Scenario 2: AI design and on-demand supply shorten the trend cycle
+- **Evidence:** Mango runs an in-house generative AI platform ("Lisa") plus AI pricing and personalization. [Inside Retail US, Apr 2024](https://insideretail.us/?p=55021) Shein offers brands its manufacturing network ([FashionUnited](https://fashionunited.com/news/business/sheins-us-momentum-stalls-as-de-minimis-tariff-exemption-ends/2025101368667)).
+- **Analysis:** if trend copies get cheaper and faster, newness stops being an edge; fit, materials and community matter more. Synthetic influencer content and fake reviews may raise distrust; the FTC review rule already bans the worst forms.
+- **Signals to watch:** design-to-shelf times, SKU counts on Shein and TikTok Shop, disputes over copied or AI-generated designs.
 
-### 2026-2028 scenarios
+### Scenario 3: AI assistants become the shop window
+- **Evidence:** ThredUp says AI is improving secondhand discovery and automating pricing and authenticity checks. [ThredUp, Apr 2026](https://newsroom.thredup.com/news/thredup-14th-resale-report) Cross-category evidence on AI shopping traffic is in `us-technology.md` (Scenario 1).
+- **Analysis:** agents comparing fit probability, landed price, delivery and material claims would reward structured, verifiable product data over brand language.
+- **Signals to watch:** AI referral traffic to apparel sites, whether assistants read size charts, fabric and return terms, purchases inside assistants.
 
-- **Base case:** AI improves size recommendations, localization, customer service, merchandising, and paid-media production. Advantages accrue to brands with clean product and returns data.
-- **Upside case:** verified body/garment data creates materially better fit confidence and supports made-to-order or localized inventory.
-- **Downside case:** synthetic influencer content and fake reviews increase distrust; regulators and platforms demand stronger provenance. The FTC already prohibits specified fake reviews and undisclosed insider reviews. [G9](https://www.ftc.gov/business-guidance/resources/consumer-reviews-testimonials-rule-questions-answers)
+**So what for an entrant:** Publish machine-readable product data (measurements per size, fiber, origin, care, returns) and record return reasons by SKU. Fund fit tools before paid ads, keep consent and deletion controls on any body or image data, and keep a human responsible for claims.
 
-### 2029-2031 scenarios
-
-AI agents may compare fit probability, landed price, delivery, resale value, and material claims across brands. If so, vague brand language loses value while structured, verifiable product data gains value. This is an inference, not a forecasted fact.
-
-### No-regret actions
-
-1. Create a garment-measurement schema and record reason-level returns by SKU.
-2. Preserve consent and deletion controls for body or image data.
-3. Publish machine-readable material, care, origin, availability, and shipping data.
-4. Keep humans responsible for claims, sensitive body-image interactions, and escalated fit issues.
-5. Watermark or record provenance for synthetic campaign assets where practical.
-
-**So what for an entrant:** AI is most valuable when it reduces uncertainty and operating waste; using it merely to multiply content may worsen trust.
-
-## 11. Recommendations and 90-day test plan
-
-1. **Choose one beachhead.** Select one customer, wardrobe job, price band, and hero product.
-2. **Localize fit before media.** Fit on a U.S.-relevant body range; publish garment measurements, model data, stretch, and expected ease.
-3. **Price from landed contribution.** Include current duty, freight, domestic returns, payment fees, and expected markdowns. **[VERIFY classification and origin with a broker.]**
-4. **Launch 8-20 SKUs, not a complete universe.** Use waitlists and controlled drops only when delivery expectations are explicit.
-5. **Provide domestic returns and exchange-first service.** Measure refund time, exchange rate, contact reason, and retained margin.
-6. **Run two physical tests.** Compare a one-week appointment pop-up with a wholesale trunk show in one priority city.
-7. **Build proof content.** Construction close-ups, care tests, real-body try-ons, and honest limitations should outperform generic mood imagery in the test plan.
-
-**90-day gates:** at least 50-100 paid customers in the target segment; enough size-level volume to diagnose fit; repeat or second-item intent; return reasons concentrated in fixable issues; positive contribution after returns; and a credible path to delivery within the promised window. Numeric thresholds should be set from the entrant’s economics. **[VERIFY internal targets.]**
-
-**So what for an entrant:** spend the first 90 days learning which bodies, occasions, and messages create retained margin; do not optimize only for conversion.
-
-## 12. Uncertainties and items to verify
-
-- U.S. revenue, repeat rate, and store-level profitability for most foreign entrants are not public.
-- Category-specific 2024 Census revenue should be extracted for the selected NAICS/SKU scope rather than treated as one apparel number.
-- Current HTS classification, origin, Section 301 treatment, and preferential eligibility require broker review. **[VERIFY]**
-- State privacy obligations for body scanning or biometric features depend on data collection and geography. **[VERIFY]**
-- Sizing opportunity by petite/tall/plus/adaptive segment requires primary research and retailer panel data. **[VERIFY]**
-- Several case outcomes are continuation signals, not proof of profitability.
-
-**So what for an entrant:** the biggest open questions are economics and operational fit, not whether Americans buy apparel.
-
-## 13. Interviews and tests next
-
-- 15-20 target-customer wardrobe interviews using recent purchases and returns, not hypothetical preferences.
-- 8-12 fit sessions across the intended body range.
-- Five retail-buyer interviews on price, margin, returns, and seasonal calendars.
-- Three customs/logistics consultations using actual bills of materials.
-- Message test: origin story versus material/fit proof versus occasion solution.
-- Blind quality test against three substitutes at the same landed price.
-- Concierge domestic-return pilot to measure reasons, timing, and recoverable inventory.
-
-**So what for an entrant:** ask customers to show what they bought, kept, altered, and returned; observed tradeoffs are more useful than abstract style opinions.
-
-## 14. Source register and peer-review audit
-
-### Counted peer-reviewed analytical sources (12)
-
-- [P1 - Sustainability versus conventional apparel attributes](https://www.sciencedirect.com/science/article/pii/S0969698921002472)
-- [P2 - Apparel fit reviews and purchase decisions](https://www.sciencedirect.com/org/science/article/pii/S1361202620000253)
-- [P3 - Digital product fitting and return costs](https://www.sciencedirect.com/org/science/article/pii/S0960003521000222)
-- [P4 - Size finders and high-end fashion returns](https://www.sciencedirect.com/science/article/pii/S2444569X25001246)
-- [P5 - Social media and sustainable fashion](https://link.springer.com/article/10.1007/s43621-025-01135-x)
-- [P6 - Sustainable fashion and circularity systematic review](https://journals.sagepub.com/doi/10.1177/0887302X241249330)
-- [P7 - Apparel consumer behavior and circular economy](https://www.mdpi.com/2071-1050/15/2/1546)
-- [P8 - Systematic review of sustainable apparel consumer behavior](https://www.mdpi.com/2071-1050/16/7/2863)
-- [P9 - Environmental impact of returned apparel](https://www.sciencedirect.com/science/article/pii/S0921344924004051)
-- [P10 - Anatomy of fashion e-commerce returns](https://www.sciencedirect.com/science/article/pii/S1366554524004952)
-- [P11 - AR shopping, brand response, and privacy](https://www.sciencedirect.com/science/article/pii/S1567422319300316)
-- [P12 - Country-of-origin meta-analysis](https://www.sciencedirect.com/science/article/pii/S0167487099000239)
-
-### Counted non-peer-reviewed analytical sources (2)
-
-- Vogue Business consumer sizing survey: [summary and sample context](https://www.vogue.com/article/the-editors-cut-a-full-data-breakdown-from-the-vogue-business-consumer-sizing-survey)
-- Fashionista international-brand retail analysis: [2019 New York entries](https://fashionista.com/2019/12/international-brands-new-york-city-stores)
-
-**Ratio: 12 / 14 = 85.7% peer-reviewed.**
-
-### Separately classified sources
-
-- Government/regulatory: BLS, Census, CBP, FTC, CPSC links in sections 3 and 7.
-- Entry verification: C1-C11 in section 8.
-- Community: Reddit search [R1](https://www.reddit.com/r/femalefashionadvice/search/?q=quality%20international%20brands&restrict_sr=1).
-- Books: [B1](https://www.penguinrandomhouse.com/books/311988/overdressed-by-elizabeth-l-cline/) and [B2](https://www.routledge.com/The-Psychology-of-Fashion/Mair/p/book/9781138658677).
-- Excluded preprints: SizeFlags and other arXiv work were used only as technology leads, not counted as peer-reviewed evidence.
-
+## Open questions
+- Confirm each MFN rate on hts.usitc.gov, the China lists for 6403 and 4202, and whether chapters 64, 42 and 71 are on the all-country exemption list. [VERIFY]
+- Textile quota notice for Bangladesh, Cambodia, Indonesia and Malaysia; the trade-court challenge; Green Guides; care labeling; children's apparel rules. [VERIFY]
+- U.S. revenue, repeat rates and store profit for most foreign entrants are not public; several cases above are continuation signals, not proof of profit.
+- Missing cases: ASOS, Boohoo, Muji USA, Daniel Wellington, Gymshark, Mejuri; U.S. entry years for Aritzia, On, Pandora and Shein.
+- Interviews and tests: 15-20 wardrobe interviews built on recent purchases and returns; fit sessions across the target body range; five retail-buyer interviews on margin, returns and seasonal calendars; a blind quality test against three substitutes at the same landed price. Key question: what makes a U.S. shopper trust a foreign brand's sizing on the first order, and does appearing at TJ Maxx help awareness or hurt full price?

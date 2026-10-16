@@ -245,11 +245,21 @@ export async function POST(req: Request) {
   const reservation = await reserveCredit(code);
   if (!reservation.ok) return refuse(reservation);
 
+  // Tagged research notes that match this country or category. Example plans are never included.
+  const related = selectResearch(countryKey, category, picked === OTHER);
+  console.log(
+    `research used (${related.length}, ${picked ?? "no category"} -> ${countryName}): ${related.map((n) => `${n.file} [${n.why}]`).join(", ") || "none"}`,
+  );
+  // "No category-specific research" only when no category note covers the target country.
+  const noCategoryResearch = !related.some(
+    (n) => n.catMatch && (n.countries.includes(countryKey) || n.countries.includes("all")),
+  );
+
   const fromSite = (v: string) => v.trim() || "(not given - work it out from the brand website)";
   const brief = `Write the market-entry plan for this brand.
 
 Brand: ${body.brand}
-${category ? `Category: ${category}${picked === OTHER || picked === "Technology" ? " (no category-specific research: use the country research, web results and the brief, and mark category rules [verify])" : ""}\n` : ""}What they sell: ${fromSite(body.product)}
+${category ? `Category: ${category}${noCategoryResearch ? " (no category-specific research: use the country research, web results and the brief, and mark category rules [verify])" : ""}\n` : ""}What they sell: ${fromSite(body.product)}
 Brand identity: ${fromSite(body.identity)}
 Target customer: ${fromSite(body.customer)}
 Price point: ${fromSite(body.price)}
@@ -277,11 +287,6 @@ Target country: ${countryName}${website ? `\nWebsite: ${website}` : ""}`;
   const site = website ? formatWebsite(website, siteText) : "";
   console.log(`web results: ${webResults.length}, papers: ${papers.length} (${countryName})${website ? `, website chars: ${siteText.length}` : ""}`);
 
-  // Tagged research notes that match this country or category. Example plans are never included.
-  const related = selectResearch(countryKey, category);
-  console.log(
-    `research used (${related.length}, ${picked ?? "no category"} -> ${countryName}): ${related.map((n) => `${n.file} [${n.why}]`).join(", ") || "none"}`,
-  );
   const relatedBlock = formatResearch(related);
 
   const system = [

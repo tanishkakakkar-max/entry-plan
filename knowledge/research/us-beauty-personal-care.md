@@ -1,280 +1,216 @@
 ---
 countries: [us]
-categories: [beauty & personal care]
-topics: [customer psychology, competitors, market access, entry cases, failures, ai future]
-research_date: 2026-10-16
-coverage_period: 2016-2026 for entry cases; earlier peer-reviewed research where relevant
-status: complete with verification gaps
+categories: [beauty, personal care, skincare, cosmetics]
+topics: [customer psychology, competitors, entry cases, failures, regulation, tariffs, ai future]
+updated: 2026-10-15
 ---
 
-# Beauty & personal care in the United States: market-entry research
+# Beauty and personal care in the United States: psychology, rules, competitors, foreign entry history, AI outlook (checked October 2026)
 
-## 1. Executive summary
+Scope: this note is about **foreign (non-U.S.) beauty and personal care brands entering the U.S.**: skincare, makeup, haircare, fragrance and body care. U.S. brands appear only as competitors. It does not repeat `beauty-regulation-and-channels-by-country.md` (MoCRA registration and listing basics, TikTok Shop beauty sales to Q2 2026) or `hero-cosmetics-brand-teardown.md` (acne patches). The tariff baseline is the Section 301 table in the US country doc (section 5); this note adds only beauty-specific detail. It merges two research passes; peer-reviewed findings come first, and community sources (Reddit, articles) are kept as qualitative evidence of how people think.
 
-The U.S. beauty market rewards novelty unusually quickly, but it punishes weak proof and operational inconsistency just as fast. Social discovery, retailer curation, ingredient literacy, reviews, and sampling all matter. The winning foreign entrant usually does not sell “beauty from abroad”; it sells a clear routine, concern, texture, shade system, or cultural aesthetic that U.S. customers can understand and trust.
+## Customer psychology
 
-Five conclusions:
+### Fact
+- **Beauty grew in 2025, led by mass.** U.S. prestige beauty sales rose 4% to $36B and mass rose 5% to $72.7B. Fragrance was the fastest-growing mass category (+15%), skincare grew fastest by units in prestige, scalp care grew double digits for a third year, and hair is the only prestige category where most sales are online. Circana's Larissa Jensen said brands that "lean into value, wellness, and innovation" are best placed. [Circana, Feb 2026](https://www.circana.com/post/us-prestige-and-mass-beauty-retail-deliver-a-positive-performance-in-2025-circana-reports)
+- **Growth is price-led and moving to marketplaces.** YipitData (card and receipt data) put 2025 U.S. beauty at about $114B (+5%), "driven mainly by price increases." It reported skincare up 104% on TikTok Shop and 21% on Amazon, and e-commerce's share up from 27% to 30%. K-beauty brands Medicube and Anua were among skincare's growth leaders. Sephora disputes the data. [Beauty Independent, Feb 2026](https://www.beautyindependent.com/?p=183846)
+- **K-beauty demand is mainstream.** Korea's cosmetics exports to the U.S. reached $2.2B in 2025 (+15%), making the U.S. its top market, ahead of China ($2B, -19%), per Korea's Ministry of Food and Drug Safety. [Korea JoongAng Daily, May 2026](https://www.koreajoongangdaily.com/business/korea-surpasses-us-in-cosmetics-exports-with-record-114-billion/12713991)
+- **Origin is not always what shoppers buy.** Amorepacific's North America CEO said many North American consumers do not know Laneige is a K-beauty brand, named U.S. brands Summer Fridays and rhode as its biggest competitors, and said the company is "heavily investing in education" so beauty advisors can explain the science. [BeautyMatter, May 2026](https://beautymatter.com/articles/k-beauty-showdown-amorepacific-ceo-reveals-steady-strategy)
+- **Asian sunscreens pull shoppers, and U.S. versions differ.** Consumer Reports tested Korean and U.S. formulas of Beauty of Joseon, Innisfree and Round Lab sunscreens: the Korean formulas protected better against UVA and UVB, while panelists saw little difference in feel. [WTOP on Consumer Reports, 2026](https://wtop.com/health-fitness/2026/07/sunscreens-are-not-all-created-equal-new-study-explains-why-korean-products-are-being-praised/) Dermatologist Shereene Idriss told Refinery29 she buys Beauty of Joseon from an established importer rather than third-party Amazon sellers; the article warns about counterfeits. [Refinery29](https://refinery29.com/en-us/european-asian-australian-sunscreen-better-ingredients)
+- **Buyers start young.** Mintel: in the U.S., by age 12 nearly 40% of tweens with discretionary income already buy beauty and personal care; WGSN says Gen Alpha enters beauty as young as eight. [Cosmetics Business, Jun 2026](https://cosmeticsbusiness.com/gen-alpha-beauty-analysis-what-want-products-experiences) U.S. female teens' beauty spending rose 10% in 2025 to an average $374 (The Future Laboratory; underlying survey not named, so treat as directional). [Cosmetics Business, May 2026](https://cosmeticsbusiness.com/gen-z-are-still-a-sought-after-beauty-demographic)
+- **Dupes are normal for young buyers.** No U.S. figure was found. In Europe, Circana found 29% of consumers had bought beauty dupes, 52% of 18-34s, driven by inflation and social feeds. [Cosmetics Business, Jul 2025](https://cosmeticsbusiness.com/how-beauty-dupes-became-a-new-form-of) Charlotte Tilbury's response: "When you dupe, you dupe the consumer." [Cosmetics Business, Jul 2026](https://cosmeticsbusiness.com/charlotte-tilbury-speaks-out-on-beauty-dupes-again)
+- **Wallet context:** U.S. households spent an average of $978 on personal care products and services in 2024, up 2.9% (not statistically significant). [BLS Consumer Expenditures 2024](https://www.bls.gov/news.release/cesan.htm)
+- **Creators are judged, not just followed.** Trustworthiness is the main driver of a beauty guru's credibility; video quality and a "professional" profile also shape it; YouTube influence was strongest at ages 18-21 and weaker at 22-29; endorsements woven into regular content read as more credible than sponsored posts. [Djafarova and Matson, International Journal of Internet Marketing and Advertising, 2021](https://phys.org/news/2021-04-beauty-gurus-trustworthy-audience-production.html) A PLOS ONE study likewise examines how young millennials judge beauty gurus' credibility before it shapes product choice. ["The credibility of social media beauty gurus in young millennials' cosmetic product choice," PLOS ONE, 2021](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8006996/) (sample country not confirmed [VERIFY])
+- **Trying on virtually helps, with a privacy cost.** AR shopping raised perceived informativeness and enjoyment, which lifted brand responses, but also raised perceived intrusiveness. [Smink et al., Electronic Commerce Research and Applications, 2019](https://www.sciencedirect.com/science/article/pii/S1567422319300316)
+- For peer-reviewed evidence that negative reviews hurt a new product more than positive ones help, see `us-technology.md`. Studies of U.S. beauty shoppers specifically remain thin [VERIFY].
 
-1. **Trust is the commercial bottleneck.** Peer-reviewed research consistently links source credibility, electronic word of mouth, perceived product quality, and community trust to purchase intention. [P1](https://doi.org/10.1016/j.clrc.2025.100277) [P2](https://www.nature.com/articles/s41599-024-02760-9)
-2. **Retailer endorsement can convert foreign novelty into legitimacy.** Sephora and Ulta repeatedly function as trust, trial, shade-matching, and education infrastructure for international brands.
-3. **Ingredients attract attention, but experience creates retention.** Texture, irritation, scent, packaging, routine compatibility, and visible but realistic results determine repeat purchase.
-4. **Cultural specificity can be an advantage if it is legible rather than exoticized.** K-beauty’s routines and formats, C-beauty’s visual codes, French pharmacy cues, and British founder-led brands all travel best when the customer benefit is explicit.
-5. **The dangerous shortcut is overclaiming.** Cosmetics, OTC drugs, devices, and supplements have different U.S. requirements. A claim that a product treats acne, eczema, hair loss, or another condition may change the regulatory category.
+### Customer language (Reddit and articles, qualitative only)
+- r/SkincareAddiction, r/AsianBeauty, r/MakeupAddiction and r/HaircareScience keep circling the same questions: irritation, counterfeits, reformulations, pilling, fragrance, value, and whether a viral product is worth repurchasing. [r/AsianBeauty search](https://www.reddit.com/r/AsianBeauty/search/?q=worth%20it&restrict_sr=1), [r/SkincareAddiction search](https://www.reddit.com/r/SkincareAddiction/search/?q=holy%20grail&restrict_sr=1) Useful for vocabulary, FAQs and edge cases, not for population estimates.
+- Background reading: Geoffrey Jones, *Beauty Imagined* (the global beauty industry), and Kathy Peiss, *Hope in a Jar* (American beauty culture and business).
 
-**Provisional recommendation:** begin with one concern-routine pair and 3-8 products, secure a U.S. responsible person and MoCRA-ready operations, substantiate every claim, and use a credible trial channel - targeted creators, estheticians/dermatologists where appropriate, a retailer test, or a high-touch pop-up. Build shade and skin-type feedback before expanding.
+### Inference
+- **"Skintellectual" buying shows in where growth goes:** skincare growth on Amazon and TikTok Shop, products named after their active and its percentage (The Ordinary), and Korean brands winning on a visible result (sunscreen texture, lip and barrier care). The working credibility signals are the active and its strength, a result shown on video, review volume and a prestige retailer's shelf.
+- **What makes a foreign brand credible:** a U.S. retailer or marketplace that vouches for it (Sephora, Ulta, Amazon reviews), a formula that is legal here (an SPF that meets U.S. drug rules) and trained advisors or creators who explain it. Korean origin helps in skincare and sun care, but Laneige shows a brand can win without shoppers knowing where it is from.
+- **"Premium" means results and ritual, not origin or price.** Growth is price-led while dupes spread among young buyers, so a premium foreign brand needs something a dupe cannot copy: a proprietary active, clinical data or a sensory ritual.
+- **Decision journey:** TikTok or a creator → reviews on Amazon or TikTok Shop → low-risk trial → repeat or trade-up at Ulta, Sephora or Target. Belief can break at any step: discovery, reading the ingredients, first use, a visible result, or the refill.
+- **Likely first customers:**
 
-**So what for an entrant:** a concentrated, provable routine with excellent trial and support is a stronger entry than a broad catalogue of trend-responsive products.
-
-## 2. Research question, scope, and evidence rules
-
-**Question:** where can a foreign skincare, cosmetics, haircare, fragrance, body-care, or personal-care brand enter the U.S. with a credible trust system and repeatable acquisition-to-retention path?
-
-The report distinguishes cosmetics from products that may be OTC drugs, devices, or supplements. It covers DTC, marketplaces, specialty beauty, mass retail, department stores, salons, and professional channels.
-
-Peer-reviewed research is used for behavioral mechanisms; FDA/FTC material for regulation; company and reputable trade records for entries; Reddit for customer language; books for historical interpretation. Reddit is non-representative. Outcome claims are conservative when U.S.-only sales or profitability are not disclosed.
-
-**Peer-review audit:** 13 of 15 counted analytical articles/case studies are peer-reviewed (86.7%). Government, retailer/company records, event-verification journalism, books, Reddit, and preprints are separate and excluded from the denominator.
-
-**So what for an entrant:** treat social conversation as a source of hypotheses, then validate with product use, retention, claims review, and retailer economics.
-
-## 3. Market context
-
-U.S. households spent an average of $978 on personal-care products and services in 2024, up 2.9% from 2023, according to the Consumer Expenditure Survey. [G1](https://www.bls.gov/news.release/cesan.nr0.htm) This is not a complete market-size figure: it combines products and services and omits some beauty spending classified elsewhere. Census AIES tables should be used for selected retail and service NAICS once the subcategory is defined. [G2](https://data.census.gov/table/AIESBASIC2024.AIES00BASIC)
-
-The practical market structure is:
-
-- **prestige:** Sephora, Ulta prestige, department stores, specialty e-commerce;
-- **mass:** Walmart, Target, CVS, Walgreens, grocery and club;
-- **marketplaces/social commerce:** Amazon and TikTok Shop, with strong authenticity and gray-market risks;
-- **professional:** salons, estheticians, dermatology and med-spa channels, depending on claims and product type;
-- **DTC:** highest storytelling control but expensive trust acquisition and sampling.
-
-NIQ reported that K-beauty reached $2 billion in U.S. sales in 2025 and linked growth to TikTok Shop, creators, and innovative formats; treat this as commercial research rather than peer-reviewed evidence. [A1](https://nielseniq.com/global/en/insights/report/2025/k-beautys-viral-rise-in-the-us-market/)
-
-**So what for an entrant:** define the regulatory category and distribution ladder before selecting the hero product; the same formula can have very different economics and obligations across channels and claims.
-
-## 4. Customer psychology and purchase journey
-
-### Credibility, reviews, and social proof
-
-Peer-reviewed beauty research finds that influencer credibility and perceived product quality shape trust and purchase intention. [P1](https://doi.org/10.1016/j.clrc.2025.100277) Research on beauty vloggers similarly connects expertise, trust, and parasocial relationships with intention. [P2](https://www.nature.com/articles/s41599-024-02760-9) PLOS ONE research on beauty gurus shows that young audiences evaluate credibility rather than accepting all influencer content equally. [P3](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0249286)
-
-**Inference:** creator reach without diagnostic relevance or believable product use can produce awareness without retention. Smaller concern-specific communities may be more useful than celebrity exposure.
-
-### Ingredient literacy and efficacy theater
-
-Customers increasingly compare ingredients, concentrations, compatibility, before/after images, and reviews. This can improve scrutiny but also encourages single-ingredient thinking and pseudo-clinical language. Social-media information credibility affects skincare purchase intention through trust and perceived risk. [P4](https://pubmed.ncbi.nlm.nih.gov/41124229/) Bio-cosmetics research also links informativeness, personalization, interaction, and e-WOM with perceived quality and trust. [P5](https://pubmed.ncbi.nlm.nih.gov/41109109/)
-
-### Identity, aspiration, and harm
-
-Beauty is simultaneously functional and identity-laden. Systematic reviews connect social media with body-image dissatisfaction and interest in cosmetic procedures, highlighting risks from unrealistic standards and misleading promotion. [P6](https://pubmed.ncbi.nlm.nih.gov/39205749/) [P7](https://pubmed.ncbi.nlm.nih.gov/38724639/) These studies are not direct product-demand estimates, but they are important design and ethics constraints.
-
-### Vegan, clean, natural, and sustainable cues
-
-Research on vegan cosmetics finds that source credibility and digital influence can affect purchase intention even when the consumer does not fully identify with veganism. [P8](https://pubmed.ncbi.nlm.nih.gov/36937490/) Sustainability and “clean” language should be product-specific; vague claims can obscure allergens, efficacy limitations, or environmental tradeoffs.
-
-### Trial, texture, shade, and routine friction
-
-Beauty purchase risk is sensory: texture, scent, finish, shade, irritation, and packaging are hard to judge online. AR can increase informativeness, enjoyment, product liking, and choice confidence, but privacy concerns and unreality can reduce trust. [P9](https://www.sciencedirect.com/science/article/pii/S1567422319300316) Comparative AR research finds both cognitive and affective pathways to reuse and purchase intention. [P10](https://www.sciencedirect.com/science/article/pii/S0148296320307220)
-
-### Community evidence
-
-Reddit communities such as r/SkincareAddiction, r/AsianBeauty, r/MakeupAddiction, and r/HaircareScience repeatedly discuss irritation, counterfeit products, reformulations, pilling, fragrance, value, and whether viral products are worth repurchasing. [R1](https://www.reddit.com/r/AsianBeauty/search/?q=worth%20it&restrict_sr=1) [R2](https://www.reddit.com/r/SkincareAddiction/search/?q=holy%20grail&restrict_sr=1) These discussions are useful for vocabulary and edge cases, not population estimates.
-
-### Books as interpretive context
-
-Geoffrey Jones’s *Beauty Imagined* traces the global beauty industry and the commercialization of cultural ideals. [B1](https://global.oup.com/academic/product/beauty-imagined-9780199639625) Kathy Peiss’s *Hope in a Jar* documents the history of American beauty culture and business. [B2](https://www.pennpress.org/9780812221671/hope-in-a-jar/) Books are interpretive, not counted in the peer-review audit.
-
-**So what for an entrant:** design the proof path from discovery to patch test to repeat use; do not let a trend claim do the work of a coherent routine and safe customer experience.
-
-## 5. First-customer hypotheses
-
-| Segment / job | Motivation | Barrier | Trial trigger | Best initial channel | Confidence |
-|---|---|---|---|---|---|
-| Concern-led skincare optimizer | Solve dryness, sensitivity, pigmentation, acne appearance, or aging concern | Irritation, overclaiming, routine conflict | Clear regimen, ingredient rationale, patch guidance, realistic timeline | DTC education plus specialty retail | High on mechanism |
-| Ingredient-literate value seeker | Effective formula without luxury markup | Distrust of concentration and sourcing | Transparent INCI, testing, comparison, price-per-use | DTC, Ulta, Amazon authorized store | Medium-high |
-| Cultural-format explorer | Novel textures, rituals, colors, packaging | Fear of gimmick or poor local suitability | Demonstration by relevant creators and samples | TikTok/creator, Sephora/Ulta, pop-up | Medium-high |
-| Mature-beauty simplifier | Portable, forgiving routine for changing skin | Youth-coded marketing and shade/texture mismatch | Realistic demonstrations on target ages | Founder media, appointments, department store | Medium |
-| Sensitive-skin minimalist | Fewer products and lower irritation risk | “Clean” ambiguity and hidden fragrance | Conservative formula, full disclosure, patch testing | Dermatology-adjacent education, DTC | Medium-high |
-| Gift/fragrance discovery buyer | Emotion, identity, collectability | Inability to smell online and return restrictions | Discovery set credited to full size | Specialty retail, sampling, DTC | High on mechanism |
-
-**So what for an entrant:** start with the segment whose concern and product experience your formulation can serve demonstrably, not the largest audience imaginable.
-
-## 6. Competitor and channel map
-
-| Arena | Benchmarks | Customer expectation | Entrant opening |
+| Segment | Main barrier | Trial trigger | First channel |
 |---|---|---|---|
-| Prestige retail | Sephora, Ulta, Nordstrom, Macy’s | Curation, sampling, loyalty, easy comparison | A differentiated hero with education and retail readiness |
-| Mass beauty | Walmart, Target, CVS, Walgreens | Value, convenience, replenishment | Clinically cautious proof and premium cues at accessible price |
-| Global groups | L’Oréal, Estée Lauder, P&G, Unilever, Shiseido, Amorepacific | Portfolio breadth, R&D, distribution | Speed, specificity, founder/community intimacy |
-| Digital indie | e.l.f., Glossier, The Ordinary, Beauty Pie, DTC specialists | Social relevance, transparent price, launches | Better routine coherence and less acquisition dependence |
-| K-beauty / Asian beauty | COSRX, Laneige, Beauty of Joseon, Innisfree, Tirtir, Round Lab | Innovation, textures, routines, value | Specific need plus reliable authorized distribution |
-| Professional / clinical | CeraVe, La Roche-Posay, SkinCeuticals, professional lines | Safety, recommendation, evidence cues | Underserved concern or better adherence experience |
-| Social commerce / marketplaces | TikTok Shop, Amazon, creator storefronts | Viral discovery and fast checkout | Authenticity controls, authorized seller policy, education |
+| Concern-led optimizer (dryness, sensitivity, pigmentation, aging) | Irritation, overclaiming | Clear routine, ingredient rationale, patch-test advice, realistic timeline | Own site education plus a specialty retailer |
+| Ingredient-literate value seeker | Doubts about concentration and sourcing | Full INCI, test data, price per use | Own site, Ulta, Amazon authorized store |
+| Cultural-format explorer | Fear of a gimmick | Demos by relevant creators, samples | TikTok, Sephora or Ulta, pop-up |
+| Mature-skin simplifier | Youth-coded marketing | Realistic demos on the target age | Founder media, department store |
+| Fragrance or gift buyer | Can't smell online | Discovery set credited toward full size | Specialty retail, sampling |
 
-The competitor is often a routine, not one SKU. A serum competes with a dermatologist visit, a cheaper active, fewer products, and customer skepticism about needing another step.
+**So what for an entrant:** Lead with one hero product and one active whose result shows on camera. Build marketplace reviews first, then use them to win a retailer's endorsement (Ulta or Sephora). Confirm your SPF or treatment claim works in a U.S.-legal formula before building the story around it.
 
-**So what for an entrant:** map the customer’s existing routine, retailer loyalty, and substitution behavior before benchmarking formulas or prices.
+## Rules and regulatory risk (2025-2026), including tariffs
 
-## 7. Market access, regulation, and claims
+### Fact
+**MoCRA** (registration and listing basics are in the channels note)
+- **Statutory duties:** the "responsible person" is the manufacturer, packer or distributor named on the label. Serious adverse events go to FDA within 15 business days; records are kept six years (three for small businesses). Labels need a U.S. address, phone or electronic contact for adverse-event reports. The responsible person keeps records of "adequate substantiation of safety." Foreign and domestic facilities register every two years, and products are listed with ingredients and updated yearly. Small businesses (under $1M average annual U.S. sales) are exempt from some duties, but not for eye-area or injected products. FDA can order mandatory recalls. [Buchanan Ingersoll, Mar 2023](https://www.bipc.com/the-new-face-of-cosmetics-the-modernization-of-cosmetics-regulation-act-of-2022)
+- **In practice:** by Jan 2026 FDA had 14,299 active facility registrations and 992,907 product listings, a public adverse-event dashboard (Sep 2025) and draft mandatory-recall guidance (Dec 2025). [Foley, Mar 2026](https://www.foley.com/insights/publications/2026/03/how-mocra-is-reshaping-fda-oversight-of-cosmetics-in-2026/)
+- **Claims decide the category.** A claim to treat or prevent a condition (acne, eczema, hair loss) or to change body structure can make a cosmetic a drug or device; check every package, page, creator brief and testimonial. [FDA, cosmetics importers](https://www.fda.gov/cosmetics/cosmetics-international-activities/cosmetics-importers)
+- **Still pending:** the **fragrance allergen labeling** proposed rule (MoCRA required a proposal by about June 2024) and a ban on **formaldehyde and releasers in hair-smoothing products** are both targeted for November 2026 in the July 3, 2026 Unified Agenda. The **GMP rule** is not on the agenda. [ChemLinked, Jul 2026](https://cosmetic.chemlinked.com/news/cosmetic-news/us-fda-sets-november-2026-timeline-for-formaldehyde-ban-and-fragrance-allergen-rule) FDA had already moved GMP to its long-term list; Covington notes FDA "often misses these targets." [Covington, Sep 2025](https://www.cov.com/en/news-and-insights/insights/2025/09/mocra-implementation-fda-spring-2025-unified-agenda-update) [VERIFY whether the allergen proposal is published in November.]
 
-- **MoCRA:** FDA requires facility registration and product listing subject to applicable exemptions and rules; biennial renewal and current portal guidance apply. [G3](https://www.fda.gov/cosmetics/registration-listing-cosmetic-product-facilities-and-products)
-- **Importing:** imported cosmetics must meet the same U.S. requirements as domestic products; FDA provides cosmetics-importer guidance. [G4](https://www.fda.gov/cosmetics/cosmetics-international-activities/cosmetics-importers)
-- **Responsible person and safety substantiation:** determine the U.S. responsible person, adverse-event process, records, labels, and safety file before launch. **[VERIFY with U.S. cosmetics counsel.]**
-- **Cosmetic versus drug/device:** claims that diagnose, treat, cure, mitigate, or prevent disease, or affect body structure/function, can change classification. **[VERIFY every website, creator brief, package, and testimonial.]**
-- **Reviews/influencers:** the FTC review rule and endorsement guidance prohibit specified deceptive practices and require material-connection disclosure. [G5](https://www.ftc.gov/business-guidance/resources/consumer-reviews-testimonials-rule-questions-answers) [G6](https://www.ftc.gov/business-guidance/advertising-marketing/endorsements-influencers-reviews)
-- **State rules:** California and other states can add ingredient, warning, privacy, packaging, or environmental obligations. **[VERIFY by SKU and distribution state.]**
-- **Tariffs:** finished cosmetics and packaging components require HTS classification and origin-specific landed-cost review. **[VERIFY with a customs broker.]**
+**Sunscreens and acne treatments are OTC drugs**
+- The U.S. allows 16 UV filters, against 27 in the EU. [Refinery29](https://refinery29.com/en-us/european-asian-australian-sunscreen-better-ingredients)
+- **Bemotrizinol** was added to the OTC sunscreen monograph by final order on June 10, 2026 (up to 6%, effective Aug 9, 2026), the first new active since the late 1990s. DSM holds 18 months' exclusivity, propellant aerosols and powders are excluded, and wider availability is expected around 2028. [Venable, Jun 2026](https://www.venable.com/insights/publications/2026/06/fda-clears-the-way-for-bemotrizinol-first-new-otc)
+- **Why Korean and European sunscreens can't be sold as-is:** they often pair bemotrizinol with bisoctrizole and drometrizole trisiloxane, which the U.S. does not permit. Brands must build new U.S. formulas, made in drug-GMP facilities that are registered and listed in the National Drug Code Directory (Kolmar Korea and Cosmax have OTC-certified plants). Several Korean brands reformulated or pulled U.S. sunscreens. Korean-formula products bought directly from Korea are drugs that customs can stop, and Olive Young, which opened U.S. stores in late May 2026, blocked U.S. customers from its global site. A 2021 FDA proposal to tighten rules for all sunscreens is still pending. [Korea JoongAng Daily, Aug 2026](https://www.koreajoongangdaily.com/business/is-the-new-us-regulation-an-open-door-or-obstacle-for-ksunscreens/12818291)
+- Acne treatments with drug actives (such as benzoyl peroxide or salicylic acid) fall under an OTC monograph too [VERIFY; FDA monograph page not opened]. Patches are covered in the Hero note.
 
-**So what for an entrant:** claims discipline and adverse-event readiness are market-entry capabilities, not legal polish added after creative production.
+**State ingredient laws (stricter than federal)**
+- **PFAS bans in cosmetics:** California, Colorado, Maryland, Minnesota and Washington from Jan 1, 2025; Maine and Vermont from Jan 1, 2026; Connecticut labeling and notice from Jul 1, 2026 and a ban in 2028; Rhode Island 2027, New Mexico 2028, Illinois 2032; New Jersey signed a ban Jan 12, 2026. Minnesota treats packaging that dispenses the product as part of the product. [Morgan Lewis, Dec 2025](https://www.morganlewis.com/pubs/2025/12/state-pfas-bans-in-cosmetics-expand-ahead-of-2026)
+- **California:** the Toxic-Free Cosmetics Act banned a first list (including 13 PFAS) from Jan 1, 2025; AB 496 adds 26 more, including lily aldehyde, styrene and boron substances, from Jan 1, 2027. [Keller and Heckman](https://www.khlaw.com/insights/california-governor-approves-ban-twenty-six-additional-chemicals-cosmetics-building)
+- **Washington** bans all intentionally added formaldehyde releasers (for example DMDM hydantoin) from Jan 1, 2027, with retailer sell-through to Dec 31, 2027; any detected formaldehyde is presumed intentional. [BeautyMatter, Sep 2025](https://beautymatter.com/articles/washington-bans-formaldehyde-releasing-chemicals-in-cosmetics)
+- California Prop 65 warnings apply to products containing listed chemicals [VERIFY; not checked in this pass].
 
-## 8. Verified entry cases, 2016-present
+**FTC**
+- The Consumer Reviews and Testimonials Rule (effective Oct 21, 2024) bans fake reviews (including AI-generated ones), sentiment-conditioned incentives, undisclosed insider reviews, review suppression and fake followers; penalties reach nearly $52,000 per violation. [Wilson Sonsini](https://wsgr.com/en/insights/ftc-issues-final-rule-banning-fake-and-misleading-consumer-reviews-and-testimonials.html) The 2023 Endorsement Guides govern influencer disclosures. [FTC](https://www.ftc.gov/business-guidance/advertising-marketing/endorsements-influencers-reviews)
 
-| Year | Company / origin | Entry or scale move | Outcome signal | Lesson | Confidence |
-|---|---|---|---|---|---|
-| 2016-2017 | Beauty Pie / United Kingdom | Simultaneous/near-simultaneous U.K.-U.S. digital launch with membership pricing | Continued U.S. operation and later major funding | A new pricing model can be the proposition, but it must explain complexity | Medium-high [C1](https://time.com/4636207/beauty-pie-cheap-designer-lipstick/) |
-| 2017 | Innisfree / South Korea | First U.S. store in Manhattan | Closed owned North American stores by 2021; continued via Sephora/online | Owned retail can outrun local economics; channel retreat need not equal brand exit | High [C2](https://www.allure.com/story/innisfree-sold-at-sephora-stores) [C3](https://www.koreatimes.co.kr/business/companies/20210507/amorepacific-withdraws-innisfree-business-from-north-america) |
-| 2017 | International-brand cohort / multiple | Allure documented eight foreign brands arriving in the U.S. | Mixed, brand-specific outcomes | Editorial novelty helps discovery but does not prove retention | Medium [C4](https://www.allure.com/story/8-new-international-beauty-brands-2017) |
-| 2018 | Charlotte Tilbury / United Kingdom | Major U.S. expansion into Sephora after earlier U.S. availability | Continued U.S. prominence | Retailer scale can convert founder authority into broad trial | High [C5](https://www.thecut.com/2018/08/charlotte-tilbury-sephora.html) |
-| 2018 | Kaja by Memebox / South Korea-U.S. platform | Exclusive Sephora launch with 47 products | Continued brand availability; economics undisclosed | A locally built brand can translate K-beauty formats for U.S. retail | High [C6](https://www.prnewswire.com/news-releases/memebox-launches-next-generation-k-beauty-color-cosmetic-line-kaja-exclusively-with-sephora-300713791.html) |
-| 2019 | The Ordinary / Canada | Ulta online then 400-store rollout, described as its largest U.S. expansion | Continued mainstream distribution | Radical price/formula legibility can scale through trusted retail | High [C7](https://www.allure.com/story/the-ordinary-deciem-sold-at-ulta-shop) |
-| 2019 | Innisfree / South Korea | Sephora U.S. online and selected-store launch | Continued channel presence despite later owned-store closure | Separate brand demand from owned-store economics | High [C2](https://www.allure.com/story/innisfree-sold-at-sephora-stores) |
-| 2021-2022 | Florasis / China | Cross-border DTC and U.S. market expansion using Chinese aesthetics | Continued U.S. digital presence; retail scale still developing | Cultural specificity can differentiate when product use is clear | Medium [C8](https://www.gcimagazine.com/retail/digital-e-commerce/news/22184578/chinese-brand-florasis-expands-to-us-market) |
-| 2023-2025 | Trinny London / United Kingdom | Saks presence followed by New York pop-up and U.S. growth focus | Company/trade-reported growth; U.S.-only economics [VERIFY] | Pop-ups can combine consultation, education, and data capture | Medium [C9](https://cosmeticsbusiness.com/trinny-london-to-debut-us-pop-up-in-new-york) |
-| 2024-2025 | K-Beauty World cohort / South Korea | Ulta expanded a dedicated K-beauty concept in store and online | Category continued to grow; brand outcomes vary | Retail merchandising can make a foreign category navigable | Medium [C10](https://beautynewsdaily.com/k-beauty-world-arrives-at-ulta-beauty/) |
-| 2026 | Molvany / South Korea | Entered Ulta Beauty | Too early | Major retail placement is a validation event, not proof of repeat | Medium [C11](https://en.sedaily.com/finance/2025/12/30/k-beauty-brand-molvany-enters-ulta-beauty-expands-global) |
-| 2026 | Dr.G / South Korea | U.S. TikTok Shop launch after L’Oréal acquisition | Too early | Social commerce can be a focused entry channel when backed by supply and compliance | High on event [C12](https://www.prnewswire.com/news-releases/koreas-1-skincare-brand-drg-accelerates-us-expansion-with-tiktok-shop-launch-302894974.html) |
+**Tariffs** (beauty-specific; see the Section 301 table in the US country doc)
+- **MFN duty is free** for perfumes and toilet waters (3303.00), lip (3304.10), eye (3304.20) and nail (3304.30) products, powders (3304.91), other skincare and makeup (3304.99.50) and hair preparations (3305.10-3305.90). Deodorants (3307.20) pay 4.9% and bath salts 5.8%. [Tariff schedule summary](https://ustariffrates.com/chapter/cosmetics) [VERIFY at hts.usitc.gov, which could not be opened] A March 2026 CBP ruling confirms skincare under 3304.99.50 is free. [CBP NY N359063](https://www.tarifflens.ai/rulings/N359063) Soap (3401) rate not obtained [VERIFY].
+- **The combined cap gives beauty no relief.** With 0% MFN duty, EU and Taiwan cosmetics pay the full 10% and Japanese, Korean and Swiss cosmetics the full 12.5% (inference from the cap rule in the US country doc). Korean press treats K-beauty as facing 12.5%, against 15% under the earlier reciprocal tariff. [Segye Ilbo, Jul 2026](https://v.daum.net/v/20260725230316701) Whether any Chapter 33 or 3401 line is exempt in Annex II was not checked line by line [VERIFY]. The UK trade body CTPA reported 12.5% for EU products, which conflicts with the notice's 10% EU cap; trust the notice [VERIFY]. [CTPA, Jul 2026](https://www.ctpa.org.uk/news/us-introduces-new-tariffs-on-imports-9186)
+- **China:** skincare under 3304.99.50 already carries the 2018-19 Section 301 duty of 25% (reported under 9903.88.03). [CBP ruling summary, Jan 2020](https://www.cmtradelaw.com/2020/01/customs-ruling-of-the-week-classification-of-facial-masks/) The new 12.5% applies on top of existing China Section 301 duties, [Global Trade Alert, Jul 2026](https://globaltradealert.org/blog/forced-labour-section-301-final-action) so the total is about 37.5% [VERIFY with a broker].
+- **Canada:** since Aug 22, 2026, a 50% Section 338 tariff covers listed Canadian goods including cosmetics, with no USMCA exception. [Covington, Aug 2026](https://www.cov.com/news-and-insights/insights/2026/08/section-338-tariffs-on-canada-take-effect-as-canada-announces-retaliatory-response) Canada set 50% counter-tariffs on U.S. cosmetics from Sep 8. [Personal Care Insights, Aug 2026](https://www.personalcareinsights.com/news/canada-us-50-percent-cosmetics-tariffs.html) Exact HTS lines [VERIFY].
+- **De minimis is still suspended for all countries.** Executive Order 14388 kept the suspension after the Supreme Court's Feb 20, 2026 IEEPA ruling, the Court of International Trade upheld it on Aug 13, 2026, and a statute ends the exemption on Jul 1, 2027. This resolves the [VERIFY] in the US country doc. [Troutman Pepper Locke, Aug 2026](https://www.troutman.com/insights/the-800-free-pass-is-gone-cit-confirms-president-can-eliminate-de-minimis-tariff-exemption/)
+- **Exposure:** the U.S. industry group PCPC says at least 42.1% of ingredients cannot be sourced domestically or at scale. [PCPC comments to USTR, Apr 2026](https://www.personalcarecouncil.org/wp-content/uploads/2026/05/PCPC-Comments-Docket-No.-USTR_2026_0133-Section-301-Investigation-Goods-Produced-with-Forced-Labor.pdf)
 
-### Failure and constraint lessons
+### Inference
+- The costly mistakes are a hero SPF or acne product that is not U.S.-legal, an ingredient banned in California or Washington, and a tariff on a product with no MFN duty to absorb it.
+- Federal rules are still forming (allergens, GMP), so in practice the bar is set by states and retailers.
 
-**Innisfree’s store retreat:** the brand entered with physical stores in 2017 and later closed its North American owned stores amid pandemic and performance pressure while retaining online/retail access. [C3](https://www.koreatimes.co.kr/business/companies/20210507/amorepacific-withdraws-innisfree-business-from-north-america) This is evidence that a brand can survive while an entry mode fails.
+**So what for an entrant:** Build a U.S. formula, not a translated label: screen every ingredient against California, Washington and PFAS lists, and treat SPF as an OTC drug made by a drug-GMP partner. Name a U.S. responsible person and adverse-event contact before listing. Price with 10-12.5% tariff (about 37.5% from China, 50% from Canada) and import in bulk to a U.S. warehouse.
 
-**Gray-market and counterfeit risk:** viral international products can appear through unauthorized sellers before the brand has U.S. infrastructure. The operational answer is authorized-seller clarity, lot traceability, and fast counterfeit reporting. Scale of the problem by brand is **[VERIFY]**.
+## Competitors
 
-**Routine overload:** rapid launches can create trial without repeat if customers cannot understand sequencing or compatibility. This is an inference from credibility and routine-friction evidence.
+### Fact
+- **Global majors are restructuring.** L'Oréal saw a "gradual recovery in North America" in Q2 2025 with CeraVe "regaining traction in the US." [Cosmetics Business, Jul 2025](https://cosmeticsbusiness.com/l-or%C3%A9al-sales-buoyed-by-china-and-hair-care) Estée Lauder Companies (ELC) is cutting 5,800-7,000 jobs, [Cosmetics Business, Apr 2026](https://cosmeticsbusiness.com/estee-lauder-companies-hails-milestone-restructuring) took a $1.3B impairment on Tom Ford, Too Faced and Dr.Jart+ [Cosmetics Business, Oct 2025](https://cosmeticsbusiness.com/analysis-est%C3%A9e-lauder-companies-s-top-three-underperforming-brands) and confirmed merger talks with Puig in March 2026. [Cosmetics Business, May 2026](https://cosmeticsbusiness.com/charlotte-tilbury-est%C3%A9e-lauder-companies-puig-merger)
+- **Foreign groups growing here:** Puig's Americas sales rose 10.9% in H1 2025, with Charlotte Tilbury's Unreal and Super Nudes lines driving makeup. [Cosmetics Business, Jul 2025](https://cosmeticsbusiness.com/puig-sales-soar-7-6-per-cent-in-h1-2025) The Americas was L'Occitane Group's fastest-growing region, at 46.4% of sales (year to Mar 2025). [Cosmetics Business, Jul 2025](https://cosmeticsbusiness.com/loccitane-group-sales-2025-full-year-watershed-private-sol-de-janeiro)
+- **U.S. indie brands:** Amorepacific names Summer Fridays and rhode as its biggest North American rivals. [BeautyMatter, May 2026](https://beautymatter.com/articles/k-beauty-showdown-amorepacific-ceo-reveals-steady-strategy)
+- **K-beauty challengers:** Medicube led U.S. TikTok Shop beauty in Q2 2026 (see the channels note) and launched 22 products in all 1,400+ Ulta stores and online at once in August 2025; Ulta usually launches international brands online first. [KED Global, May 2025](https://www.kedglobal.com/beauty-cosmetics/newsView/ked202505120005)
+- **Retailers:** LVMH's Selective Retailing grew 8% in Q3 2026, with Sephora gaining share, partly from "C-beauty" brands. [Cosmetics Business, Oct 2026](https://cosmeticsbusiness.com/lvmh-q3-2026-beauty-growth-sephora-dior-guerlain) Olive Young opened U.S. stores in late May 2026. [Korea JoongAng Daily, Aug 2026](https://www.koreajoongangdaily.com/business/is-the-new-us-regulation-an-open-door-or-obstacle-for-ksunscreens/12818291) Skincare is growing fastest on TikTok Shop and Amazon (YipitData, above).
+- **Price bands and terms:** no reliable source for retailer margins, slotting, loyalty programs or Amazon and TikTok Shop beauty fees was found [VERIFY].
+- **Ulta is building K-beauty shelf space,** including a mass K-beauty skincare lineup (Rael, Ma:nyo, Mediheal and others). [Beauty Independent](https://www.beautyindependent.com/ulta-jumps-k-beauty-boom-new-mass-skincare-lineup-rael-manyo-mediheal/)
 
-**So what for an entrant:** choose the lightest channel that delivers trust and trial; an owned-store rollout is rarely the first proof point.
+### Inference
+- **Channel map:** prestige (Sephora, Ulta prestige, Nordstrom, Macy's: curation, sampling, loyalty); mass (Walmart, Target, CVS, Walgreens: value and replenishment); professional and clinical (CeraVe, La Roche-Posay, SkinCeuticals, estheticians and dermatologists: safety and recommendation); digital indie (e.l.f., Glossier, The Ordinary: social relevance and transparent price); marketplaces and social commerce (Amazon, TikTok Shop: viral discovery, but counterfeit and gray-market risk). The competitor is often a routine, not a SKU: a new serum competes with a dermatologist visit, a cheaper active, or simply using fewer products.
+- A foreign entrant's real competitor is usually one of four: (1) **a K-beauty challenger** in the same subcategory, with fast launches and creator content on Amazon and TikTok Shop; (2) **a U.S. indie "it" brand** at Sephora (rhode, Summer Fridays); (3) **a derm-mass brand** at Target or Walmart (CeraVe); (4) **dupes and retailer private labels**.
+- The majors are distracted (restructuring, impairments, merger talks), which leaves room on Sephora and Ulta shelves for brands that can show demand.
+- **White space:** sunscreen with modern filters in a U.S.-legal formula (bemotrizinol from late 2026, other makers around 2028); scalp and hair care (double-digit scalp growth); mass fragrance (+15%); barrier and sensitive-skin care backed by advisor education.
 
-## 9. Pattern synthesis
+**So what for an entrant:** Benchmark against the K-beauty leader in your subcategory, not against L'Oréal. Bring retailers marketplace sell-through data; Medicube's all-door Ulta launch followed its online success (inference). Pick one white space you can prove.
 
-### Repeatable success conditions
+## Foreign entry cases since 2016
 
-- one easily explained hero benefit or format;
-- retailer, professional, or community endorsement appropriate to the claim;
-- strong sampling, shade/skin guidance, and authorized distribution;
-- cultural identity tied to product function rather than decoration alone;
-- conservative claims with visible substantiation;
-- routine simplicity and replenishment logic.
+Method: non-U.S. brands or groups that entered or scaled in the U.S. since 2016. "Success" means active and growing at the October 2026 check, not proven profitable.
 
-### Common failure conditions
+### Successes
+- **COSRX / South Korea / Amazon from 2018**
+  - Entry mode: Amazon marketplace first.
+  - Positioning: simple, low-irritation skincare; its Advanced Snail 96 Mucin Power Essence topped Amazon's beauty and personal care category.
+  - Outcome: thriving. Over 90% of sales are overseas; Amorepacific raised its stake from 38.4% (2021) to 93.2% (Oct 2023) for KRW 755.1bn. After a year restructuring its distribution network, it returned to growth in Q4 2025.
+  - Why (source): Amorepacific says the brand stands out in North America; the 2025 dip came with the distribution reset.
+  - Sources: [Happi, Oct 2023](https://www.happi.com/breaking-news/amorepacific-increases-its-stake-in-cosrx-skincare-brand/), [BeautyMatter, May 2026](https://beautymatter.com/articles/k-beauty-showdown-amorepacific-ceo-reveals-steady-strategy)
+- **Beauty of Joseon / South Korea (Goodai Global) / U.S. focus from 2023**
+  - Entry mode: Amazon.
+  - Positioning: "modern herbal" Korean skincare at affordable prices; its rice sunscreen reached No. 1 in Amazon beauty.
+  - Key marketing: aggressive influencer marketing.
+  - Outcome: revenue rose from KRW 0.1bn (2020) to KRW 140bn (2023), with KRW 300bn expected in 2024.
+  - Why (source): the CEO cites the novelty of herbal ingredients, influencer marketing and going deep in a few markets rather than many. Its U.S. sunscreen formula differs from the Korean one (Consumer Reports, above).
+  - Source: [Asia Business Daily, Jul 2024](https://view.asiae.co.kr/en/article/2024070422532220327)
+- **Laneige (Amorepacific) / South Korea**
+  - Entry mode: prestige retail (a Sephora top-seller) plus Amazon.
+  - Key marketing: viral hero products such as Glaze Craze Lip Serum.
+  - Outcome: thriving. Amorepacific's Americas sales rose 58% in 2023 (driven by Laneige) and 83% in 2024 (with COSRX consolidated); North America grew from 5.5% to 20.5% of its international sales (2021-2023); U.S. sales passed Greater China for the first time in 2024; Americas sales rose 10% in Q2 2025.
+  - Why (source): new launches and strong key products.
+  - Sources: [Happi profile](https://www.happi.com/top-company-profile/amore-pacific/?cyear=2025), [Cosmetics Business, Feb 2025](https://cosmeticsbusiness.com/us-spurs-amorepacific-sales-to-2-93-billion-high), [Cosmetics Business, Jul 2025](https://cosmeticsbusiness.com/amorepacific-sales-profit-grow-Q2-25-laneige-boost)
+- **Medicube (APR) / South Korea**
+  - Entry mode: online and TikTok Shop, then an all-door Ulta launch (Aug 2025).
+  - Positioning: skincare plus at-home devices (Booster Pro line, over 1M units sold globally).
+  - Key marketing: CES 2025, Times Square ads, Los Angeles pop-ups.
+  - Outcome: thriving. APR's 2025 revenue was KRW 1.53tn (+111%) with a 24% operating margin; overseas sales reached 80%; U.S. results were a record.
+  - Why (source): APR credits rising Medicube awareness in the U.S. and Japan.
+  - Sources: [APR release, Feb 2026](https://www.bolsamania.com/nota-de-prensa/mercados/apr-records-annual-revenue-of-krw-153-trillion-usd-105-billion-with-24-operating-margin-in-2025--21606381.html), [KED Global, May 2025](https://www.kedglobal.com/beauty-cosmetics/newsView/ked202505120005)
+- **Anua / South Korea / Ulta from 2025**
+  - Entry mode: Amazon and TikTok demand first, then Ulta online (January 2025) and all of Ulta's roughly 1,400 stores (February 2025).
+  - Outcome: growing; named among U.S. skincare growth leaders in 2025 (YipitData, above).
+  - Why: cause not reported beyond retail expansion.
+  - Sources: [Beauty Packaging, Jan 2025](https://www.beautypackaging.com/contents/view_breaking-news/2025-01-01/k-beauty-brand-anua-launches-in-ulta-beauty/), [Mann Publications newswire, Feb 2025](https://www.mannpublications.com/mannabouttown/2025/02/18/k-beauty-brand-anua-expands-to-1400-ulta-beauty-stores-nationwide/)
+- **The Ordinary (DECIEM) / Canada**
+  - Entry mode: own site, then Sephora; it left Sephora in 2018 and launched at Ulta in 2019. [Hypebae, Jun 2018](https://hypebae.com/2018/6/the-ordinary-leaves-sephora-ulta-launch), [Beauty Packaging, May 2019](https://www.beautypackaging.com/contents/view_breaking-news/2019-05-28/the-ordinary-launches-at-ulta-beauty)
+  - Positioning: products named for their active and strength (e.g. Lacto-PDRN 4% + B9 Eye Cream) at low prices.
+  - Outcome: thriving. ELC invested in 2017, took a majority in 2021 and full ownership in 2024; it is ELC's largest indie brand and "coming very close" to $1B in sales. Daash lists it as a U.S. skincare outperformer.
+  - Why: cause not reported.
+  - Risk: Canadian-made goods face the 50% Section 338 tariff; where it is made was not checked [VERIFY].
+  - Sources: [Cosmetics Business, Sep 2026](https://cosmeticsbusiness.com/estee-lauder-companies-helping-acquired-indie-brands-thrive-ordinary-1billion-club), [Cosmetics Business, Sep 2026](https://cosmeticsbusiness.com/the-ordinary-opens-playful-pdrn-pop-up-highlighting), [Beauty Independent](https://www.beautyindependent.com/?p=183846)
+- **L'Occitane Group / France / acquisition, 2021**
+  - Entry mode: bought 83% of U.S.-based digital-native Sol de Janeiro at a $450M valuation (Nov 2021).
+  - Outcome: thriving. By the year to Mar 2025, Sol de Janeiro was 31.6% of group sales, the top-selling beauty brand in North America at Sephora and the No. 1 fragrance brand on Amazon.
+  - Why (source): a strategy of owning strong brands in each major region. Sol de Janeiro is itself a U.S. brand; the entrant here is the acquirer.
+  - Sources: [Cosmetics Business, Nov 2021](https://cosmeticsbusiness.com/l-occitane-acquires-majority-stake-of-sol-de-janeiro-the-brazilian-inspired-beauty-brand--180605), [Cosmetics Business, Jul 2025](https://cosmeticsbusiness.com/loccitane-group-sales-2025-full-year-watershed-private-sol-de-janeiro)
 
-- opening stores before proving local repeat demand;
-- relying on founder fame or viral content without product education;
-- treating all skin tones, climates, hair textures, or sensitivities as one market;
-- ambiguous “clean,” “medical-grade,” “non-toxic,” or “clinically proven” language;
-- weak U.S. adverse-event, returns, and customer-service processes;
-- marketplace distribution that undermines authenticity and price control.
+### Mixed
+- **Charlotte Tilbury / U.K. / Puig majority since 2020**
+  - Entry mode: founder-led brand that widened U.S. trial through Sephora from 2018. [The Cut, Aug 2018](https://www.thecut.com/2018/08/charlotte-tilbury-sephora.html)
+  - Outcome: Puig's Americas grew 10.9% in H1 2025 with Tilbury lines named as makeup drivers, but U.S. figures are not disclosed. An unconfirmed Spanish press report says Tilbury is seeking to renegotiate and would not earn an earn-out at current performance [VERIFY].
+  - Sources: [Cosmetics Business, Jul 2025](https://cosmeticsbusiness.com/puig-sales-soar-7-6-per-cent-in-h1-2025), [Cosmetics Business, May 2026](https://cosmeticsbusiness.com/charlotte-tilbury-est%C3%A9e-lauder-companies-puig-merger)
 
-### Contradictions
+### Struggles and exits
+- **Innisfree (Amorepacific) / South Korea / first U.S. store 2017**
+  - Entry mode: own stores, starting in New York.
+  - Outcome: launched at Sephora (online and selected stores) in 2019 [Allure](https://www.allure.com/story/innisfree-sold-at-sephora-stores), then closed all 12 North American stores in 2021 (ten U.S. stores in February); kept selling through Sephora. The entry mode failed while the brand survived.
+  - Why (source): the company cited the prolonged pandemic; brand sales fell 17.2% in Q1 2021, and Amorepacific shifted to digital channels.
+  - Sources: [BeautyMatter, May 2021](https://beautymatter.com/articles/amorepacific-to-pull-innisfree-brand-from-north-american), [Business of Fashion](https://www.businessoffashion.com/news/beauty/amorepacifics-innisfree-to-exit-us-market/)
+- **Dr.Jart+ / South Korea / owned by ELC [VERIFY acquisition year]**
+  - Outcome: one of three ELC brands in a $1.3B impairment (Oct 2025); ELC hired advisers to review its portfolio.
+  - Why: cause not reported.
+  - Source: [Cosmetics Business, Oct 2025](https://cosmeticsbusiness.com/analysis-est%C3%A9e-lauder-companies-s-top-three-underperforming-brands)
 
-- Customers want innovation and simplicity at the same time.
-- Ingredient literacy builds scrutiny but can encourage decontextualized “hero ingredient” marketing.
-- Prestige cues can increase desire, while transparent low markup can also signal value and trust.
-- Retailer endorsement increases legitimacy but reduces margin and control.
+- **Florasis / China / U.S. from about 2022**
+  - Entry mode: cross-border online and creator marketing (about 1,500 U.S. influencers, over 1M TikTok followers), selling Chinese aesthetics and craft.
+  - Outcome: in October 2025 its global president told Bloomberg TV it had paused further U.S. investment, though the market remains "stable," and is prioritizing Asia and Europe.
+  - Why (source): escalating political and trade tensions.
+  - Sources: [Cosmetics & Toiletries](https://www.cosmeticsandtoiletries.com/news/companies/news/22184578/chinese-brand-florasis-expands-to-us-market), [Global Cosmetics News, Oct 2025](https://www.globalcosmeticsnews.com/florasis-shifts-expansion-from-us-to-asia-and-europe-amid-trade-tensions/)
 
-**So what for an entrant:** make the product easy to understand and hard to misrepresent; the trust system should survive outside founder-controlled media.
+### Recent and smaller entries (outcome not reported)
+- **Beauty Pie / U.K. / 2016-17** - launched a membership model selling makeup and skincare near factory cost in the U.K. and U.S. [Time, 2017](https://time.com/4636207/beauty-pie-cheap-designer-lipstick/) [VERIFY U.S. launch date]
+- **Kaja / Sephora and Memebox / 2018** - a K-beauty color line co-developed by Sephora and Memebox, launched in September 2018. [FashionNetwork, Sep 2018](https://au.fashionnetwork.com/news/K-beauty-retailer-Memebox-and-Sephora-create-new-Kaja-cosmetics-line,1015689.html) Shows a retailer translating Korean formats for U.S. shoppers.
+- **Trinny London / U.K. / from 2019** - founder-led makeup with an online "match" quiz; announced a New York pop-up in 2019 and has returned with SoHo pop-ups. [FashionNetwork, Apr 2019](https://hk.fashionnetwork.com/news/Trinny-London-to-open-in-NYC,1088182.html), [Cosmetics Business](https://cosmeticsbusiness.com/trinny-london-to-debut-us-pop-up-in-new-york) U.S. sales not reported.
+- **Dr.G / South Korea / 2026** - after L'Oréal acquired the brand, its U.S. launch went to TikTok Shop first, ahead of U.S. retail. [Personal Care Insights](https://www.personalcareinsights.com/news/loreal-dr-g-tiktok-shop.html) [VERIFY launch month]
 
-## 10. AI and technology outlook
+### Patterns (found 7 successes, 1 mixed, 3 struggles or exits, 4 recent with no outcome)
+- **What winners share:** one hero product with a visible or ingredient-led result (snail essence, rice sunscreen, lip serum, devices); entry through a channel that already carries trust (Amazon reviews, TikTok Shop, Sephora, Ulta); and creator-led marketing. L'Occitane shows a second route: buy a U.S.-built brand.
+- **What separates them from failures:** asset-light entry. Innisfree's own stores closed while the brand survived at Sephora; the K-beauty winners never needed stores.
+- **Repeated failure patterns:** high fixed costs before demand, stalls after an acquisition or channel change (Dr.Jart+ under ELC, COSRX's distribution reset), and political exposure for China-origin brands (Florasis). Also risky: vague "clean," "medical-grade" or "clinically proven" language, and marketplace sellers undermining authenticity and price.
+- **Tensions to keep in mind:** shoppers want innovation and simplicity at once; ingredient literacy builds scrutiny but also feeds single-ingredient hype; a retailer's endorsement adds legitimacy but costs margin and control.
+- **Survivorship bias:** K-beauty wins are heavily reported, quiet exits are not, and this pass could not confirm several struggle leads (see Open questions). Failures are under-counted here.
 
-### Documented present
+**So what for an entrant:** Enter through Amazon or TikTok Shop with one hero, then use the reviews to win Ulta or Sephora. Avoid own stores until demand is proven. If you have capital but no U.S. brand, acquiring a U.S.-built brand is a real alternative.
 
-AI and AR are used for shade matching, virtual try-on, product recommendations, review summarization, creator selection, formulation analytics, and service automation. Peer-reviewed AR research finds benefits through informativeness, enjoyment, immersion, and choice confidence, alongside privacy and intrusiveness concerns. [P9](https://www.sciencedirect.com/science/article/pii/S1567422319300316) [P10](https://www.sciencedirect.com/science/article/pii/S0148296320307220)
+## AI outlook (analysis)
 
-### 2026-2028 scenarios
+### Scenario 1: AI skin analysis becomes the front door
+- **Evidence:** at CES 2026 Amorepacific showed AI skin analysis in Samsung's AI Beauty Mirror (trained on over 450,000 cases) and an AI "electronic skin" patch. [Cosmetics Business, Jan 2026](https://cosmeticsbusiness.com/amorepacific-and-lor%C3%A9al-brands-technology-ces-2026) L'Oréal-backed Noli matches products across brands from a face scan (about 72,000 users). [Cosmetics Business, Jul 2025](https://cosmeticsbusiness.com/how-l-or%C3%A9al-backed-noli-is-using-ai-to) Vendors report conversion lifts of about 30% (promoted content, directional). [Cosmetics Business, May 2026](https://cosmeticsbusiness.com/best-ai-skin-analysis-tools-in-2026)
+- **Peer-reviewed check:** AR try-on raises informativeness and enjoyment but also perceived intrusiveness (Smink et al., above), so face scans need clear consent.
+- **Signals to watch:** Sephora and Ulta using third-party scans to recommend across brands; state biometric and privacy rules (see `us-technology.md`).
 
-- **Base:** routine recommendation and service become standard; brands differentiate through better proprietary product/use data.
-- **Upside:** explainable ingredient and shade systems reduce trial waste and improve cross-sell.
-- **Downside:** synthetic testimonials, retouched skin, and fabricated expertise intensify distrust. FTC enforcement already addresses fake reviews and AI-enabled review deception. [G5](https://www.ftc.gov/business-guidance/resources/consumer-reviews-testimonials-rule-questions-answers)
+### Scenario 2: AI answers "best sunscreen for oily skin"
+- **Evidence:** skincare growth is shifting to Amazon and TikTok Shop, where AI assistants sit (YipitData, above); for AI shopping traffic and checkout inside ChatGPT, see `us-technology.md`.
+- **Signals to watch:** AI referral traffic, which attributes assistants cite (filters, active strength, reviews, price), and whether a U.S.-legal SPF formula gets cited over gray-market imports.
 
-### 2029-2031 scenarios
+### Scenario 3: AI content and AI-speed dupes
+- **Evidence:** Unilever makes product imagery twice as fast and 50% cheaper with Nvidia Omniverse "product twins"; ELC partnered with Adobe Firefly (Mar 2025); Pantone's AI video drew backlash. [Cosmetics Business, Mar 2025](https://cosmeticsbusiness.com/why-beauty-s-new-obsession-is-ai-generated-marketing) L'Oréal partnered with Nvidia on generative content (Jun 2025). [Cosmetics Business, Jun 2025](https://cosmeticsbusiness.com/l-or%C3%A9al-partners-with-nvidia-to-supercharge-gen-ai-in-beauty) The FTC rule already bans AI-generated fake reviews (above).
+- **Analysis:** cheaper content lowers the cost of copying a hit, so dupes may arrive faster.
+- **Signals to watch:** time from a viral launch to lookalikes on TikTok Shop and Amazon, and FTC enforcement.
 
-Shopping agents may screen products for allergens, routine conflicts, price-per-use, seller authorization, and evidence quality. Brands with complete ingredient, test, claims, and provenance data will be more legible. This is an inference.
+**So what for an entrant:** Publish machine-readable proof (active and strength, filters, test results, reviews) so assistants can cite you. Use AI for content volume but keep real creators and real reviews. Protect the hero with something hard to copy: a proprietary active, clinical data or a patent.
 
-### No-regret actions
-
-1. Maintain structured ingredient, allergen, claim, test, shade, and lot data.
-2. Keep before/after standards, consent, and image-editing rules auditable.
-3. Train support systems to escalate adverse events and medical questions to humans.
-4. Do not let a recommendation model imply diagnosis or guaranteed outcomes.
-5. Use verified-purchase and authorized-seller signals.
-
-**So what for an entrant:** AI should make the routine safer and easier to choose, not simulate certainty the evidence does not support.
-
-## 11. Recommendations and 90-day test plan
-
-1. Select one concern-routine pair and define who should not use the product.
-2. Conduct U.S. claims and classification review before naming, packaging, or creator briefs. **[VERIFY]**
-3. Build 3-8 launch SKUs around one hero, with sample sizes or a discovery set.
-4. Recruit 40-60 target users across relevant skin tones/types, hair textures, ages, and climates for supervised use feedback.
-5. Compare three trust routes: expert/esthetician, concern-specific creator, and retailer/pop-up consultation.
-6. Measure week-1 activation, irritation/returns, routine adherence, 30/60-day repurchase intent, and customer-service contacts.
-7. Establish domestic fulfillment, lot traceability, adverse-event handling, and an authorized-seller policy.
-
-**So what for an entrant:** gate scale on safe use and repeat behavior, not viral reach or waitlist size.
-
-## 12. Uncertainties and items to verify
-
-- U.S.-only revenue and profitability are unavailable for most case brands.
-- MoCRA obligations and exemptions must be checked against the exact entity, facility, product, and current FDA rules. **[VERIFY]**
-- Cosmetic versus drug/device classification depends on claims and intended use. **[VERIFY]**
-- State-specific ingredient, warning, privacy, environmental, and packaging rules. **[VERIFY]**
-- Trademark availability, INCI nomenclature, net-contents formatting, and bilingual needs for the selected channels. **[VERIFY]**
-- Market size for the chosen subcategory; personal-care household spending is only context, not a revenue forecast.
-
-**So what for an entrant:** the unresolved items could change formulation, packaging, claims, and channel, so resolve them before inventory commitment.
-
-## 13. Interviews and tests next
-
-- 15 customer routine walkthroughs using products currently on the shelf.
-- 10 lapsed-user interviews on why a viral purchase was not repurchased.
-- Five specialty-retail buyer interviews.
-- Three U.S. regulatory/claims consultations.
-- Two creator pilots with identical landing pages and different credibility routes.
-- Blind sensory comparison against three price-adjacent substitutes.
-- Customer-support simulation for irritation, counterfeit concern, late delivery, and adverse event.
-
-**So what for an entrant:** learn where belief breaks - discovery, ingredient interpretation, first use, visible result, or replenishment - before increasing media spend.
-
-## 14. Source register and peer-review audit
-
-### Counted peer-reviewed analytical sources (13)
-
-- [P1 - Influencer credibility, product quality, and beauty trust](https://doi.org/10.1016/j.clrc.2025.100277)
-- [P2 - Beauty vloggers, trust, and purchase intention](https://www.nature.com/articles/s41599-024-02760-9)
-- [P3 - Credibility of beauty gurus among young audiences](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0249286)
-- [P4 - Social-media credibility and skincare purchase intention](https://pubmed.ncbi.nlm.nih.gov/41124229/)
-- [P5 - Social-media marketing and bio-cosmetics](https://pubmed.ncbi.nlm.nih.gov/41109109/)
-- [P6 - Social media, body image, and cosmetic procedures systematic review](https://pubmed.ncbi.nlm.nih.gov/39205749/)
-- [P7 - Social media and repeat aesthetic procedures systematic review](https://pubmed.ncbi.nlm.nih.gov/38724639/)
-- [P8 - Digital influence and vegan cosmetics](https://pubmed.ncbi.nlm.nih.gov/36937490/)
-- [P9 - AR shopping, brand response, and privacy](https://www.sciencedirect.com/science/article/pii/S1567422319300316)
-- [P10 - Cognitive, affective, and behavioral responses to AR](https://www.sciencedirect.com/science/article/pii/S0148296320307220)
-- [P11 - Beauty influencers and impulse buying](https://www.sciencedirect.com/science/article/pii/S2772503025000532)
-- [P12 - Influencer credibility, reviews, and sustainable beauty](https://link.springer.com/article/10.1007/s43546-025-00983-9)
-- [P13 - Beauty-vlogger strategies and brand purchase intention](https://www.nature.com/articles/s41599-024-03133-y)
-
-### Counted non-peer-reviewed analytical sources (2)
-
-- [NIQ K-beauty U.S. analysis](https://nielseniq.com/global/en/insights/report/2025/k-beautys-viral-rise-in-the-us-market/)
-- [Vogue Business on beauty digital influence and trust](https://www.voguebusiness.com/beauty)
-
-**Ratio: 13 / 15 = 86.7% peer-reviewed.**
-
-### Separately classified sources
-
-- Government/regulatory: FDA and FTC links in section 7.
-- Entry verification: C1-C12 in section 8.
-- Community: Reddit [R1](https://www.reddit.com/r/AsianBeauty/search/?q=worth%20it&restrict_sr=1) and [R2](https://www.reddit.com/r/SkincareAddiction/search/?q=holy%20grail&restrict_sr=1).
-- Books: [B1](https://global.oup.com/academic/product/beauty-imagined-9780199639625) and [B2](https://www.pennpress.org/9780812221671/hope-in-a-jar/).
-- Excluded preprints: AI cosmetic-chemistry and recommendation preprints were not counted as peer-reviewed evidence.
-
+## Open questions
+- Retailer terms (Sephora and Ulta margins, slotting, loyalty programs), Amazon and TikTok Shop beauty fees, and shelf price bands by tier: not found [VERIFY]. A shelf and marketplace price audit would fill this.
+- Peer-reviewed studies with U.S. samples (dermatologist and creator trust, dupes, sunscreen preferences, Gen Alpha) are still thin [VERIFY].
+- Tariffs: Annex II treatment of Chapters 33 and 3401, the 3401 soap rate, China stacking, and the Section 338 Canada HTS list [VERIFY with a customs broker].
+- Whether FDA publishes the fragrance allergen and formaldehyde proposals in November 2026.
+- Unconfirmed leads to research: The Body Shop's U.S. bankruptcy (2024), Shiseido and Drunk Elephant's U.S. decline, Augustinus Bader, Byoma, Skin1004, DECIEM's manufacturing location.
+- Interviews and tests: an Ulta or Sephora buyer on what proof they want from a foreign brand; a K-beauty founder on the cost of a U.S. SPF reformulation; 15 routine walkthroughs with shoppers' current shelves; 10 lapsed-user interviews on why a viral purchase was not repurchased; a blind sensory test against three price-adjacent substitutes.
