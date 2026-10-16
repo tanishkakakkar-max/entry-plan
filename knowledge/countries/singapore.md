@@ -1,17 +1,17 @@
 # Singapore - country research doc
 
-Status: v0 baseline (desk research). Tanishka's Singapore teardown paper, interview notes and judgment go in sections 0-2 and override anything below.
-Legend: [VERIFY] = check against a primary source. [TANI] = needs Tanishka's own input. Tags like (Apparel), (Beauty), (Food), (Restaurants) mean the note applies ONLY to that category.
+Status: v0 baseline (desk research). First Port's Singapore teardown paper, interview notes and judgment go in sections 0-2 and override anything below.
+Legend: [VERIFY] = check against a primary source. [PLACEHOLDER] = section not yet filled in; ignore it. Tags like (Apparel), (Beauty), (Food), (Restaurants) mean the note applies ONLY to that category.
 
 ## 0. Thesis (the non-consensus point of view)
 Brands typically enter Singapore as a Southeast Asia beachhead, not a destination. The market is small, rich and expensive, so the right question is rarely "can we win Singapore?" and usually "what does Singapore prove or unlock for the region?"
-[TANI] Paste the sharpest version from your paper here.
+[PLACEHOLDER] Paste the sharpest version from your paper here.
 
 ## 1. Interview notes
-[TANI] Template per conversation: who / date / what surprised me / quotes / so what.
+[PLACEHOLDER] Template per conversation: who / date / what surprised me / quotes / so what.
 
 ## 2. From the Singapore paper
-[TANI] Paste the framework section and each sector subsection (clothing, skincare, medical devices) here. This is your strongest proprietary material - the tool should lean on it.
+[PLACEHOLDER] Paste the framework section and each sector subsection (clothing, skincare, medical devices) here. This is your strongest proprietary material - the tool should lean on it.
 
 ## 3. Consumer psychology (each insight -> so what)
 - High income, highly digital, well-traveled shoppers who already know many global brands. -> Being foreign isn't a novelty; the brand needs a sharper reason to exist than "new from the US."
@@ -78,10 +78,10 @@ From the Oct 15, 2026 import-duty research (official customs and regulator sourc
 - Premium pricing without a clear reason; shoppers can easily compare prices globally.
 
 ## 7. Category notes
-[TANI] Paste from the paper: clothing, skincare, medical devices.
+[PLACEHOLDER] Paste from the paper: clothing, skincare, medical devices.
 
 ## 8. Channels for awareness
 - Instagram, TikTok, YouTube; Xiaohongshu among Chinese-speaking shoppers [VERIFY]; creator marketing common.
 
 ## 9. Sources
-[TANI] Primary sources: IRAS (GST), Singapore Customs, HSA, Enterprise Singapore.
+[PLACEHOLDER] Primary sources: IRAS (GST), Singapore Customs, HSA, Enterprise Singapore.

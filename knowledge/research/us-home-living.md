@@ -7,7 +7,7 @@ updated: 2026-10-15
 
 # Home and living in the United States: psychology, rules, competitors, foreign entry history, AI outlook (checked October 2026)
 
-Scope: this note is about **foreign (non-U.S.) home brands entering the U.S.**: furniture, mattresses, decor, tableware and ceramics, cookware, lighting and home textiles. U.S. brands appear only as competitors. It adds to `ceramics-and-home-goods-notes.md` and section 5 of the US country doc without repeating them. It merges two research passes; peer-reviewed findings come first, and community sources (Reddit, review sites) are kept as qualitative evidence of how people think. Bulky furniture and small parcel goods (a vase, a pan) behave very differently, so check which one a finding is about.
+Scope: this note is about **foreign (non-U.S.) home brands entering the U.S.**: furniture, mattresses, decor, tableware and ceramics, cookware, lighting and home textiles. U.S. brands appear only as competitors. It adds to the ceramics and home goods notes research and section 5 of the US country doc without repeating them. It merges two research passes; peer-reviewed findings come first, and community sources (Reddit, review sites) are kept as qualitative evidence of how people think. Bulky furniture and small parcel goods (a vase, a pan) behave very differently, so check which one a finding is about.
 
 ## Customer psychology
 
@@ -53,7 +53,7 @@ Scope: this note is about **foreign (non-U.S.) home brands entering the U.S.**: 
 
   Commercial mirrors of the USITC schedule; hts.usitc.gov could not be opened from this session [VERIFY each line there, plus porcelain 6911, glassware 7013 and wooden furniture 9403].
 - **Section 301 (July 24, 2026):** home goods are not generally exempt; see the Section 301 table in the US country doc for country rates and caps.
-- **De minimis is gone.** The $800 exemption has been suspended for all countries since Aug 29, 2025, made indefinite by CBP rule in 2026, and ends by law on Jul 1, 2027 (details in `us-apparel-accessories.md`). [CBP](https://www.cbp.gov/newsroom/national-media-release/cbp-modernizes-low-value-shipment-processing)
+- **De minimis is gone.** The $800 exemption has been suspended for all countries since Aug 29, 2025, made indefinite by CBP rule in 2026, and ends by law on Jul 1, 2027 (details in the US apparel accessories research). [CBP](https://www.cbp.gov/newsroom/national-media-release/cbp-modernizes-low-value-shipment-processing)
 
 ### Fact: product safety and materials
 - **Upholstered furniture flammability:** 16 CFR Part 1640 adopts California's TB117-2013 smolder standard nationally and requires a certification label. [CPSC, upholstered furniture FAQ](https://www.cpsc.gov/FAQ/Upholstered-Furniture)
@@ -67,7 +67,7 @@ Scope: this note is about **foreign (non-U.S.) home brands entering the U.S.**: 
   - Rugs and carpets: Minnesota (2025), Vermont (2026), Connecticut (2026), New Hampshire (2027), New Jersey (2028).
   - Cleaning products and fabric treatments are also covered in several states.
   - Source: [Morgan Lewis, Jan 2026](https://www.morganlewis.com/pubs/2026/01/state-regulation-of-pfas-in-consumer-products-continues-to-gain-momentum-in-2026)
-- **Children's furniture** adds testing, certificates and tracking labels; CPSC eFiling of certificates at entry started Jul 8, 2026 (see `us-apparel-accessories.md`). [CPSC, furniture requirements guide](https://www.cpsc.gov/s3fs-public/04.12.2016%20Guide%20to%20US%20Furniture%20Requirements.pdf)
+- **Children's furniture** adds testing, certificates and tracking labels; CPSC eFiling of certificates at entry started Jul 8, 2026 (see the US apparel accessories research). [CPSC, furniture requirements guide](https://www.cpsc.gov/s3fs-public/04.12.2016%20Guide%20to%20US%20Furniture%20Requirements.pdf)
 - **Claims and reviews:** environmental, durability and origin claims need substantiation, and the FTC fake-review rule applies. [FTC Q&A](https://www.ftc.gov/business-guidance/resources/consumer-reviews-testimonials-rule-questions-answers)
 
 ### Inference
@@ -147,7 +147,7 @@ Method: non-U.S. brands whose U.S. entry, push or exit falls in 2016-2026. "Succ
 
 ### Scenario 2: Accurate dimensions become the ranking signal
 - **Analysis:** if assistants check whether a sofa fits the room and the doorway, brands with exact 3D geometry, package sizes and assembly data get recommended; vague product pages drop out.
-- **Signals to watch:** retailer requirements for 3D files, AI referral traffic to furniture sites (see `us-technology.md`, Scenario 1).
+- **Signals to watch:** retailer requirements for 3D files, AI referral traffic to furniture sites (see the US technology research, Scenario 1).
 
 ### Scenario 3: Photoreal renders widen the expectation gap
 - **Analysis:** cheap AI renders make every product look perfect, which may raise returns from expectation gaps (Journal of Business Research, 2024) and draw scrutiny under the FTC review and advertising rules.

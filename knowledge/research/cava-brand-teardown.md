@@ -35,6 +35,6 @@ updated: 2026-10-12
 - Guzman y Gomez (Australian build-your-own fast casual) exited the US in May 2026 after its Chicago restaurants missed targets; one-off hit US$30-40M. Lesson for any foreign fast casual in the US: sub-scale tests die. Source: https://www.marketing-interactive.com/guzman-y-gomez-exits-us-market-to-refocus-on-australia-singapore-and-japan
 
 ## Working price hypotheses used in the example plans (not verified facts)
-- Japan: ¥1,200-1,800 per bowl (Tanishka's CAVA Japan project).
+- Japan: ¥1,200-1,800 per bowl (CAVA Japan field project).
 - Singapore: S$14-18 per bowl, to confirm against GYG, SaladStop! and Stuff'd.
 - India: Rs 349-499 per bowl before tax, to confirm against Salad Days and Harvest Salad Co on Zomato.

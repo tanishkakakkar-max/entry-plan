@@ -7,7 +7,7 @@ updated: 2026-10-15
 
 # Beauty and personal care in the United States: psychology, rules, competitors, foreign entry history, AI outlook (checked October 2026)
 
-Scope: this note is about **foreign (non-U.S.) beauty and personal care brands entering the U.S.**: skincare, makeup, haircare, fragrance and body care. U.S. brands appear only as competitors. It does not repeat `beauty-regulation-and-channels-by-country.md` (MoCRA registration and listing basics, TikTok Shop beauty sales to Q2 2026) or `hero-cosmetics-brand-teardown.md` (acne patches). The tariff baseline is the Section 301 table in the US country doc (section 5); this note adds only beauty-specific detail. It merges two research passes; peer-reviewed findings come first, and community sources (Reddit, articles) are kept as qualitative evidence of how people think.
+Scope: this note is about **foreign (non-U.S.) beauty and personal care brands entering the U.S.**: skincare, makeup, haircare, fragrance and body care. U.S. brands appear only as competitors. It does not repeat the beauty regulation and channels by country research (MoCRA registration and listing basics, TikTok Shop beauty sales to Q2 2026) or the hero cosmetics brand teardown research (acne patches). The tariff baseline is the Section 301 table in the US country doc (section 5); this note adds only beauty-specific detail. It merges two research passes; peer-reviewed findings come first, and community sources (Reddit, articles) are kept as qualitative evidence of how people think.
 
 ## Customer psychology
 
@@ -22,7 +22,7 @@ Scope: this note is about **foreign (non-U.S.) beauty and personal care brands e
 - **Wallet context:** U.S. households spent an average of $978 on personal care products and services in 2024, up 2.9% (not statistically significant). [BLS Consumer Expenditures 2024](https://www.bls.gov/news.release/cesan.htm)
 - **Creators are judged, not just followed.** Trustworthiness is the main driver of a beauty guru's credibility; video quality and a "professional" profile also shape it; YouTube influence was strongest at ages 18-21 and weaker at 22-29; endorsements woven into regular content read as more credible than sponsored posts. [Djafarova and Matson, International Journal of Internet Marketing and Advertising, 2021](https://phys.org/news/2021-04-beauty-gurus-trustworthy-audience-production.html) A PLOS ONE study likewise examines how young millennials judge beauty gurus' credibility before it shapes product choice. ["The credibility of social media beauty gurus in young millennials' cosmetic product choice," PLOS ONE, 2021](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8006996/) (sample country not confirmed [VERIFY])
 - **Trying on virtually helps, with a privacy cost.** AR shopping raised perceived informativeness and enjoyment, which lifted brand responses, but also raised perceived intrusiveness. [Smink et al., Electronic Commerce Research and Applications, 2019](https://www.sciencedirect.com/science/article/pii/S1567422319300316)
-- For peer-reviewed evidence that negative reviews hurt a new product more than positive ones help, see `us-technology.md`. Studies of U.S. beauty shoppers specifically remain thin [VERIFY].
+- For peer-reviewed evidence that negative reviews hurt a new product more than positive ones help, see the US technology research. Studies of U.S. beauty shoppers specifically remain thin [VERIFY].
 
 ### Customer language (Reddit and articles, qualitative only)
 - r/SkincareAddiction, r/AsianBeauty, r/MakeupAddiction and r/HaircareScience keep circling the same questions: irritation, counterfeits, reformulations, pilling, fragrance, value, and whether a viral product is worth repurchasing. [r/AsianBeauty search](https://www.reddit.com/r/AsianBeauty/search/?q=worth%20it&restrict_sr=1), [r/SkincareAddiction search](https://www.reddit.com/r/SkincareAddiction/search/?q=holy%20grail&restrict_sr=1) Useful for vocabulary, FAQs and edge cases, not for population estimates.
@@ -194,10 +194,10 @@ Method: non-U.S. brands or groups that entered or scaled in the U.S. since 2016.
 ### Scenario 1: AI skin analysis becomes the front door
 - **Evidence:** at CES 2026 Amorepacific showed AI skin analysis in Samsung's AI Beauty Mirror (trained on over 450,000 cases) and an AI "electronic skin" patch. [Cosmetics Business, Jan 2026](https://cosmeticsbusiness.com/amorepacific-and-lor%C3%A9al-brands-technology-ces-2026) L'Oréal-backed Noli matches products across brands from a face scan (about 72,000 users). [Cosmetics Business, Jul 2025](https://cosmeticsbusiness.com/how-l-or%C3%A9al-backed-noli-is-using-ai-to) Vendors report conversion lifts of about 30% (promoted content, directional). [Cosmetics Business, May 2026](https://cosmeticsbusiness.com/best-ai-skin-analysis-tools-in-2026)
 - **Peer-reviewed check:** AR try-on raises informativeness and enjoyment but also perceived intrusiveness (Smink et al., above), so face scans need clear consent.
-- **Signals to watch:** Sephora and Ulta using third-party scans to recommend across brands; state biometric and privacy rules (see `us-technology.md`).
+- **Signals to watch:** Sephora and Ulta using third-party scans to recommend across brands; state biometric and privacy rules (see the US technology research).
 
 ### Scenario 2: AI answers "best sunscreen for oily skin"
-- **Evidence:** skincare growth is shifting to Amazon and TikTok Shop, where AI assistants sit (YipitData, above); for AI shopping traffic and checkout inside ChatGPT, see `us-technology.md`.
+- **Evidence:** skincare growth is shifting to Amazon and TikTok Shop, where AI assistants sit (YipitData, above); for AI shopping traffic and checkout inside ChatGPT, see the US technology research.
 - **Signals to watch:** AI referral traffic, which attributes assistants cite (filters, active strength, reviews, price), and whether a U.S.-legal SPF formula gets cited over gray-market imports.
 
 ### Scenario 3: AI content and AI-speed dupes

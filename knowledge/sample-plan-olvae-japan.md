@@ -1,7 +1,7 @@
 # SAMPLE PLAN - the format and quality bar
 # OLVAE -> Japan
 
-> This is the gold-standard example. Every plan the tool writes should match this structure, this length (roughly 900-1,300 words), and this level of specificity. [TANI] Rewrite any call you disagree with - this plan should sound like your judgment, because it's what the tool will imitate.
+> This is the gold-standard example. Every plan the tool writes should match this structure, this length (roughly 900-1,300 words), and this level of specificity.
 
 **Brand:** OLVAE - clean apparel: 100% organic cotton, linen and hemp daily-wear basics and loungewear, made in India. Positioning: confidence in your own skin. Mission: every purchase helps feed or house an animal.
 **Customer today:** upper-middle-class Gen Z women (US), inclusive sizing. Pre-launch, community-first on Instagram.
@@ -21,7 +21,7 @@
 **First 90 days (prove there's demand)**
 - Translate and localize the product pages, size chart (cm + Japanese sizes), and returns policy with a native copywriter.
 - Seed 10-15 pieces with Japanese lifestyle and "slow living" creators on Instagram; measure saves, DMs and waitlist sign-ups from Japan.
-- Run a Japan-only waitlist. Go/no-go threshold: [TANI set a number].
+- Run a Japan-only waitlist. Go/no-go threshold: [set a number].
 
 **Months 3-9 (earn credibility)**
 - Pitch a pop-up to one select shop or a department store event floor, using creator results as proof.
@@ -46,7 +46,7 @@
 ## 6. Competitive reality
 - **MUJI:** organic cotton basics at accessible prices, everywhere. OLVAE cannot win on "organic basics" alone - it must win on design, fabric feel and story.
 - **Domestic roomwear brands (e.g. gelato pique):** own the loungewear-as-self-care category with a strong brand world. OLVAE's opening is a more natural, less sugary aesthetic.
-- **Imported natural-fiber labels in select shops:** the real comparison set for a pop-up. [TANI research 3-5 of these]
+- **Imported natural-fiber labels in select shops:** the real comparison set for a pop-up. [name 3-5 of these]
 
 ## 7. Risks
 | Risk | Type | Likelihood | Impact | Mitigation |

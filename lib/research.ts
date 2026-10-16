@@ -85,12 +85,19 @@ export function selectResearch(countryKey: string, category?: string, isOther = 
   return picked;
 }
 
+// A neutral title for a note: its first "# " heading, never the file name.
+export function noteTitle(n: ResearchNote) {
+  const h = n.body.match(/^#\s+(.+)$/m)?.[1]?.trim();
+  return h ? h.replace(/[[\]]/g, "") : "Category research";
+}
+
+// Notes are numbered [R2], [R3]... in the order given; [R1] is the country research.
 export function formatResearch(notes: ResearchNote[]): string {
   if (!notes.length) return "";
   const items = notes
     .map(
-      (n) =>
-        `<note file="${n.file}" countries="${n.countries.join(", ")}" categories="${n.categories.join(", ")}" updated="${n.updated}">\n${n.body}\n</note>`,
+      (n, i) =>
+        `<note id="R${i + 2}" title="${noteTitle(n)}" countries="${n.countries.join(", ")}" categories="${n.categories.join(", ")}">\n${n.body}\n</note>`,
     )
     .join("\n\n");
   return `<related_research>\n${items}\n</related_research>`;

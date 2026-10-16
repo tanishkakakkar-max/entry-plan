@@ -6,7 +6,8 @@ import { checkBrief } from "@/lib/brief";
 import { creditsReady, getCode, normalizeCode, peekCode, refundCredit, reserveCredit } from "@/lib/credits";
 import { briefId, getPlan, savePlan } from "@/lib/saved-plans";
 import { aiCheckBrief } from "@/lib/brief-check";
-import { formatResearch, selectResearch } from "@/lib/research";
+import { formatResearch, noteTitle, selectResearch } from "@/lib/research";
+import { finalizeCitations, formatSources, hasInternal, scrubInternal, type ParsedSource } from "@/lib/citations";
 import { formatScholarly, paperCitation, scholarlyResearch } from "@/lib/scholar";
 
 export const runtime = "nodejs";
@@ -292,7 +293,7 @@ Target country: ${countryName}${website ? `\nWebsite: ${website}` : ""}`;
   const system = [
     instructions,
     `<sample_plan>\n${samplePlan}\n</sample_plan>`,
-    `<country_research country="${countryName}">\n${research}\n</country_research>`,
+    `<country_research id="R1" country="${countryName}">\n${research}\n</country_research>`,
     ...(relatedBlock ? [relatedBlock] : []),
     ...(site ? [site] : []),
     ...(web ? [web] : []),
@@ -314,25 +315,19 @@ Target country: ${countryName}${website ? `\nWebsite: ${website}` : ""}`;
         } else {
           await streamGroq(system, brief, send);
         }
-        // The model doesn't reliably write the Sources list, so build it from the [S#] and [W#] tags it
-        // actually cited: papers under "Research", web pages under "Web".
-        // Only skip if the model already wrote a Sources section with real links.
+        // The Sources list is built from the same arrays the model was given, numbered the same way:
+        // [R1] country research, [R2]... related notes, [S#] papers, [W#] web pages. Only cited ones are
+        // listed. Skip it only if the model already wrote a Sources section with real links.
         if (!/^#+\s*Sources[\s\S]*(\]\(http|https?:\/\/doi)/im.test(output)) {
-          const citedOf = (tag: "W" | "S", list: unknown[]) =>
-            [...new Set([...output.matchAll(new RegExp(`[\\[【]${tag}(\\d+)[\\]】]`, "g"))].map((m) => Number(m[1])))]
-              .filter((n) => list[n - 1])
-              .sort((a, b) => a - b);
-          const citedW = citedOf("W", webResults);
-          const citedS = citedOf("S", papers);
-          const research = citedS.map((n) => `- ${paperCitation(papers[n - 1], n)}`).join("\n");
-          const webList = citedW
-            .map((n) => `- [W${n}] [${webResults[n - 1].title.replace(/[[\]]/g, "")}](${webResults[n - 1].url})`)
-            .join("\n");
-          if (research || webList) {
-            send(
-              `\n\n## Sources\n${research ? `\n### Research\n\n${research}\n` : ""}${webList ? `\n### Web\n\n${webList}\n` : ""}`,
-            );
-          }
+          const all: ParsedSource[] = [
+            { kind: "R", n: 1, title: `First Port research: ${countryName} market notes`, url: "" },
+            ...related.map((n, i) => ({ kind: "R" as const, n: i + 2, title: `First Port research: ${noteTitle(n)}`, url: "" })),
+            ...papers.map((p, i) => ({ kind: "S" as const, n: i + 1, title: paperCitation(p, i + 1).replace(/^\[S\d+\]\s*/, "").replace(/\s+https?:\/\/\S+$/, ""), url: p.url })),
+            ...webResults.map((w, i) => ({ kind: "W" as const, n: i + 1, title: w.title, url: w.url })),
+          ];
+          const cited = new Set([...output.matchAll(/[[【]([RWS])(\d+)[\]】]/g)].map((m) => m[1] + m[2]));
+          const list = formatSources(all.filter((x) => cited.has(x.kind + x.n)));
+          if (list) send(`\n\n${list}`);
         }
       } catch (err) {
         console.error(err);
@@ -349,7 +344,7 @@ Target country: ${countryName}${website ? `\nWebsite: ${website}` : ""}`;
         if (!finished) console.log(`plan not finished (${output.length} chars), credit refunded`);
         if (!finished) await refundCredit(code).catch((e) => console.error("refund failed", e));
         else
-          await savePlan(code, planId, { brand: body.brand.trim(), country: countryKey, category: category ?? "", text: output }).catch((e) =>
+          await savePlan(code, planId, { brand: body.brand.trim(), country: countryKey, category: category ?? "", text: finalText(output) }).catch((e) =>
             console.error("saving plan failed", e),
           );
         try {
@@ -368,4 +363,11 @@ Target country: ${countryName}${website ? `\nWebsite: ${website}` : ""}`;
       "X-Plan-Id": planId,
     },
   });
+}
+
+// Check after generation: renumber citations to match the Sources list, and rewrite any author name,
+// internal label or file name. The plan page applies the same two functions when streaming ends.
+function finalText(output: string) {
+  if (hasInternal(output)) console.warn("plan mentioned an internal name, label or file; rewritten before saving");
+  return scrubInternal(finalizeCitations(output));
 }

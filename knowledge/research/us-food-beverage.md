@@ -7,7 +7,7 @@ updated: 2026-10-15
 
 # Packaged food and beverage in the United States: psychology, rules, competitors, foreign entry history, AI outlook (checked October 2026)
 
-Scope: **foreign packaged food and drink brands entering the U.S.** (snacks, confectionery, noodles and pantry, dairy and plant-based, non-alcoholic drinks), with a short note on alcohol. Restaurants are in the separate restaurants note. U.S. companies appear only as competitors. Supplements and GLP-1 nutrition needs are in `us-health-wellness.md`; front-of-pack halo research is in `health-wellness-consumer-and-claims.md`. This note merges two research passes; peer-reviewed findings come first, and community sources (Reddit, articles) are kept as qualitative evidence of how people think.
+Scope: **foreign packaged food and drink brands entering the U.S.** (snacks, confectionery, noodles and pantry, dairy and plant-based, non-alcoholic drinks), with a short note on alcohol. Restaurants are in the separate restaurants note. U.S. companies appear only as competitors. Supplements and GLP-1 nutrition needs are in the US health wellness research; front-of-pack halo research is in the health wellness consumer and claims research. This note merges two research passes; peer-reviewed findings come first, and community sources (Reddit, articles) are kept as qualitative evidence of how people think.
 
 ## Customer psychology
 
@@ -115,7 +115,7 @@ Sources: [1905](https://www.htshub.com/us-hs/head/1905), [1902.30](https://www.h
 
 ## Foreign entry cases since 2016
 
-Method: non-U.S. packaged food and drink brands that entered or scaled in the U.S. since about 2016. "Success" means active and growing at the October 2026 check. Yakult, Huel and Oatly's coffee-shop entry are in `us-health-wellness.md`.
+Method: non-U.S. packaged food and drink brands that entered or scaled in the U.S. since about 2016. "Success" means active and growing at the October 2026 check. Yakult, Huel and Oatly's coffee-shop entry are in the US health wellness research.
 
 ### Successes
 - **Samyang Foods (Buldak) / South Korea / U.S. growth from mid-2010s**
@@ -179,7 +179,7 @@ Method: non-U.S. packaged food and drink brands that entered or scaled in the U.
 ## AI outlook (analysis)
 
 ### Scenario 1: AI assistants and retail media decide what gets found
-- **Evidence:** 68% of food retailers surveyed by FMI use AI (up from 47%), and nearly a fifth expect conversational or agentic AI to change shopping. [Grocery Dive, Jul 2026](https://www.grocerydive.com/news/grocers-artificial-intelligence-technology-spending-fmi/824777/) Kroger is launching an AI shopping assistant with Google Cloud. [Grocery Dive, Apr 2026](https://www.grocerydive.com/news/grocers-ai-technology-2026-kroger-albertsons-awg/815720/) Albertsons joined OpenAI's ChatGPT ad pilot, and its retail media unit plans to help brands reach shoppers there. [Grocery Dive, Feb 2026](https://www.grocerydive.com/news/albertsons-ai-openai-chatgpt-advertising-pilot-grocery-supermarkets/812193/) Broader data is in `us-technology.md`.
+- **Evidence:** 68% of food retailers surveyed by FMI use AI (up from 47%), and nearly a fifth expect conversational or agentic AI to change shopping. [Grocery Dive, Jul 2026](https://www.grocerydive.com/news/grocers-artificial-intelligence-technology-spending-fmi/824777/) Kroger is launching an AI shopping assistant with Google Cloud. [Grocery Dive, Apr 2026](https://www.grocerydive.com/news/grocers-ai-technology-2026-kroger-albertsons-awg/815720/) Albertsons joined OpenAI's ChatGPT ad pilot, and its retail media unit plans to help brands reach shoppers there. [Grocery Dive, Feb 2026](https://www.grocerydive.com/news/albertsons-ai-openai-chatgpt-advertising-pilot-grocery-supermarkets/812193/) Broader data is in the US technology research.
 - **Signals to watch:** paid placements in assistants, assistants favoring store brands, and which product fields they filter on.
 
 ### Scenario 2: Faster copying shortens a viral product's window

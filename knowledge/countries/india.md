@@ -1,16 +1,16 @@
 # India - country research doc
 
-Status: v0 baseline (desk research). This is the market where Tanishka has the most lived experience - her observations in section 2 should become the strongest part of this doc.
-Legend: [VERIFY] = check against a primary source. [TANI] = needs Tanishka's own input. Tags like (Apparel), (Beauty), (Food), (Restaurants) mean the note applies ONLY to that category.
+Status: v0 baseline (desk research). Field observations in section 2 should become the strongest part of this doc.
+Legend: [VERIFY] = check against a primary source. [PLACEHOLDER] = section not yet filled in; ignore it. Tags like (Apparel), (Beauty), (Food), (Restaurants) mean the note applies ONLY to that category.
 
 ## 0. Thesis (the non-consensus point of view)
-[TANI] Draft to react to: "India" is not one market. A foreign brand that enters "India" usually means it enters metro, English-speaking, Instagram-native shoppers in a few cities - a market of real size, but one that behaves very differently from the rest of the country. The winning move is to pick that slice deliberately and price for it, not to chase national scale.
+[PLACEHOLDER] Draft to react to: "India" is not one market. A foreign brand that enters "India" usually means it enters metro, English-speaking, Instagram-native shoppers in a few cities - a market of real size, but one that behaves very differently from the rest of the country. The winning move is to pick that slice deliberately and price for it, not to chase national scale.
 
 ## 1. Interview notes
-[TANI] Template per conversation: who / date / what surprised me / quotes / so what.
+[PLACEHOLDER] Template per conversation: who / date / what surprised me / quotes / so what.
 
-## 2. Tanishka's own observations
-[TANI] What you see as someone who grew up with Indian shopping culture and now studies US marketing: what foreign brands get wrong, which ones got it right, how your family shops, how D2C brands earned trust.
+## 2. Field observations
+[PLACEHOLDER] What you see as someone who grew up with Indian shopping culture and now studies US marketing: what foreign brands get wrong, which ones got it right, how your family shops, how D2C brands earned trust.
 
 ## 3. Consumer psychology (each insight -> so what)
 - Price-value scrutiny is intense, even among affluent shoppers; discounts and sale events (e.g. festive season around Diwali) drive a large share of buying [VERIFY]. -> Plan launch pricing with festive promotions in mind; don't launch premium into the middle of a discount season without a reason.
@@ -114,4 +114,4 @@ Source: [Khaitan & Co, Sep 2025](https://www.khaitanco.com/sites/default/files/2
 - Instagram (Reels) and YouTube dominate; WhatsApp for community and customer service [VERIFY]. TikTok is banned in India.
 
 ## 9. Sources
-[TANI] Primary sources: CBIC customs tariff, GST Council, DPIIT (FDI policy), CDSCO, FSSAI.
+[PLACEHOLDER] Primary sources: CBIC customs tariff, GST Council, DPIIT (FDI policy), CDSCO, FSSAI.

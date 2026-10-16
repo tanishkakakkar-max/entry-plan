@@ -7,7 +7,7 @@ updated: 2026-10-15
 
 # Apparel and accessories in the United States: psychology, rules, competitors, foreign entry history, AI outlook (checked October 2026)
 
-Scope: this note is about **foreign (non-U.S.) apparel, footwear, bag and jewelry brands entering the U.S.**, roughly 2016 to October 2026. U.S. brands appear only as competitors. It adds to `apparel-category-notes.md` (organic cotton, Gen Z sustainable fashion, India tariffs, organic textile claims) and section 5 of the US country doc without repeating them. It merges two research passes; peer-reviewed findings come first, and community sources (Reddit, articles) are kept as qualitative evidence of how people think.
+Scope: this note is about **foreign (non-U.S.) apparel, footwear, bag and jewelry brands entering the U.S.**, roughly 2016 to October 2026. U.S. brands appear only as competitors. It adds to the apparel category notes research (organic cotton, Gen Z sustainable fashion, India tariffs, organic textile claims) and section 5 of the US country doc without repeating them. It merges two research passes; peer-reviewed findings come first, and community sources (Reddit, articles) are kept as qualitative evidence of how people think.
 
 ## Customer psychology
 
@@ -161,7 +161,7 @@ Method: non-U.S. brands whose U.S. entry, push or exit falls in 2016-2026; some 
 - **Signals to watch:** design-to-shelf times, SKU counts on Shein and TikTok Shop, disputes over copied or AI-generated designs.
 
 ### Scenario 3: AI assistants become the shop window
-- **Evidence:** ThredUp says AI is improving secondhand discovery and automating pricing and authenticity checks. [ThredUp, Apr 2026](https://newsroom.thredup.com/news/thredup-14th-resale-report) Cross-category evidence on AI shopping traffic is in `us-technology.md` (Scenario 1).
+- **Evidence:** ThredUp says AI is improving secondhand discovery and automating pricing and authenticity checks. [ThredUp, Apr 2026](https://newsroom.thredup.com/news/thredup-14th-resale-report) Cross-category evidence on AI shopping traffic is in the US technology research (Scenario 1).
 - **Analysis:** agents comparing fit probability, landed price, delivery and material claims would reward structured, verifiable product data over brand language.
 - **Signals to watch:** AI referral traffic to apparel sites, whether assistants read size charts, fabric and return terms, purchases inside assistants.
 

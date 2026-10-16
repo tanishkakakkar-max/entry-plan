@@ -116,12 +116,12 @@ Generic digital features become cheap. Defensibility shifts toward proprietary c
 
 ## 9. Companion U.S. notes
 
-- `us-other-pet-care.md`
-- `us-other-baby-kids-family.md`
-- `us-other-sports-fitness-outdoor.md`
-- `us-other-toys-games-hobbies.md`
-- `us-other-automotive-mobility.md`
-- `us-other-education-professional-services.md`
+- the US pet care research
+- the US baby kids family research
+- the US sports fitness outdoor research
+- the US toys games hobbies research
+- the US automotive mobility research
+- the US education professional services research
 - Existing notes: Health & Wellness, Food & Beverage, Beauty & Personal Care, Home & Living, Apparel & Accessories, Restaurants and Technology.
 
 This routing note does not make independent analytical market claims and therefore has no peer-review denominator. Each companion category note contains its own source register and audit.

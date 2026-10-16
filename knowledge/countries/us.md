@@ -1,16 +1,16 @@
 # United States - country research doc
 
-Status: v0 baseline (desk research). For a foreign brand entering the US. Tanishka lives and studies here, so her observations in section 2 should sharpen this.
-Legend: [VERIFY] = check against a primary source. [TANI] = needs Tanishka's own input. Tags like (Apparel), (Beauty), (Food), (Restaurants) mean the note applies ONLY to that category.
+Status: v0 baseline (desk research). For a foreign brand entering the US. Field observations in section 2 should sharpen this.
+Legend: [VERIFY] = check against a primary source. [PLACEHOLDER] = section not yet filled in; ignore it. Tags like (Apparel), (Beauty), (Food), (Restaurants) mean the note applies ONLY to that category.
 
 ## 0. Thesis (the non-consensus point of view)
-[TANI] Draft to react to: The US is not one market - it's a set of regional and community markets with one shared checkout. Foreign brands fail by launching "nationally" with a national budget that buys nothing. The winning move is to pick one city or one online community and become the obvious choice there first.
+[PLACEHOLDER] Draft to react to: The US is not one market - it's a set of regional and community markets with one shared checkout. Foreign brands fail by launching "nationally" with a national budget that buys nothing. The winning move is to pick one city or one online community and become the obvious choice there first.
 
 ## 1. Interview notes
-[TANI] Template per conversation: who / date / what surprised me / quotes / so what.
+[PLACEHOLDER] Template per conversation: who / date / what surprised me / quotes / so what.
 
-## 2. Tanishka's own observations
-[TANI] What you see in the Bay Area and in class projects (Cava, Hero Cosmetics): how brands earned early traction, what founders get wrong.
+## 2. Field observations
+[PLACEHOLDER] What you see in the Bay Area and in class projects (Cava, Hero Cosmetics): how brands earned early traction, what founders get wrong.
 
 ## 3. Consumer psychology (each insight -> so what)
 - Convenience expectations are set by Amazon: fast shipping, free returns, easy checkout. -> Slow cross-border shipping is a conversion killer; plan US fulfillment early.
@@ -68,8 +68,8 @@ Sources: Proclamation 10976, 90 FR 48127 (Oct 6, 2025), https://www.federalregis
 
 ## 7. Category notes
 - Apparel: crowded; "organic cotton basics" competes with Pact, Quince and many DTC brands [VERIFY]. Needs a sharper wedge (fit, design, community).
-- Skincare: ingredient-literate, TikTok-driven discovery; Hero Cosmetics is a case study in hero-product focus [TANI add class notes].
-- Food / fast casual: Cava is a case study in regional density before national expansion [TANI add class notes].
+- Skincare: ingredient-literate, TikTok-driven discovery; Hero Cosmetics is a case study in hero-product focus [PLACEHOLDER: add field notes].
+- Food / fast casual: Cava is a case study in regional density before national expansion [PLACEHOLDER: add field notes].
 
 ## 8. Channels for awareness
 - TikTok, Instagram, YouTube, Pinterest (strong for home and fashion), Reddit for research-heavy categories, podcasts.
@@ -77,4 +77,4 @@ Sources: Proclamation 10976, 90 FR 48127 (Oct 6, 2025), https://www.federalregis
 ## 9. Sources
 - Section 301 rates and exemptions: USTR final notice, 91 FR 47318, Jul 28, 2026 (Federal Register doc 2026-15181), including Annex II, Part A.
 - Tariff timeline (secondary, Oct 2026): firstresort.in "India Apparel Export Tariffs 2026: The Timeline"; tariffstool.com India tariff guide.
-- [TANI] Primary sources: CBP, USITC HTS, FTC, FDA.
+- [PLACEHOLDER] Primary sources: CBP, USITC HTS, FTC, FDA.

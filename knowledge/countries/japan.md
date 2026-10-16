@@ -1,21 +1,21 @@
 # Japan - country research doc
 
-Status: v0.1. Desk research plus Tanishka's own Japan work (CAVA -> Japan market-entry project and a Japan/Thailand/Romania PEST study, Global Dimensions of Business, SJSU, 2026). Sections 1-2 are her judgment and override anything below.
-Legend: [VERIFY] = check against a primary source before relying on it. [TANI] = needs Tanishka's own input. Tags like (Apparel), (Beauty), (Food), (Restaurants), (Retail products) mean the note applies ONLY to that category. Untagged notes apply to every brand.
+Status: v0.1. Desk research plus First Port's own Japan field work (CAVA -> Japan market-entry project and a Japan/Thailand/Romania PEST study, Global Dimensions of Business, SJSU, 2026). Sections 1-2 are her judgment and override anything below.
+Legend: [VERIFY] = check against a primary source before relying on it. [PLACEHOLDER] = section not yet filled in; ignore it. Tags like (Apparel), (Beauty), (Food), (Restaurants), (Retail products) mean the note applies ONLY to that category. Untagged notes apply to every brand.
 
 ## 0. Thesis (the non-consensus point of view)
-[TANI] One or two sentences that the tool should lead with for any brand entering Japan.
+[PLACEHOLDER] One or two sentences that the tool should lead with for any brand entering Japan.
 Draft to react to: Japan rewards foreign brands that win on craft and material proof, not on values messaging. Brands that lead with "eco" or mission claims read as marketing; brands that lead with how the product feels, how it's made and how long it lasts earn trust - and trust in Japan is slow to build and very sticky once earned.
 
 ## 1. Interview notes
-[TANI] One block per conversation. Template:
+[PLACEHOLDER] One block per conversation. Template:
 - Who (role, company, years in/with Japan) - no names needed if they prefer
 - Date
 - What surprised me
 - Direct quotes worth keeping
 - What this changes in a plan (the "so what")
 
-## 2. Tanishka's own observations (from her CAVA -> Japan project, 2026)
+## 2. Field observations (CAVA -> Japan field project, 2026)
 - Sell what the category means in Japan, not where the brand is from. CAVA should enter as "a Mediterranean lifestyle brand, not an American import": Mediterranean food already signals health, longevity and quality there. -> Position on the category's local associations; home country only helps if it is itself a quality signal.
 - Keep the core nobody can copy, adapt the edges (transnational strategy). CAVA keeps its spice blends, dips and Crazy Feta, and adds Japan-only items: matcha drinks, miso-glazed vegetables, a less-sweet yuzu panna cotta, and curated set bowls next to build-your-own. -> Every plan should say what stays, what changes and what's added.
 - Enter through a local partner, not a hotel. Hotel tie-ups reach travellers looking for familiar food, not locals. A partner bridges language, regulation and specialty supplier networks, and its knowledge transfers when the brand goes independent.
@@ -128,7 +128,7 @@ From the Oct 15, 2026 import-duty research (official customs and regulator sourc
 ## 7. Category notes
 - (Apparel) Apparel / loungewear: strong roomwear culture (gelato pique is a well-known domestic roomwear brand). MUJI sells organic cotton basics at accessible prices, so "organic cotton basics" alone is not differentiated [VERIFY current MUJI range].
 - (Beauty) Skincare: very competitive domestic market, ingredient-literate shoppers, sunscreen and gentle formulations big. Regulatory route needed before selling.
-- (Food, Restaurants) Food / fast casual: one of the world's largest, most demanding food-service markets. Healthy, customizable, locally grown options already exist, so differentiation is hard. Rice is a staple; portions, flavor (less sweet), seasonality and presentation matter; build-your-own needs curated sets alongside it. Matcha and ready-to-go meals are everywhere; konbini set the low price anchor. Price reference: CAVA planned about ¥1,200-1,800 per bowl, above konbini and below sit-down (Tanishka's CAVA project). Food Sanitation Act and an importer of record apply.
+- (Food, Restaurants) Food / fast casual: one of the world's largest, most demanding food-service markets. Healthy, customizable, locally grown options already exist, so differentiation is hard. Rice is a staple; portions, flavor (less sweet), seasonality and presentation matter; build-your-own needs curated sets alongside it. Matcha and ready-to-go meals are everywhere; konbini set the low price anchor. Price reference: CAVA planned about ¥1,200-1,800 per bowl, above konbini and below sit-down (CAVA Japan field project). Food Sanitation Act and an importer of record apply.
 - Cities: Tokyo (finance, startups, about 75% of foreign companies' Japan HQs), Osaka (trade, food services, pharma, electronics), Nagoya (manufacturing, bold-flavored local food). Launch where your category is concentrated; for most consumer brands that is Tokyo first.
 
 ## 8. Channels for awareness
@@ -136,7 +136,7 @@ From the Oct 15, 2026 import-duty research (official customs and regulator sourc
 - Japanese creators and magazine features (print and digital) still carry real weight for fashion and beauty.
 
 ## 9. Sources
-- Tanishka Kakkar et al., CAVA -> Japan: Report 2 (strategy), Report 3 (market entry and functional plan) and final presentation, Global Dimensions of Business, SJSU, 2026.
-- Tanishka Kakkar et al., PEST report: Japan, Thailand, Romania, 2026 (cites IMF 2025 Article IV, Bank of Japan 2025, OECD 2024, Statistics Bureau of Japan 2025, Santander Trade, Transparency International 2024).
+- First Port field project, CAVA -> Japan: Report 2 (strategy), Report 3 (market entry and functional plan) and final presentation, Global Dimensions of Business, SJSU, 2026.
+- First Port field project, PEST report: Japan, Thailand, Romania, 2026 (cites IMF 2025 Article IV, Bank of Japan 2025, OECD 2024, Statistics Bureau of Japan 2025, Santander Trade, Transparency International 2024).
 - DataReportal, Digital 2024: Japan (LINE users).
-[TANI] Add other sources with date accessed. Desk facts above to verify against: Japan Customs tariff schedule, Consumer Affairs Agency (labeling), JETRO market guides.
+[PLACEHOLDER] Add other sources with date accessed. Desk facts above to verify against: Japan Customs tariff schedule, Consumer Affairs Agency (labeling), JETRO market guides.
