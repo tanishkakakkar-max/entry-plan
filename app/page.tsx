@@ -68,7 +68,7 @@ export default function StartPage() {
             </a>
           </div>
           <div className="story-stage">
-            <JumpingTani height={150} />
+            <JumpingTani height={200} />
           </div>
         </div>
       </section>

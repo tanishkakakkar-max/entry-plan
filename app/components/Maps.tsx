@@ -1,6 +1,6 @@
 "use client";
 
-import { COUNTRY_PATHS, PINS, WORLD_COUNTRY_PATHS, WORLD_PATH, WORLD_VIEWBOX } from "./geo";
+import { COUNTRY_PATHS, PINS, WORLD_COUNTRY_PATHS, WORLD_PATH } from "./geo";
 import { useEffect, useState } from "react";
 import { COUNTRIES, countryLabel } from "./brand";
 
@@ -36,7 +36,9 @@ function arc([x1, y1]: Pt, [x2, y2]: Pt) {
   return `M${x1},${y1} Q${cx.toFixed(1)},${cy.toFixed(1)} ${x2},${y2}`;
 }
 
-const [, , VB_W, VB_H] = WORLD_VIEWBOX.split(" ").map(Number);
+// Cropped to the land (Alaska to New Zealand), so the map has no empty ocean margin on the left.
+const MAP_VIEWBOX = "85 36 915 448";
+const [VB_X, VB_Y, VB_W, VB_H] = MAP_VIEWBOX.split(" ").map(Number);
 const teaserOf = (key: string) => COUNTRIES.find((c) => c.key === key)?.teaser ?? "";
 
 export function WorldMap({ highlight = "japan", onSelect }: { highlight?: string; onSelect?: (key: string) => void }) {
@@ -65,7 +67,7 @@ export function WorldMap({ highlight = "japan", onSelect }: { highlight?: string
   });
   return (
     <div className="world-map-wrap">
-    <svg className="world-map" viewBox={WORLD_VIEWBOX} role={onSelect ? "group" : "img"} aria-label={`Routes from around the world into ${countryLabel(highlight)}`}>
+    <svg className="world-map" viewBox={MAP_VIEWBOX} role={onSelect ? "group" : "img"} aria-label={`Routes from around the world into ${countryLabel(highlight)}`}>
       <path className="world-land" d={WORLD_PATH} />
       {Object.entries(WORLD_COUNTRY_PATHS).map(([key, d]) => (
         <path key={key} className={key === highlight ? "world-country on" : "world-country"} d={d} />
@@ -121,8 +123,8 @@ export function WorldMap({ highlight = "japan", onSelect }: { highlight?: string
     </svg>
       {onSelect && tipAt && (
         <p
-          className={`map-tip${tipAt[0] > VB_W * 0.62 ? " left" : ""}`}
-          style={{ left: `${(tipAt[0] / VB_W) * 100}%`, top: `${(tipAt[1] / VB_H) * 100}%` }}
+          className={`map-tip${tipAt[0] - VB_X > VB_W * 0.62 ? " left" : ""}`}
+          style={{ left: `${((tipAt[0] - VB_X) / VB_W) * 100}%`, top: `${((tipAt[1] - VB_Y) / VB_H) * 100}%` }}
           role="status"
         >
           <strong>{countryLabel(shown)}</strong> {teaserOf(shown)}
