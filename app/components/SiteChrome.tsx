@@ -39,7 +39,7 @@ export function SiteNav({ onFree, onExample, home = false }: { onFree?: () => vo
             See an example
           </a>
           <a className="nav-cta" {...freeLink(onFree)}>
-            Get 3 free plans
+            Get 5 free plans
           </a>
         </nav>
       </div>
@@ -52,7 +52,7 @@ export function SiteFooter({ onFree }: { onFree?: () => void }) {
     <footer className="footer" id="contact">
       <div className="wrap footer-inner">
         <p className="footer-contact">
-          <strong>No code?</strong> <a {...freeLink(onFree)}>Get 3 free plans</a> with your email, then get in touch if
+          <strong>No code?</strong> <a {...freeLink(onFree)}>Get 5 free plans</a> with your email, then get in touch if
           you&apos;d like more.
         </p>
         <p className="footer-contact">

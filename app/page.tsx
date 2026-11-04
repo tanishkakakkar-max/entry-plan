@@ -143,7 +143,7 @@ export default function Home() {
   }, [loading]);
 
   // Sections fade in as they scroll into view (CSS skips the motion for prefers-reduced-motion).
-  // Jumping somewhere (a nav link, "Get 3 free plans", "See an example") shows every section at once instead,
+  // Jumping somewhere (a nav link, "Get 5 free plans", "See an example") shows every section at once instead,
   // so the place you land on is never still fading in.
   useEffect(() => {
     window.addEventListener("hashchange", revealAll);
@@ -224,7 +224,7 @@ export default function Home() {
     showExample(key, form.country);
   }
 
-  // Opens the "get 3 free plans" step at the top of the form and brings it into view.
+  // Opens the "get 5 free plans" step at the top of the form and brings it into view.
   function openFreeStep(notice = "") {
     revealAll();
     setAccessNotice(notice);
@@ -458,7 +458,7 @@ export default function Home() {
                     openFreeStep();
                   }}
                 >
-                  Get 3 free plans <span aria-hidden="true">→</span>
+                  Get 5 free plans <span aria-hidden="true">→</span>
                 </a>
                 <a
                   href="#example"
@@ -717,7 +717,7 @@ export default function Home() {
                 <small className="field-note">
                   No code?{" "}
                   <button type="button" className="link-btn" onClick={() => openFreeStep()}>
-                    Get 3 free plans
+                    Get 5 free plans
                   </button>{" "}
                   with your email at the top of this form.
                 </small>
@@ -776,7 +776,7 @@ export default function Home() {
                   <>
                     Live plans need an access code.{" "}
                     <button type="button" className="link-btn" onClick={() => openFreeStep()}>
-                      Get 3 free plans with your email
+                      Get 5 free plans with your email
                     </button>
                     .
                   </>
@@ -792,7 +792,7 @@ export default function Home() {
                 <span className="no-print">
                   Want one for your brand?{" "}
                   <button type="button" className="link-btn" onClick={() => openFreeStep()}>
-                    Get 3 free plans
+                    Get 5 free plans
                   </button>{" "}
                   and fill in your own answers.
                 </span>

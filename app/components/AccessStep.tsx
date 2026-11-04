@@ -73,7 +73,7 @@ export const AccessStep = forwardRef<
           return;
         }
         if (data.existing && data.credits === 0) {
-          setError("You've already used the 3 free plans for this email. Want more? Get in touch at the bottom of the page.");
+          setError("You've already used the 5 free plans for this email. Want more? Get in touch at the bottom of the page.");
           return;
         }
         setFresh(data.code);
@@ -170,7 +170,7 @@ export const AccessStep = forwardRef<
           <p className="privacy-line">
             No code?{" "}
             <button type="button" className="link-btn" onClick={() => setMode("email")}>
-              Get 3 free plans with your email
+              Get 5 free plans with your email
             </button>
           </p>
         </div>
@@ -185,7 +185,7 @@ export const AccessStep = forwardRef<
             {notice}
           </p>
         )}
-        <p className="access-title">Get 3 free plans</p>
+        <p className="access-title">Get 5 free plans</p>
         <p className="access-sub">Enter your email and your code appears right here.</p>
         {status === "bad" && <p className="access-note">The code saved on this device isn&apos;t valid, so get a free one below.</p>}
         <form className="access-row" onSubmit={getFreeCode}>

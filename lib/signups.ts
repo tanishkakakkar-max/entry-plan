@@ -9,7 +9,7 @@ import { createHash } from "node:crypto";
 import { resolveMx } from "node:dns/promises";
 import { createCode, db, getCode } from "./credits";
 
-export const FREE_CREDITS = 3;
+export const FREE_CREDITS = 5;
 const PER_IP_PER_DAY = 3;
 const PER_DAY = 50; // new free codes per day across the whole site
 

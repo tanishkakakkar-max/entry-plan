@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-// "Get 3 free plans": email (+ optional offers opt-in) -> a 3-credit access code from /api/access.
+// "Get 5 free plans": email (+ optional offers opt-in) -> a 5-credit access code from /api/access.
 // The code is saved on this device so the plan form on the home page is already filled in.
 export function FreeAccessForm() {
   const [email, setEmail] = useState("");
@@ -49,11 +49,11 @@ export function FreeAccessForm() {
 
   return (
     <div className="free-access hero-free">
-      <h1 className="free-title">Get 3 free plans</h1>
+      <h1 className="free-title">Get 5 free plans</h1>
       <p className="free-sub">Enter your email for a free access code. One per email, no card needed.</p>
       {result && result.existing && result.credits === 0 ? (
         <div className="free-result" role="status">
-          <p>You&apos;ve already used the 3 free plans for this email.</p>
+          <p>You&apos;ve already used the 5 free plans for this email.</p>
           <p className="free-note">
             Free codes are one per email. Want more plans, or a personalised plan for your brand?
           </p>
