@@ -496,3 +496,21 @@ a.cite:hover { background: var(--maroon); color: var(--white); transform: transl
 .guide-card:hover .guide-cta { transform: translateX(4px); }
 .port-teaser { margin: 6px 0 0; font-size: 14px; color: var(--muted); animation: tip-in 0.4s var(--ease); }
 .port-teaser strong { color: var(--maroon); font-weight: 500; }
+
+/* Bolder nav: a solid bar, bigger pill links, the current page filled, Create outlined as the main action. */
+.nav { background: rgba(253, 251, 249, 0.6); backdrop-filter: saturate(1.4) blur(12px); -webkit-backdrop-filter: saturate(1.4) blur(12px); border-bottom: 1px solid rgba(123, 43, 37, 0.14); }
+.nav.scrolled { background: rgba(253, 251, 249, 0.92); box-shadow: 0 8px 24px -18px rgba(29, 27, 26, 0.35); }
+.nav-inner { min-height: 76px; }
+.wordmark { font-size: 30px; }
+.wordmark-dot { width: 9px; height: 9px; }
+.nav nav { gap: 6px; }
+.nav nav a, .nav nav a.active { font-size: 15px; font-weight: 600; color: var(--ink); padding: 9px 16px; border-radius: 999px; border: 1.5px solid transparent; transition: background 0.25s, color 0.25s, border-color 0.25s, transform 0.25s var(--spring); }
+.nav nav a::after { display: none; }
+.nav nav a:hover { background: rgba(123, 43, 37, 0.09); transform: translateY(-1px); }
+.nav nav a[href="/create"] { border-color: var(--ink); }
+.nav nav a[href="/create"]:hover { background: var(--ink); color: var(--white); }
+.nav nav a.active, .nav nav a.active:hover { background: var(--maroon); border-color: var(--maroon); color: var(--white); }
+@media (min-width: 768px) { .nav nav { gap: 10px; } .nav nav a, .nav nav a.active { font-size: 17px; padding: 10px 22px; } }
+@media (max-width: 420px) { .nav nav a, .nav nav a.active { padding: 8px 12px; font-size: 14px; } .wordmark { font-size: 24px; } }
+.hero { margin-top: -76px; padding-top: 76px; }
+.sticky-actions { top: 76px; }
