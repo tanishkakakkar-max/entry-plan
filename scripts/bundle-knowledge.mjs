@@ -91,6 +91,8 @@ writeFileSync(
 export const researchNotes: ResearchNote[] = ${JSON.stringify(research, null, 2)};
 `,
 );
+// Tani, the site guide (app/api/chat): her voice, the site facts and what she may say about Tanishka.
+writeFileSync(join(root, "lib", "tani.generated.ts"), `${header}export const taniGuide = ${JSON.stringify(k("tani-guide.md"))};\n`);
 writeFileSync(
   join(root, "lib", "examples-index.generated.ts"),
   `${header}export const exampleKeys: string[] = ${JSON.stringify(Object.keys(examples).sort())};\n`,

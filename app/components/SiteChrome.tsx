@@ -1,82 +1,101 @@
 "use client";
 
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { BRAND } from "./brand";
 
-// Nav and footer shared by the home page and other pages. On the home page, onFree opens the free-code box
-// and onExample fills in an example brand, in place; elsewhere the links go to /#access and /#example.
-function freeLink(onFree?: () => void) {
-  return {
-    href: onFree ? "#access" : "/#access",
-    onClick: onFree
-      ? (e: React.MouseEvent) => {
-          e.preventDefault();
-          onFree();
-        }
-      : undefined,
-  };
+const LINKS = [
+  { href: "/", label: "Start" },
+  { href: "/samples", label: "Samples" },
+  { href: "/create", label: "Create" },
+];
+
+// Fades sections in as they scroll into view (".reveal" -> ".reveal.in"), again on every page change.
+// Without IntersectionObserver, or with reduced motion (CSS), everything simply shows.
+export function RevealOnScroll() {
+  const pathname = usePathname();
+  useEffect(() => {
+    const els = document.querySelectorAll(".reveal:not(.in)");
+    if (!("IntersectionObserver" in window)) {
+      els.forEach((el) => el.classList.add("in"));
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((en) => {
+          if (en.isIntersecting) {
+            en.target.classList.add("in");
+            io.unobserve(en.target);
+          }
+        }),
+      { rootMargin: "0px 0px -6% 0px" },
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, [pathname]);
+  return null;
 }
 
-export function SiteNav({ onFree, onExample, home = false }: { onFree?: () => void; onExample?: () => void; home?: boolean }) {
+// Nav on every page: Start, Samples, Create. The current page is underlined.
+export function SiteNav() {
+  const pathname = usePathname();
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const on = () => setScrolled(window.scrollY > 8);
+    on();
+    window.addEventListener("scroll", on, { passive: true });
+    return () => window.removeEventListener("scroll", on);
+  }, []);
+  if (pathname.startsWith("/admin")) return null;
+  const active = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
   return (
-    <header className="nav no-print">
+    <header className={`nav no-print${scrolled ? " scrolled" : ""}`}>
       <div className="wrap nav-inner">
-        <a href={home ? "#top" : "/"} className="wordmark">
+        <Link href="/" className="wordmark">
+          <span className="wordmark-dot" aria-hidden="true" />
           {BRAND.name}
-        </a>
+        </Link>
         <nav aria-label="Main">
-          <a href={home ? "#how" : "/#how"}>How it works</a>
-          <a
-            href={onExample ? "#example" : "/#example"}
-            onClick={
-              onExample
-                ? (e) => {
-                    e.preventDefault();
-                    onExample();
-                  }
-                : undefined
-            }
-          >
-            See an example
-          </a>
-          <a className="nav-cta" {...freeLink(onFree)}>
-            Get 5 free plans
-          </a>
+          {LINKS.map((l) => (
+            <Link key={l.href} href={l.href} className={active(l.href) ? "active" : ""} aria-current={active(l.href) ? "page" : undefined}>
+              {l.label}
+            </Link>
+          ))}
         </nav>
       </div>
     </header>
   );
 }
 
-export function SiteFooter({ onFree }: { onFree?: () => void }) {
+export function SiteFooter() {
+  const pathname = usePathname();
+  if (pathname.startsWith("/admin")) return null;
   return (
     <footer className="footer" id="contact">
       <div className="wrap footer-inner">
-        <p className="footer-contact">
-          <strong>No code?</strong> <a {...freeLink(onFree)}>Get 5 free plans</a> with your email, then get in touch if
-          you&apos;d like more.
-        </p>
-        <p className="footer-contact">
-          <strong>Get in touch</strong> for a personalised plan or more plans:{" "}
-          <a href={`mailto:${BRAND.email}?subject=${encodeURIComponent(`${BRAND.name}: personalised plan`)}`}>{BRAND.email}</a>
-          <span className="dot" aria-hidden="true">
-            ·
-          </span>
-          <a href={BRAND.authorUrl} target="_blank" rel="noopener noreferrer">
-            LinkedIn
-          </a>
-        </p>
-        <p>
-          <a href={BRAND.authorUrl} target="_blank" rel="noopener noreferrer" className="no-print-link">
-            Built by {BRAND.author}
-          </a>
-          <span className="dot" aria-hidden="true">
-            ·
-          </span>
-          <span>{BRAND.version}</span>
-        </p>
+        <div>
+          <p className="footer-mark">{BRAND.name}</p>
+          <p>
+            <a href={`mailto:${BRAND.email}?subject=${encodeURIComponent(`${BRAND.name}: hello`)}`}>{BRAND.email}</a>
+            <span className="dot" aria-hidden="true">
+              ·
+            </span>
+            <a href={BRAND.authorUrl} target="_blank" rel="noopener noreferrer">
+              LinkedIn
+            </a>
+          </p>
+        </div>
+        <div className="footer-links">
+          {LINKS.map((l) => (
+            <Link key={l.href} href={l.href}>
+              {l.label}
+            </Link>
+          ))}
+        </div>
         <p className="disclaimer">
-          This is a first read, not legal or customs advice. Web sources are cited as [W1], [W2] and research papers as
-          [S1]. Anything marked [verify] should be checked with a primary source before you act on it.
+          Built by {BRAND.author}. A plan is a first read, not legal, tax or customs advice. Anything marked [verify] should
+          be checked with a primary source before you act on it.
         </p>
       </div>
     </footer>

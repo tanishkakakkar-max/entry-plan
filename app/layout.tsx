@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { BRAND } from "./components/brand";
+import { RevealOnScroll, SiteFooter, SiteNav } from "./components/SiteChrome";
+import { AskTani } from "./components/Tani";
 import "./globals.css";
 
 // Share previews (LinkedIn, iMessage, Slack) use app/opengraph-image.png; icons are app/icon.svg and app/apple-icon.png.
@@ -25,10 +27,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@400;500;600&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <SiteNav />
+        {children}
+        <SiteFooter />
+        <AskTani />
+        <RevealOnScroll />
+      </body>
     </html>
   );
 }

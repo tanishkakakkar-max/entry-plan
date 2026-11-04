@@ -4,7 +4,7 @@ import { signUp } from "@/lib/signups";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-// "Get free access": email (+ optional marketing opt-in) -> a 3-credit code, one per email.
+// "Get free access": email (+ optional marketing opt-in) -> a 5-credit code, one per email.
 export async function POST(req: Request) {
   if (!creditsReady) return Response.json({ error: "Free access isn't available right now." }, { status: 503 });
   const body = await req.json().catch(() => ({}));

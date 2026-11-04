@@ -12,7 +12,7 @@ import {
 } from "@/lib/citations";
 
 type Section = { id: string; heading: string; body: string };
-// kind R = First Port research, S = peer-reviewed paper, W = web page.
+// kind P = official or primary source, W = web page, S = peer-reviewed paper, R = First Port research.
 type Source = ParsedSource;
 
 const slug = (s: string) =>
@@ -96,7 +96,7 @@ export function cleanDashes(md: string) {
 
 // [R2] / [W3] / [S1] -> a link to the matching source, rendered as a small badge.
 const linkCitations = (md: string) =>
-  md.replace(/\[([RWS])(\d+)\](?!\()/g, (_m, k: string, n) => `[${k}${n}](#source-${k.toLowerCase()}${n})`);
+  md.replace(/\[([PRWS])(\d+)\](?!\()/g, (_m, k: string, n) => `[${k}${n}](#source-${k.toLowerCase()}${n})`);
 
 // While streaming: tidy dashes and hide internal names. Once finished: also renumber citations so every
 // cited number is in the Sources list and every listed source is cited (same as the saved copy).
@@ -204,7 +204,7 @@ export function PlanView({ plan, country, streaming }: { plan: string; country: 
         {sources.length > 0 ? (
           <section id="sec-sources" className="sources">
             <h2>Sources</h2>
-            {(["R", "S", "W"] as const).map((kind) => {
+            {(["P", "W", "S", "R"] as const).map((kind) => {
               const list = sources.filter((s) => s.kind === kind);
               if (!list.length) return null;
               return (

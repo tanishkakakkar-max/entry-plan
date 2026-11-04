@@ -7,7 +7,7 @@ import { creditsReady, getCode, normalizeCode, peekCode, refundCredit, reserveCr
 import { briefId, getPlan, savePlan } from "@/lib/saved-plans";
 import { aiCheckBrief } from "@/lib/brief-check";
 import { formatResearch, noteTitle, selectResearch } from "@/lib/research";
-import { finalizeCitations, formatSources, hasInternal, scrubInternal, type ParsedSource } from "@/lib/citations";
+import { extractPrimary, finalizeCitations, formatSources, hasInternal, scrubInternal, type ParsedSource } from "@/lib/citations";
 import { formatScholarly, paperCitation, scholarlyResearch } from "@/lib/scholar";
 
 export const runtime = "nodejs";
@@ -288,12 +288,14 @@ Target country: ${countryName}${website ? `\nWebsite: ${website}` : ""}`;
   const site = website ? formatWebsite(website, siteText) : "";
   console.log(`web results: ${webResults.length}, papers: ${papers.length} (${countryName})${website ? `, website chars: ${siteText.length}` : ""}`);
 
-  const relatedBlock = formatResearch(related);
+  // Links inside the research become numbered primary sources [P#], so plans cite the official page itself.
+  const primary = extractPrimary([research, ...related.map((n) => n.body)]);
+  const relatedBlock = formatResearch(related.map((n, i) => ({ ...n, body: primary.texts[i + 1] })));
 
   const system = [
     instructions,
     `<sample_plan>\n${samplePlan}\n</sample_plan>`,
-    `<country_research id="R1" country="${countryName}">\n${research}\n</country_research>`,
+    `<country_research id="R1" country="${countryName}">\n${primary.texts[0]}\n</country_research>`,
     ...(relatedBlock ? [relatedBlock] : []),
     ...(site ? [site] : []),
     ...(web ? [web] : []),
@@ -316,10 +318,11 @@ Target country: ${countryName}${website ? `\nWebsite: ${website}` : ""}`;
           await streamGroq(system, brief, send);
         }
         // The Sources list is built from the same arrays the model was given, numbered the same way:
-        // [R1] country research, [R2]... related notes, [S#] papers, [W#] web pages. Only cited ones are
+        // [P#] links inside the research, [R1] country research, [R2]... related notes, [S#] papers, [W#] web pages. Only cited ones are
         // listed. Skip it only if the model already wrote a Sources section with real links.
         if (!/^#+\s*Sources[\s\S]*(\]\(http|https?:\/\/doi)/im.test(output)) {
           const all: ParsedSource[] = [
+            ...primary.sources,
             { kind: "R", n: 1, title: `First Port research: ${countryName} market notes`, url: "" },
             ...related.map((n, i) => ({ kind: "R" as const, n: i + 2, title: `First Port research: ${noteTitle(n)}`, url: "" })),
             ...papers.map((p, i) => ({ kind: "S" as const, n: i + 1, title: paperCitation(p, i + 1).replace(/^\[S\d+\]\s*/, "").replace(/\s+https?:\/\/\S+$/, ""), url: p.url })),
@@ -344,7 +347,14 @@ Target country: ${countryName}${website ? `\nWebsite: ${website}` : ""}`;
         if (!finished) console.log(`plan not finished (${output.length} chars), credit refunded`);
         if (!finished) await refundCredit(code).catch((e) => console.error("refund failed", e));
         else
-          await savePlan(code, planId, { brand: body.brand.trim(), country: countryKey, category: category ?? "", text: finalText(output) }).catch((e) =>
+          await savePlan(code, planId, { brand: body.brand.trim(), country: countryKey, category: category ?? "", text: finalText(output),
+            brief: Object.fromEntries(
+              ["website", "brand", "category", "categoryOther", "product", "identity", "customer", "price", "stage", "country"].map((k) => [
+                k,
+                String((body as Record<string, unknown>)[k] ?? ""),
+              ]),
+            ),
+          }).catch((e) =>
             console.error("saving plan failed", e),
           );
         try {

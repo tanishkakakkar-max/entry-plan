@@ -1,6 +1,6 @@
 "use client";
 
-import { COUNTRY_PATHS, PINS, WORLD_PATH, WORLD_VIEWBOX } from "./geo";
+import { COUNTRY_PATHS, PINS, WORLD_COUNTRY_PATHS, WORLD_PATH, WORLD_VIEWBOX } from "./geo";
 import { useEffect, useState } from "react";
 import { COUNTRIES, countryLabel } from "./brand";
 
@@ -67,6 +67,9 @@ export function WorldMap({ highlight = "japan", onSelect }: { highlight?: string
     <div className="world-map-wrap">
     <svg className="world-map" viewBox={WORLD_VIEWBOX} role={onSelect ? "group" : "img"} aria-label={`Routes from around the world into ${countryLabel(highlight)}`}>
       <path className="world-land" d={WORLD_PATH} />
+      {Object.entries(WORLD_COUNTRY_PATHS).map(([key, d]) => (
+        <path key={key} className={key === highlight ? "world-country on" : "world-country"} d={d} />
+      ))}
       <g key={highlight} className="world-routes">
         {origins.map(([name, p]) => (
           <path key={name} className="world-route" d={arc(p, dest)} />

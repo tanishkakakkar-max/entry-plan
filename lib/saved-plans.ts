@@ -1,5 +1,6 @@
 // Finished plans, saved under the access code that made them for 30 days. Keys:
-//   fp:plan:<code>:<id>   hash {brand, country, category, created, text}   (expires after 30 days)
+//   fp:plan:<code>:<id>   hash {brand, country, category, created, text, brief}   (expires after 30 days)
+//   brief is the form answers as JSON, so "Edit inputs and rerun" can refill the form.
 //   fp:plans:<code>       sorted set of ids, scored by when they were saved
 // The id is a hash of the brief, so the same brief for the same country maps to the same saved plan:
 // asking again returns it free. To get a fresh plan, change an answer or delete the saved one.
@@ -12,7 +13,7 @@ const KEEP_MS = KEEP_DAYS * 24 * 60 * 60 * 1000;
 const MAX_PLANS = 50; // per code; the oldest drop off past this
 
 export type SavedPlanMeta = { id: string; brand: string; country: string; category: string; created: string; expires: string };
-export type SavedPlan = SavedPlanMeta & { text: string };
+export type SavedPlan = SavedPlanMeta & { text: string; brief?: Record<string, string> };
 
 const planKey = (code: string, id: string) => `fp:plan:${code}:${id}`;
 const indexKey = (code: string) => `fp:plans:${code}`;
@@ -35,10 +36,14 @@ const withExpiry = (p: Omit<SavedPlan, "expires">): SavedPlan => ({
   expires: new Date(new Date(p.created).getTime() + KEEP_MS).toISOString(),
 });
 
-export async function savePlan(code: string, id: string, plan: { brand: string; country: string; category: string; text: string }) {
+export async function savePlan(
+  code: string,
+  id: string,
+  plan: { brand: string; country: string; category: string; text: string; brief?: Record<string, string> },
+) {
   const created = new Date().toISOString();
   if (db) {
-    await db.hset(planKey(code, id), { ...plan, created });
+    await db.hset(planKey(code, id), { ...plan, brief: JSON.stringify(plan.brief ?? {}), created });
     await db.expire(planKey(code, id), KEEP_DAYS * 24 * 60 * 60);
     await db.zadd(indexKey(code), { score: Date.now(), member: id });
     await db.expire(indexKey(code), KEEP_DAYS * 24 * 60 * 60);
@@ -59,7 +64,12 @@ export async function getPlan(code: string, id: string): Promise<SavedPlan | nul
     const h = (await db.hgetall(planKey(code, id))) as Record<string, unknown> | null;
     if (!h || !h.text) return null;
     const s = (k: string) => String(h[k] ?? "");
-    return withExpiry({ id, brand: s("brand"), country: s("country"), category: s("category"), created: s("created"), text: s("text") });
+    const raw = h.brief;
+    let brief: Record<string, string> | undefined;
+    try {
+      brief = typeof raw === "string" ? JSON.parse(raw) : raw && typeof raw === "object" ? (raw as Record<string, string>) : undefined;
+    } catch {}
+    return withExpiry({ id, brand: s("brand"), country: s("country"), category: s("category"), created: s("created"), text: s("text"), brief });
   }
   const p = mem.get(planKey(code, id));
   return p && Date.parse(p.expires) > Date.now() ? p : null;
@@ -77,7 +87,7 @@ export async function listPlans(code: string): Promise<SavedPlanMeta[]> {
       .map(([, p]) => p)
       .sort((a, b) => b.created.localeCompare(a.created));
   }
-  return plans.map(({ text: _text, ...meta }) => meta);
+  return plans.map(({ text: _text, brief: _brief, ...meta }) => meta);
 }
 
 export async function deletePlan(code: string, id: string) {

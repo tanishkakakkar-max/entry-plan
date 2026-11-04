@@ -4,29 +4,31 @@ import { useEffect, useState } from "react";
 import { countryLabel } from "./brand";
 
 export type SavedPlanMeta = { id: string; brand: string; country: string; category: string; created: string; expires: string };
-export type SavedPlan = SavedPlanMeta & { text: string };
+export type SavedPlan = SavedPlanMeta & { text: string; brief?: Record<string, string> };
 
 const CODE = /^[A-Z0-9]{2,}-[A-Z0-9-]{4,}$/;
 const daysLeft = (iso: string) => Math.max(0, Math.ceil((Date.parse(iso) - Date.now()) / 86_400_000));
 
-async function call(body: object) {
+export async function plansCall(body: object) {
   const res = await fetch("/api/plans", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
   const data = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error(data.error || "Something went wrong.");
   return data;
 }
 
-// Plans saved under this access code (kept 30 days). Open one to read it again, or delete it.
+// Plans saved under this code (kept 30 days): open one, edit its answers and rerun, or delete it.
 export function YourPlans({
   code,
   refresh,
   openId,
   onOpen,
+  onEdit,
 }: {
   code: string;
   refresh: number;
   openId: string;
   onOpen: (plan: SavedPlan) => void;
+  onEdit: (plan: SavedPlan) => void;
 }) {
   const [plans, setPlans] = useState<SavedPlanMeta[]>([]);
   const [confirming, setConfirming] = useState("");
@@ -41,22 +43,22 @@ export function YourPlans({
     }
     let live = true;
     const t = setTimeout(() => {
-      call({ code: clean, action: "list" })
+      plansCall({ code: clean, action: "list" })
         .then((d) => live && setPlans(d.plans ?? []))
         .catch(() => live && setPlans([]));
-    }, 300);
+    }, 250);
     return () => {
       live = false;
       clearTimeout(t);
     };
   }, [clean, refresh]);
 
-  async function open(id: string) {
+  async function fetchPlan(id: string, then: (p: SavedPlan) => void) {
     setBusy(id);
     setError("");
     try {
-      const d = await call({ code: clean, action: "open", id });
-      onOpen(d.plan);
+      const d = await plansCall({ code: clean, action: "open", id });
+      then(d.plan);
     } catch (err) {
       setError((err as Error).message);
     } finally {
@@ -68,7 +70,7 @@ export function YourPlans({
     setBusy(id);
     setError("");
     try {
-      await call({ code: clean, action: "delete", id });
+      await plansCall({ code: clean, action: "delete", id });
       setPlans((p) => p.filter((x) => x.id !== id));
       setConfirming("");
     } catch (err) {
@@ -82,37 +84,39 @@ export function YourPlans({
 
   return (
     <section className="your-plans no-print" aria-labelledby="your-plans-title">
-      <h3 id="your-plans-title">Your plans</h3>
-      <p className="your-plans-note">Saved on this code for 30 days, then deleted automatically.</p>
+      <div className="your-plans-head">
+        <h2 id="your-plans-title">Your plans</h2>
+        <p>Saved on your code for 30 days.</p>
+      </div>
       <ul>
         {plans.map((p) => (
           <li key={p.id} className={p.id === openId ? "open" : ""}>
-            <div className="your-plan-info">
-              <strong>
+            <button type="button" className="your-plan-main" disabled={busy === p.id} onClick={() => fetchPlan(p.id, onOpen)}>
+              <span className="your-plan-name">
                 {p.brand} <span aria-hidden="true">→</span> {countryLabel(p.country)}
-              </strong>
+              </span>
               <small>
                 {new Date(p.created).toLocaleString(undefined, { day: "numeric", month: "short", hour: "numeric", minute: "2-digit" })} · deletes in {daysLeft(p.expires)}{" "}
                 {daysLeft(p.expires) === 1 ? "day" : "days"}
               </small>
-            </div>
+            </button>
             <div className="your-plan-actions">
               {confirming === p.id ? (
                 <>
-                  <span className="your-plan-confirm">Delete for good? It&apos;s removed from First Port too and can&apos;t be recovered.</span>
-                  <button type="button" className="btn btn-quiet admin-small danger" disabled={busy === p.id} onClick={() => remove(p.id)}>
-                    {busy === p.id ? "Deleting..." : "Delete"}
+                  <span className="your-plan-confirm">Delete for good? It can&apos;t be recovered.</span>
+                  <button type="button" className="chip-btn danger" disabled={busy === p.id} onClick={() => remove(p.id)}>
+                    Delete
                   </button>
-                  <button type="button" className="btn btn-quiet admin-small" onClick={() => setConfirming("")}>
+                  <button type="button" className="chip-btn" onClick={() => setConfirming("")}>
                     Keep
                   </button>
                 </>
               ) : (
                 <>
-                  <button type="button" className="btn btn-quiet admin-small" disabled={busy === p.id} onClick={() => open(p.id)}>
-                    {busy === p.id ? "Opening..." : p.id === openId ? "Showing" : "Open"}
+                  <button type="button" className="chip-btn" disabled={busy === p.id} onClick={() => fetchPlan(p.id, onEdit)}>
+                    Edit &amp; rerun
                   </button>
-                  <button type="button" className="btn btn-quiet admin-small" onClick={() => setConfirming(p.id)}>
+                  <button type="button" className="chip-btn" onClick={() => setConfirming(p.id)}>
                     Delete
                   </button>
                 </>

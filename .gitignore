@@ -18,3 +18,4 @@ drafts/
 
 # Scratch copies of research notes (never commit; the real notes live in knowledge/)
 Claude outputs/
+lib/tani.generated.ts
