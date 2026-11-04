@@ -6,7 +6,7 @@ import { COUNTRIES } from "./brand";
 import { WorldMap } from "./Maps";
 
 // The Start page map: the highlighted port drifts through the four countries until someone
-// picks one; picking a country (map dot or chip) opens Create with that country chosen.
+// hovers or picks one. Picking a country (map dot or name) just selects it on the map.
 export function StartMap() {
   const router = useRouter();
   const [port, setPort] = useState<string>("japan");
@@ -29,7 +29,6 @@ export function StartMap() {
   const pick = (key: string) => {
     setTouched(true);
     setPort(key);
-    router.push(`/create?country=${key}`);
   };
 
   return (
@@ -56,6 +55,9 @@ export function StartMap() {
           </span>
         ))}
       </figcaption>
+      <p key={port} className="port-teaser" aria-live="polite">
+        <strong>{COUNTRIES.find((c) => c.key === port)?.label}:</strong> {COUNTRIES.find((c) => c.key === port)?.teaser}
+      </p>
     </figure>
   );
 }

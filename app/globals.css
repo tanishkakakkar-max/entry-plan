@@ -491,3 +491,8 @@ a.cite:hover { background: var(--maroon); color: var(--white); transform: transl
 @media (min-width: 1000px) { .story-inner { padding-right: 200px; } }
 @media (min-width: 900px) { .story-stage { bottom: -112px; } }
 .story-stage { bottom: -88px !important; width: 180px; height: 320px; }
+.guide-card { display: block; text-decoration: none; color: inherit; }
+.guide-cta { display: inline-block; margin-top: 14px; font-size: 14px; font-weight: 500; color: var(--maroon); transition: transform 0.3s var(--ease); }
+.guide-card:hover .guide-cta { transform: translateX(4px); }
+.port-teaser { margin: 6px 0 0; font-size: 14px; color: var(--muted); animation: tip-in 0.4s var(--ease); }
+.port-teaser strong { color: var(--maroon); font-weight: 500; }

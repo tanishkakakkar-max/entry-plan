@@ -10,15 +10,15 @@ const HOW = [
 ];
 
 const GUIDE = [
-  { face: "pointing" as const, title: "Start", text: "You're here. What First Port is, why I built it and how it works." },
-  { face: "thumbsup" as const, title: "Samples", text: "Real-format plans for four brands in all four countries. Read them free." },
-  { face: "idea" as const, title: "Create", text: "Get your code, answer a few questions, and get your plan. Edit and rerun any time." },
+  { face: "pointing" as const, title: "Start", text: "You're here. What First Port is, why I built it and how it works.", href: "#top", cta: "Back to the top" },
+  { face: "thumbsup" as const, title: "Samples", text: "Real-format plans for four brands in all four countries. Read them free.", href: "/samples", cta: "See samples" },
+  { face: "idea" as const, title: "Create", text: "Get your code, answer a few questions, and get your plan. Edit and rerun any time.", href: "/create", cta: "Make my plan" },
 ];
 
 // Start: intro, the backstory, how it works, and a guide to the three pages.
 export default function StartPage() {
   return (
-    <main>
+    <main id="top">
       <section className="hero">
         <div className="wrap hero-inner">
           <div className="hero-copy rise">
@@ -104,11 +104,14 @@ export default function StartPage() {
         </h2>
         <div className="guide-grid">
           {GUIDE.map((g) => (
-            <div key={g.title} className="guide-card">
+            <Link key={g.title} href={g.href} className="guide-card">
               <TaniFace face={g.face} size={96} />
               <p className="guide-title">{g.title}</p>
               <p>{g.text}</p>
-            </div>
+              <span className="guide-cta">
+                {g.cta} <span aria-hidden="true">→</span>
+              </span>
+            </Link>
           ))}
         </div>
         <p className="guide-note">
