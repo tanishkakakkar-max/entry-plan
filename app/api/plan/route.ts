@@ -7,7 +7,7 @@ import { creditsReady, getCode, normalizeCode, peekCode, refundCredit, reserveCr
 import { briefId, getPlan, savePlan } from "@/lib/saved-plans";
 import { aiCheckBrief } from "@/lib/brief-check";
 import { formatResearch, noteTitle, selectResearch } from "@/lib/research";
-import { extractPrimary, finalizeCitations, formatSources, hasInternal, scrubInternal, type ParsedSource } from "@/lib/citations";
+import { extractPrimary, finalizeCitations, formatSources, hasInternal, normalizeCitations, scrubInternal, type ParsedSource } from "@/lib/citations";
 import { formatScholarly, paperCitation, scholarlyResearch } from "@/lib/scholar";
 
 export const runtime = "nodejs";
@@ -328,7 +328,7 @@ Target country: ${countryName}${website ? `\nWebsite: ${website}` : ""}`;
             ...papers.map((p, i) => ({ kind: "S" as const, n: i + 1, title: paperCitation(p, i + 1).replace(/^\[S\d+\]\s*/, "").replace(/\s+https?:\/\/\S+$/, ""), url: p.url })),
             ...webResults.map((w, i) => ({ kind: "W" as const, n: i + 1, title: w.title, url: w.url })),
           ];
-          const cited = new Set([...output.matchAll(/[[【]([RWS])(\d+)[\]】]/g)].map((m) => m[1] + m[2]));
+          const cited = new Set([...normalizeCitations(output).matchAll(/\[([PRWS])(\d+)\]/g)].map((m) => m[1] + m[2]));
           const list = formatSources(all.filter((x) => cited.has(x.kind + x.n)));
           if (list) send(`\n\n${list}`);
         }
