@@ -223,14 +223,14 @@ export async function POST(req: Request) {
   const blanks = OPTIONAL_WITH_WEBSITE.filter((f) => !body[f].trim());
   let siteText: string | null = null;
   if (website) {
-    siteText = await readWebsite(website).catch((err) => {
+    siteText = await readWebsite(website, body.brand).catch((err) => {
       console.error("website read failed", err);
       return "";
     });
     if (blanks.length && siteText.length < 300) {
       return new Response(
         "We couldn't read enough from your website. Please fill in what you sell, your customer and your price.",
-        { status: 400 },
+        { status: 400, headers: { "X-Brief": "site_unreadable" } },
       );
     }
   }
@@ -274,7 +274,7 @@ Target country: ${countryName}${website ? `\nWebsite: ${website}` : ""}`;
     siteText !== null
       ? Promise.resolve(siteText)
       : website
-        ? readWebsite(website).catch((err) => {
+        ? readWebsite(website, body.brand).catch((err) => {
             console.error("website read failed", err);
             return "";
           })

@@ -164,6 +164,15 @@ export function CreateApp() {
           body: JSON.stringify({ ...form, accessCode: code }),
         });
         if (!res.ok || !res.body) {
+          // The website couldn't be read: back to step 1 with the blank answers marked. No plan was used.
+          if (res.headers.get("X-Brief") === "site_unreadable") {
+            const msg = "We couldn't read this from your website. Please add it.";
+            const missing = (["product", "customer", "price"] as const).filter((f) => !form[f].trim());
+            setStep(0);
+            setCodeNotice("");
+            showProblems(Object.fromEntries(missing.map((f) => [f, msg])) as BriefProblems);
+            return;
+          }
           const status = res.headers.get("X-Code-Status");
           setErrorKind(status === "used_up" ? "used_up" : status === "missing" ? "missing" : "");
           setError((await res.text()) || "Something went wrong.");
@@ -542,18 +551,6 @@ export function CreateApp() {
           )}
         </div>
 
-        <aside className="create-side no-print">
-          <YourPlans code={code} refresh={refresh} openId={planId} onOpen={openSaved} onEdit={(p) => editInputs(p)} />
-          {step < 2 && (
-            <div className="side-card">
-              <p className="kicker">Not sure yet?</p>
-              <p>Read a finished plan first. They&apos;re free.</p>
-              <Link href="/samples" className="link-btn accent">
-                See sample plans <span aria-hidden="true">→</span>
-              </Link>
-            </div>
-          )}
-        </aside>
       </div>
     </main>
   );
