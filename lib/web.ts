@@ -188,8 +188,22 @@ async function searchOwnSite(url: string, brand: string): Promise<string> {
   return cleanText(((data.results ?? []) as { title?: string; content?: string }[]).map((r) => `${r.title ?? ""}. ${r.content ?? ""}`).join(" "));
 }
 
+// Last resort for sites that block readers entirely: public pages about the brand (encyclopedia, press, retail coverage).
+async function searchAboutBrand(url: string, brand: string): Promise<string> {
+  const host = new URL(url).hostname.replace(/^www\./, "");
+  const res = await fetch(`${process.env.TAVILY_BASE_URL || "https://api.tavily.com"}/search`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${process.env.TAVILY_API_KEY}` },
+    body: JSON.stringify({ query: `${brand} (${host}) brand: what it sells, price range, target customers`, search_depth: "advanced", max_results: 5 }),
+    signal: AbortSignal.timeout(12000),
+  });
+  if (!res.ok) throw new Error(`Tavily search ${res.status}`);
+  const data = await res.json();
+  return cleanText(((data.results ?? []) as { title?: string; content?: string }[]).map((r) => `${r.title ?? ""}. ${r.content ?? ""}`).join(" "));
+}
+
 // The brand's website as plain text. Tries a quick read, then a deeper read for script-heavy sites,
-// then pages from the same site found by search. Returns "" if nothing works.
+// then pages from the same site found by search, then public pages about the brand. Returns "" if nothing works.
 export async function readWebsite(url: string, brand = ""): Promise<string> {
   if (!process.env.TAVILY_API_KEY) return "";
   let text = await extract(url, "basic").catch(() => "");
@@ -197,6 +211,10 @@ export async function readWebsite(url: string, brand = ""): Promise<string> {
   if (text.length < 300) {
     const found = await searchOwnSite(url, brand).catch(() => "");
     if (found.length > text.length) text = found;
+  }
+  if (text.length < 300 && brand.trim()) {
+    const about = await searchAboutBrand(url, brand).catch(() => "");
+    if (about.length > text.length) text = about;
   }
   return text.slice(0, WEBSITE_CHARS);
 }
