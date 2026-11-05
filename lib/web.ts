@@ -199,7 +199,18 @@ async function searchAboutBrand(url: string, brand: string): Promise<string> {
   });
   if (!res.ok) throw new Error(`Tavily search ${res.status}`);
   const data = await res.json();
-  return cleanText(((data.results ?? []) as { title?: string; content?: string }[]).map((r) => `${r.title ?? ""}. ${r.content ?? ""}`).join(" "));
+  // Only pages that actually mention this brand or its site, so an unknown brand never borrows someone else's facts.
+  const name = brand.trim().toLowerCase();
+  const site = host.split(".")[0].toLowerCase();
+  return cleanText(
+    ((data.results ?? []) as { title?: string; content?: string; url?: string }[])
+      .filter((r) => {
+        const t = `${r.title ?? ""} ${r.content ?? ""} ${r.url ?? ""}`.toLowerCase();
+        return t.includes(name) || t.includes(site);
+      })
+      .map((r) => `${r.title ?? ""}. ${r.content ?? ""}`)
+      .join(" "),
+  );
 }
 
 // The brand's website as plain text. Tries a quick read, then a deeper read for script-heavy sites,
