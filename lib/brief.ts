@@ -40,8 +40,8 @@ export type BriefField = "website" | "brand" | "category" | "categoryOther" | "p
 export type BriefProblems = Partial<Record<BriefField, string>>;
 
 // Every problem in the brief, keyed by field, so the form can show each one under its own field.
-// With a website, what they sell, identity, customer and price are optional (the plan reads the site);
-// brand, category and where they sell today are always required.
+// Required: brand, category, and what they sell (or a website). Identity, customer, price and where they
+// sell today are optional; left blank, the plan states what it assumed.
 export function checkBriefFields(b: Brief, hasWebsite = false): BriefProblems {
   const out: BriefProblems = {};
   const skip = (v: string) => hasWebsite && !v.trim();
@@ -60,17 +60,17 @@ export function checkBriefFields(b: Brief, hasWebsite = false): BriefProblems {
     if (c.length < 3 || !looksReal(c, 1) || /^(other|others|misc|products?|category)$/i.test(c))
       out.categoryOther = 'Type your category, like "pet care" or "stationery".';
   }
+  // What they sell is the one detail we need: from the answer, or from the website.
   if (!skip(b.product) && !looksReal(b.product, min))
     out.product = `Say what you sell in a few words, like "cold-pressed juice" or "leather wallets".${orBlank}`;
-  if (!skip(b.identity) && !looksReal(b.identity, min))
-    out.identity = `Describe your brand in a few words, like "playful and bold" or "calm, premium, made to last".${orBlank}`;
-  if (!skip(b.customer) && !looksReal(b.customer, min))
-    out.customer = `Say who buys, like "busy parents" or "students 18-24".${orBlank}`;
-  if (!skip(b.price) && !/\d/.test(b.price) && !PRICE_WORDS.test(b.price) && !(hasWebsite && looksReal(b.price, 1)))
-    out.price = `Add a price or a level, like "$15-25" or "premium".${orBlank}`;
-  // Always required, website or not: a site can't show if they're pre-launch, in stores, wholesale or abroad.
-  if (!STAGE_WORDS.test(b.stage) && !looksReal(b.stage, min))
-    out.stage = `Say where you sell today, like "pre-launch" or "own website and Amazon".${orBlank}`;
+  // Everything else is optional: blank is fine (the plan states its assumption); only nonsense is refused.
+  const junk = (v: string) => !!v.trim() && !looksReal(v, 1) && !/\d/.test(v);
+  if (junk(b.identity)) out.identity = 'Describe your brand in a few words, like "playful and bold", or leave it blank.';
+  if (junk(b.customer)) out.customer = 'Say who buys, like "busy parents", or leave it blank.';
+  if (b.price.trim() && !/\d/.test(b.price) && !PRICE_WORDS.test(b.price) && !looksReal(b.price, 1))
+    out.price = 'Add a price like "$15-25" or "premium", or leave it blank.';
+  if (b.stage.trim() && !STAGE_WORDS.test(b.stage) && !looksReal(b.stage, 1))
+    out.stage = 'Say where you sell today, like "pre-launch", or leave it blank.';
   return out;
 }
 

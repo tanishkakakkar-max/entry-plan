@@ -22,8 +22,9 @@ const COUNTRY_NAMES: Record<string, string> = {
 
 const FIELDS = ["brand", "product", "identity", "customer", "price", "stage", "country"] as const;
 // Answers a brand can skip when it gives its website (the plan reads the site instead).
-// Where they sell today stays required: a website can't show stage, stores or wholesale reliably.
 const OPTIONAL_WITH_WEBSITE = ["product", "identity", "customer", "price"] as const;
+// Answers that are always optional: left blank, the plan infers them and states its assumption.
+const ALWAYS_OPTIONAL = ["identity", "customer", "price", "stage"] as const;
 // Plain-English names for the form fields, used in the server's messages (same wording as the form).
 const FIELD_NAMES: Record<(typeof FIELDS)[number], string> = {
   brand: "your brand name",
@@ -158,7 +159,8 @@ export async function POST(req: Request) {
   }
   for (const f of FIELDS) {
     const v = body[f];
-    if (website && (OPTIONAL_WITH_WEBSITE as readonly string[]).includes(f) && (v === undefined || v === null || v === "")) {
+    const optional = (ALWAYS_OPTIONAL as readonly string[]).includes(f) || (website && (OPTIONAL_WITH_WEBSITE as readonly string[]).includes(f));
+    if (optional && (v === undefined || v === null || (typeof v === "string" && !v.trim()))) {
       body[f] = "";
       continue;
     }
@@ -219,24 +221,24 @@ export async function POST(req: Request) {
   if (!codeState.ok) return refuse(codeState);
 
 
-  // Blank answers + website: read the site now, before any credit is spent, and stop if it's unreadable.
+  // Blank answers + website: read the site now. If it can't be read (many big sites block readers), we never stop
+  // the founder: the plan is written anyway from the brand name, category, stage and web results, with its
+  // assumptions stated up front.
   const blanks = OPTIONAL_WITH_WEBSITE.filter((f) => !body[f].trim());
+  const blankFields = FIELDS.filter((f) => f !== "country" && !body[f].trim());
   let siteText: string | null = null;
   if (website) {
     siteText = await readWebsite(website, body.brand).catch((err) => {
       console.error("website read failed", err);
       return "";
     });
-    if (blanks.length && siteText.length < 300) {
-      return new Response(
-        "We couldn't read enough from your website. Please fill in what you sell, your customer and your price.",
-        { status: 400, headers: { "X-Brief": "site_unreadable" } },
-      );
-    }
   }
+  const siteThin = !!website && blanks.length > 0 && (siteText ?? "").length < 300;
+  if (siteThin) console.log(`website thin (${(siteText ?? "").length} chars): writing from brand, category and web results`);
 
   // Does the brief make enough sense to build a strategy on? Rejections cost no credit.
-  const notUsable = await aiCheckBrief(
+  // Skipped when the site couldn't be read: the blanks are expected then, and we don't want to bounce the founder.
+  const notUsable = siteThin ? null : await aiCheckBrief(
     { ...body, category: picked === OTHER ? `Other: ${otherText}` : category, country: countryName, website, websiteText: siteText ?? undefined },
     provider,
   );
@@ -256,7 +258,13 @@ export async function POST(req: Request) {
     (n) => n.catMatch && (n.countries.includes(countryKey) || n.countries.includes("all")),
   );
 
-  const fromSite = (v: string) => v.trim() || "(not given - work it out from the brand website)";
+  const fromSite = (v: string) =>
+    v.trim() ||
+    (siteThin
+      ? "(not given, and the website couldn't be read: infer it from the brand name, category, stage and web results)"
+      : website
+        ? "(not given - work it out from the brand website)"
+        : "(not given - infer the most likely answer from what they sell and the category)");
   const brief = `Write the market-entry plan for this brand.
 
 Brand: ${body.brand}
@@ -265,7 +273,13 @@ Brand identity: ${fromSite(body.identity)}
 Target customer: ${fromSite(body.customer)}
 Price point: ${fromSite(body.price)}
 Where they sell today / stage: ${fromSite(body.stage)}
-Target country: ${countryName}${website ? `\nWebsite: ${website}` : ""}`;
+Target country: ${countryName}${website ? `\nWebsite: ${website}` : ""}${
+    siteThin
+      ? `\n\nNote: the brand's website couldn't be read. Write the full plan anyway. In section 1, after the verdict, add one short sentence starting "Assumed:" that states what you assumed about what they sell, who buys and the price, marked [verify], and say the plan gets sharper if they add those answers.`
+      : blankFields.length && !website
+        ? `\n\nNote: the founder left some answers blank. Write the full plan anyway. In section 1, after the verdict, add one short sentence starting "Assumed:" that states what you assumed for the blank answers, marked [verify].`
+        : ""
+  }`;
 
   // Live web search runs alongside the research docs (skipped if TAVILY_API_KEY isn't set).
   const searchTopic = body.product.trim() || `${body.brand} ${category ?? ""}`.trim();

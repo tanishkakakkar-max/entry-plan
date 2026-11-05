@@ -270,7 +270,7 @@ export function CreateApp() {
         ? { face: "pointing", text: "Start here: pop in your email and I'll give you a code with 5 free plans. Each plan uses one.", ask: "How do codes work?" }
         : editing
           ? { face: "idea", text: "Change whatever you like, then press Continue. Your old version stays in Your plans." }
-          : { face: "idea", text: "Got a website? Add it and you can skip what you sell, who buys it and the price. I'll read your site." }
+          : { face: "idea", text: "I only need your brand name and what you sell, or just your website. Everything else is optional." }
       : step === 1
         ? { face: "curious", text: "Where to? Pick a country, then tell me how your brand feels and where you sell today." }
         : loading
@@ -297,7 +297,7 @@ export function CreateApp() {
         <span>
           {label}
           {opts.optional && <em> (optional)</em>}
-          {skippable && <em> (optional with your website)</em>}
+          {skippable && !opts.optional && <em> (optional with your website)</em>}
         </span>
         <Tag
           placeholder={hint}
@@ -378,8 +378,8 @@ export function CreateApp() {
                 {field("website", "Brand website", "yourbrand.com", { optional: true })}
                 {field("brand", "Brand name", "e.g. Kumo Candles")}
                 {field("product", "What you sell", "e.g. soy candles in ceramic vessels, made in Melbourne", { long: true })}
-                {field("customer", "Who buys it", "e.g. women 25-40 who buy home fragrance as gifts", { long: true })}
-                {field("price", "Price range", "e.g. $28-45")}
+                {field("customer", "Who buys it", "e.g. women 25-40 who buy home fragrance as gifts", { long: true, optional: true })}
+                {field("price", "Price range", "e.g. $28-45", { optional: true })}
                 <button className="btn btn-dark btn-block">Continue</button>
                 <p className="form-aside">
                   Not sure yet?{" "}
@@ -428,8 +428,8 @@ export function CreateApp() {
                 )}
               </label>
               {form.category === OTHER && field("categoryOther", "Your category", "e.g. pet care, toys, consulting", { max: OTHER_MAX })}
-              {field("identity", "How your brand feels", "e.g. calm, natural, made to last", { long: true })}
-              {field("stage", "Where you sell today", "e.g. pre-launch, Shopify DTC, 40 boutiques in Australia")}
+              {field("identity", "How your brand feels", "e.g. calm, natural, made to last", { long: true, optional: true })}
+              {field("stage", "Where you sell today", "e.g. pre-launch, Shopify DTC, 40 boutiques in Australia", { optional: true })}
               <div className="form-row">
                 <button type="button" className="btn btn-line" onClick={() => goTo(0)}>
                   <span aria-hidden="true">←</span> Back
