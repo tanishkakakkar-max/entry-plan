@@ -294,7 +294,17 @@ export function CreateApp() {
           placeholder={hint}
           value={form[name]}
           maxLength={opts.max ?? (opts.long ? 1500 : 300)}
-          rows={opts.long ? 2 : undefined}
+          rows={opts.long ? 1 : undefined}
+          // Long answers start one line tall, like the other fields, and grow as you type.
+          onInput={
+            opts.long
+              ? (e: React.FormEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+                  const t = e.currentTarget;
+                  t.style.height = "auto";
+                  t.style.height = `${t.scrollHeight}px`;
+                }
+              : undefined
+          }
           aria-invalid={!!err}
           onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setField(name, e.target.value)}
           {...(name === "website" ? { inputMode: "url" as const, autoComplete: "url" } : {})}
@@ -309,7 +319,7 @@ export function CreateApp() {
   };
 
   return (
-    <main className="wrap page create" ref={topRef}>
+    <main className={`wrap page create${step === 2 ? " create-plan" : ""}`} ref={topRef}>
       <header className="page-head">
         <p className="kicker">
           Step {step + 1} of 3 {editing && step < 2 ? "· editing" : ""}
@@ -336,6 +346,8 @@ export function CreateApp() {
         </h1>
       </header>
 
+      <YourPlans code={code} refresh={refresh} openId={planId} onOpen={openSaved} onEdit={(p) => editInputs(p)} />
+
       {!(loading && !plan) && (
         <TaniTip face={tip.face} ask={tip.ask} className="create-tip">
           {tip.text}
@@ -360,6 +372,12 @@ export function CreateApp() {
                 {field("customer", "Who buys it", "e.g. women 25-40 who buy home fragrance as gifts", { long: true })}
                 {field("price", "Price range", "e.g. $28-45")}
                 <button className="btn btn-dark btn-block">Continue</button>
+                <p className="form-aside">
+                  Not sure yet?{" "}
+                  <Link href="/samples" className="link-btn accent">
+                    Read a sample plan first
+                  </Link>
+                </p>
               </form>
             </div>
           )}

@@ -514,3 +514,24 @@ a.cite:hover { background: var(--maroon); color: var(--white); transform: transl
 @media (max-width: 420px) { .nav nav a, .nav nav a.active { padding: 8px 12px; font-size: 14px; } .wordmark { font-size: 24px; } }
 .hero { margin-top: -76px; padding-top: 76px; }
 .sticky-actions { top: 76px; }
+/* every field the same height: long answers start one line tall and grow, no resize handle */
+.line-field textarea { resize: none; overflow: hidden; min-height: 0; field-sizing: content; line-height: 1.5; }
+.line-field input, .line-field textarea, .line-field select { line-height: 1.5; padding: 10px 0; height: auto; }
+.line-field select { padding-right: 24px; }
+
+/* Create: one centred column; Your plans is a single collapsible line at the top */
+.page.create { max-width: 880px; }
+.create-grid { display: block; }
+.create-main { max-width: none; }
+.your-plans { padding: 0; margin: 4px 0 8px; border-radius: 16px; overflow: hidden; }
+.your-plans-toggle { display: flex; align-items: center; gap: 12px; width: 100%; padding: 14px 18px; background: none; border: 0; cursor: pointer; text-align: left; }
+.your-plans-toggle:hover { background: var(--blush-soft); }
+.your-plans-title { font: italic 400 24px/1 var(--serif); }
+.your-plans-count { font-size: 13px; color: var(--muted); }
+.your-plans-chev { margin-left: auto; transition: transform 0.3s var(--ease); }
+.your-plans.open .your-plans-chev { transform: rotate(180deg); }
+.your-plans ul { padding: 0 18px 10px; animation: rise 0.35s var(--ease) both; }
+@media (min-width: 700px) { .your-plans li { display: flex; align-items: center; justify-content: space-between; gap: 16px; } .your-plan-actions { margin-top: 0; flex: none; } .your-plan-confirm { width: auto; } }
+.form-aside { margin: 14px 0 0; font-size: 14px; color: var(--muted); text-align: center; }
+.page.create.create-plan { max-width: 1160px; }
+.create-plan .your-plans, .create-plan .create-tip { max-width: 820px; }

@@ -34,6 +34,7 @@ export function YourPlans({
   const [confirming, setConfirming] = useState("");
   const [busy, setBusy] = useState("");
   const [error, setError] = useState("");
+  const [open, setOpen] = useState(false);
   const clean = code.trim().toUpperCase();
 
   useEffect(() => {
@@ -55,6 +56,7 @@ export function YourPlans({
 
   async function fetchPlan(id: string, then: (p: SavedPlan) => void) {
     setBusy(id);
+    setOpen(false);
     setError("");
     try {
       const d = await plansCall({ code: clean, action: "open", id });
@@ -83,11 +85,17 @@ export function YourPlans({
   if (!plans.length) return null;
 
   return (
-    <section className="your-plans no-print" aria-labelledby="your-plans-title">
-      <div className="your-plans-head">
-        <h2 id="your-plans-title">Your plans</h2>
-        <p>Saved on your code for 30 days.</p>
-      </div>
+    <section className={`your-plans no-print${open ? " open" : ""}`} aria-labelledby="your-plans-title">
+      <button type="button" className="your-plans-toggle" aria-expanded={open} onClick={() => setOpen((o) => !o)}>
+        <span id="your-plans-title" className="your-plans-title">Your plans</span>
+        <span className="your-plans-count">
+          {plans.length} saved · kept 30 days
+        </span>
+        <span className="your-plans-chev" aria-hidden="true">
+          ▾
+        </span>
+      </button>
+      {open && (
       <ul>
         {plans.map((p) => (
           <li key={p.id} className={p.id === openId ? "open" : ""}>
@@ -125,6 +133,7 @@ export function YourPlans({
           </li>
         ))}
       </ul>
+      )}
       {error && (
         <p className="error" role="alert">
           {error}
