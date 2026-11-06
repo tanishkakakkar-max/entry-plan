@@ -654,3 +654,38 @@ a.cite:hover { background: var(--maroon); color: var(--white); transform: transl
 .steps-detail { border-top: 0; }
 .steps-detail .step-row:first-child { border-top: 1px solid var(--line); }
 @media (max-width: 1023px) { .nav nav { background: var(--bg); backdrop-filter: none; } }
+
+/* ---------- Wider page, bigger home headline ---------- */
+.wrap { max-width: 1280px; }
+@media (min-width: 960px) {
+  .hero-inner { grid-template-columns: clamp(420px, 42vw, 620px) minmax(0, 1fr); }
+  .hero .start-map { margin-right: calc(-1 * (max(0px, (100vw - 1280px) / 2) + var(--gutter)) + 40px); }
+}
+.hero-title { font-size: clamp(44px, 14.6cqw, 108px); }
+
+/* ---------- Calmer type on every other page: the home headline stays the biggest ---------- */
+.page-head h1, .page h1 { font-size: clamp(38px, 4.6vw, 60px); }
+.create h1 { font-size: clamp(36px, 4.4vw, 56px); }
+h2, .section-title { font-size: clamp(30px, 3.2vw, 42px); }
+.step-row h2 { font-size: clamp(22px, 2.2vw, 28px); }
+.story h2 { font-size: clamp(32px, 3.6vw, 46px); }
+.market-card h2 { font-size: 30px; }
+.plan-cta h2 { font-size: clamp(28px, 3vw, 38px); }
+.verdict-headline { font-size: clamp(28px, 3.2vw, 38px); }
+.memo-section h2 { font-size: clamp(24px, 2.6vw, 32px); }
+.lede { font-size: 17px; }
+
+/* ---------- End-of-page band: a soft blush card, not red against the footer ---------- */
+.plan-cta { background: transparent; color: var(--ink); padding: 0; margin: 88px 0 72px; }
+.plan-cta::before { display: none; }
+.plan-cta-inner { background: linear-gradient(120deg, var(--blush) 0%, var(--blush-soft) 60%, var(--cream) 100%); border-radius: 28px; padding: 40px; }
+@media (min-width: 900px) { .plan-cta-inner { padding: 48px 56px; } }
+.plan-cta p { color: var(--muted); }
+.plan-cta .btn-light { background: var(--ink); color: var(--white); }
+.plan-cta .btn-light:hover { background: var(--maroon); }
+.plan-cta .btn-line-light { border-color: var(--ink); color: var(--ink); }
+.plan-cta .btn-line-light:hover { background: var(--ink); color: var(--white); }
+
+/* ---------- Footer: warm charcoal instead of green ---------- */
+.footer { background: #231e1d; margin-top: 0; }
+main:not(:has(.plan-cta)) + .footer { margin-top: 96px; }

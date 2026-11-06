@@ -108,7 +108,11 @@ export default function HowItWorksPage() {
         <h2 className="section-title">
           Every number has <em>a source.</em>
         </h2>
-        <p className="lede">Small tags in the plan link to the source behind each line. There are four kinds:</p>
+        <p className="lede">
+          Every plan starts from First Port&apos;s own research, checked against official sources, and follows fixed rules: it always covers import
+          duties, marks anything that needs checking with [verify], and never invents a tariff rate. Small tags in the plan link to the source behind
+          each line. There are four kinds:
+        </p>
         <div className="source-kinds">
           {SOURCES.map(([k, t, d]) => (
             <div key={k} className="source-kind">

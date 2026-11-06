@@ -16,24 +16,7 @@ const GUIDE = [
   { face: "thumbsup" as const, title: "Samples", text: "Real-format plans for four brands in all four countries. Read them free.", href: "/samples", cta: "See samples" },
 ];
 
-const DIFFERENT = [
-  {
-    title: "Checked research, not guesses",
-    text: "Every plan starts from First Port's own research on each country and category, checked against official sources such as government tariff notices, customs schedules and regulators.",
-  },
-  {
-    title: "Sources you can click",
-    text: "Plans link to the official page, web article or study behind each number, so you can check anything before you act on it.",
-  },
-  {
-    title: "Rules every plan follows",
-    text: "Every plan covers import duties, says when something needs checking, and never invents a tariff rate. If the research doesn't have it, the plan says so.",
-  },
-  {
-    title: "Built for small brands",
-    text: "No consultant fees and no local office needed to get a first, honest read on whether a country fits.",
-  },
-];
+
 
 // Home: the pitch, why I built it, three steps, what makes it different, where to go next, and the plan button.
 export default function StartPage() {
@@ -116,22 +99,6 @@ export default function StartPage() {
         </ol>
       </section>
 
-      <section className="wrap about-diff reveal" aria-labelledby="diff-title">
-        <p className="kicker" id="diff-title">
-          What makes it different
-        </p>
-        <h2 className="section-title">
-          More than a <em>chatbot answer.</em>
-        </h2>
-        <div className="diff-grid">
-          {DIFFERENT.map((d) => (
-            <div key={d.title} className="diff-card">
-              <h3>{d.title}</h3>
-              <p>{d.text}</p>
-            </div>
-          ))}
-        </div>
-      </section>
 
       <section className="wrap guide reveal" aria-labelledby="guide-title">
         <p className="kicker" id="guide-title">
