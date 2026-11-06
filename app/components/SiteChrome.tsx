@@ -6,10 +6,13 @@ import { usePathname } from "next/navigation";
 import { BRAND } from "./brand";
 
 const LINKS = [
-  { href: "/", label: "Start" },
+  { href: "/", label: "Home" },
+  { href: "/how-it-works", label: "How it works" },
+  { href: "/markets", label: "Markets" },
   { href: "/samples", label: "Samples" },
-  { href: "/create", label: "Create" },
+  { href: "/about", label: "About" },
 ];
+const CTA = { href: "/create", label: "Create plan" };
 
 // Fades sections in as they scroll into view (".reveal" -> ".reveal.in"), again on every page change.
 // Without IntersectionObserver, or with reduced motion (CSS), everything simply shows.
@@ -41,6 +44,8 @@ export function RevealOnScroll() {
 export function SiteNav() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
+  const [menu, setMenu] = useState(false);
+  useEffect(() => setMenu(false), [pathname]);
   useEffect(() => {
     const on = () => setScrolled(window.scrollY > 8);
     on();
@@ -56,13 +61,23 @@ export function SiteNav() {
           <span className="wordmark-dot" aria-hidden="true" />
           {BRAND.name}
         </Link>
-        <nav aria-label="Main">
+        <nav aria-label="Main" className={menu ? "open" : ""} id="main-menu">
           {LINKS.map((l) => (
             <Link key={l.href} href={l.href} className={active(l.href) ? "active" : ""} aria-current={active(l.href) ? "page" : undefined}>
               {l.label}
             </Link>
           ))}
         </nav>
+        <div className="nav-right">
+          <Link href={CTA.href} className={`nav-cta${active(CTA.href) ? " active" : ""}`} aria-current={active(CTA.href) ? "page" : undefined}>
+            {CTA.label}
+          </Link>
+          <button type="button" className="nav-burger" aria-label="Menu" aria-expanded={menu} aria-controls="main-menu" onClick={() => setMenu((m) => !m)}>
+            <span />
+            <span />
+            <span />
+          </button>
+        </div>
       </div>
     </header>
   );
@@ -87,7 +102,7 @@ export function SiteFooter() {
           </p>
         </div>
         <div className="footer-links">
-          {LINKS.map((l) => (
+          {[...LINKS, CTA].map((l) => (
             <Link key={l.href} href={l.href}>
               {l.label}
             </Link>

@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { BRAND } from "../../components/brand";
 import { SAMPLES } from "../data";
 import { SamplePlan } from "./SamplePlan";
+import { PlanCta } from "../../components/PlanCta";
 
 export function generateStaticParams() {
   return SAMPLES.map((s) => ({ slug: s.slug }));
@@ -23,6 +24,7 @@ export default async function SamplePage({ params }: { params: Promise<{ slug: s
   const s = SAMPLES[i];
   const next = SAMPLES[(i + 1) % SAMPLES.length];
   return (
+    <>
     <main className="wrap page">
       <p className="back no-print">
         <Link href="/samples">
@@ -40,5 +42,7 @@ export default async function SamplePage({ params }: { params: Promise<{ slug: s
       </header>
       <SamplePlan text={s.text} country={s.countryName} next={{ href: `/samples/${next.slug}`, label: `${next.brand} → ${next.countryName}` }} />
     </main>
+    <PlanCta title="Want one for your brand?" />
+    </>
   );
 }

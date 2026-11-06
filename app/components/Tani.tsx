@@ -137,9 +137,12 @@ function RichText({ text }: { text: string }) {
   );
 }
 
-const PAGE_NAMES: Record<string, string> = { "/": "Start", "/samples": "Samples", "/create": "Create" };
+const PAGE_NAMES: Record<string, string> = { "/": "Home", "/how-it-works": "How it works", "/markets": "Markets", "/samples": "Samples", "/about": "About", "/create": "Create" };
 const GREETING: Record<string, { face: Face; text: string }> = {
-  Start: { face: "wave", text: "Hi, I'm Tani. I built First Port. Stuck on anything? Ask me." },
+  Home: { face: "wave", text: "Hi, I'm Tani. I built First Port. Stuck on anything? Ask me." },
+  "How it works": { face: "idea", text: "Hi! Want to know what's in a plan or how codes work? Ask me." },
+  Markets: { face: "thinking", text: "Hi! Curious which country or entry route fits your brand? Ask me." },
+  About: { face: "relaxed", text: "Hi, I'm Tani! Ask me anything about why I built First Port." },
   Samples: { face: "pointing", text: "Hi! Want to know how to read a plan, or what the tags mean? Ask me." },
   Create: { face: "idea", text: "Hi! Need a hand with the form or your code? Ask me anything." },
 };
@@ -148,7 +151,7 @@ const GREETING: Record<string, { face: Face; text: string }> = {
 // carries over as you move between pages.
 export function AskTani() {
   const pathname = usePathname();
-  const page = PAGE_NAMES[pathname] ?? (pathname.startsWith("/samples") ? "Samples" : "Start");
+  const page = PAGE_NAMES[pathname] ?? (pathname.startsWith("/samples") ? "Samples" : "Home");
   const [open, setOpen] = useState(false);
   const [turns, setTurns] = useState<ChatTurn[]>([]);
   const [draft, setDraft] = useState("");
@@ -165,7 +168,7 @@ export function AskTani() {
   const openRef = useRef(false);
   openRef.current = open;
 
-  const greeting = GREETING[page] ?? GREETING.Start;
+  const greeting = GREETING[page] ?? GREETING.Home;
   const hidden = pathname.startsWith("/admin");
   const lastFace: Face = busy ? "thinking" : ([...turns].reverse().find((t) => t.role === "tani")?.face ?? greeting.face);
 

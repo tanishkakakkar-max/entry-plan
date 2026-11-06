@@ -62,14 +62,6 @@ export function SampleList({ samples }: { samples: Item[] }) {
         ))}
       </ul>
 
-      <section className="ready reveal">
-        <h2>
-          Ready for <em>your own?</em>
-        </h2>
-        <Link href="/create" className="btn btn-line">
-          Make your own plan
-        </Link>
-      </section>
     </>
   );
 }

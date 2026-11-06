@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { BRAND } from "../components/brand";
 import { SAMPLES } from "./data";
 import { SampleList } from "./SampleList";
+import { PlanCta } from "../components/PlanCta";
 
 export const metadata: Metadata = {
   title: `Sample plans - ${BRAND.name}`,
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
 export default function SamplesPage() {
   const list = SAMPLES.map(({ text: _text, ...s }) => s);
   return (
+    <>
     <main className="wrap page">
       <header className="page-head rise">
         <p className="kicker">Sample plans</p>
@@ -22,5 +24,7 @@ export default function SamplesPage() {
       </header>
       <SampleList samples={list} />
     </main>
+    <PlanCta title="Ready for your own?" />
+    </>
   );
 }
