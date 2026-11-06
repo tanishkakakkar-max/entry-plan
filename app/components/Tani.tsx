@@ -137,7 +137,7 @@ function RichText({ text }: { text: string }) {
   );
 }
 
-const PAGE_NAMES: Record<string, string> = { "/": "Home", "/how-it-works": "How it works", "/markets": "Markets", "/samples": "Samples", "/about": "About", "/create": "Create" };
+const PAGE_NAMES: Record<string, string> = { "/": "Home", "/how-it-works": "How it works", "/markets": "Markets", "/samples": "Samples", "/create": "Create" };
 const GREETING: Record<string, { face: Face; text: string }> = {
   Home: { face: "wave", text: "Hi, I'm Tani. I built First Port. Stuck on anything? Ask me." },
   "How it works": { face: "idea", text: "Hi! Want to know what's in a plan or how codes work? Ask me." },

@@ -10,7 +10,6 @@ const LINKS = [
   { href: "/how-it-works", label: "How it works" },
   { href: "/markets", label: "Markets" },
   { href: "/samples", label: "Samples" },
-  { href: "/about", label: "About" },
 ];
 const CTA = { href: "/create", label: "Create plan" };
 

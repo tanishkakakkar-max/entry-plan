@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { StartMap } from "./components/StartMap";
-import { AskTaniButton, TaniFace } from "./components/Tani";
+import { BRAND } from "./components/brand";
+import { AskTaniButton, JumpingTani, TaniFace } from "./components/Tani";
 import { PlanCta } from "./components/PlanCta";
 
 const HOW = [
@@ -15,7 +16,26 @@ const GUIDE = [
   { face: "thumbsup" as const, title: "Samples", text: "Real-format plans for four brands in all four countries. Read them free.", href: "/samples", cta: "See samples" },
 ];
 
-// Home: the pitch, three steps, where to go next, and the plan button.
+const DIFFERENT = [
+  {
+    title: "Checked research, not guesses",
+    text: "Every plan starts from First Port's own research on each country and category, checked against official sources such as government tariff notices, customs schedules and regulators.",
+  },
+  {
+    title: "Sources you can click",
+    text: "Plans link to the official page, web article or study behind each number, so you can check anything before you act on it.",
+  },
+  {
+    title: "Rules every plan follows",
+    text: "Every plan covers import duties, says when something needs checking, and never invents a tariff rate. If the research doesn't have it, the plan says so.",
+  },
+  {
+    title: "Built for small brands",
+    text: "No consultant fees and no local office needed to get a first, honest read on whether a country fits.",
+  },
+];
+
+// Home: the pitch, why I built it, three steps, what makes it different, where to go next, and the plan button.
 export default function StartPage() {
   return (
     <main id="top">
@@ -40,6 +60,40 @@ export default function StartPage() {
         </div>
       </section>
 
+      <section className="story reveal" id="about">
+        <div className="wrap story-inner">
+          <div>
+            <p className="kicker kicker-light">Why I built this</p>
+            <h2>
+              Going abroad shouldn&apos;t <em>need a consultant.</em>
+            </h2>
+            <p>
+              I&apos;m Tanishka, a business administration student at San José State, concentrating in marketing with a minor in computer science. I built
+              First Port to make a marketer&apos;s job easier.
+            </p>
+            <p>
+              Market research takes a long time. At first you don&apos;t even know where to look or how to start, and once you
+              do, the work is tedious. Going into a new country is harder still: you usually need someone who specialises in
+              that market, which takes real capital, and some brands end up building a whole local headquarters.
+            </p>
+            <p>
+              That isn&apos;t realistic for a small brand that thinks it could do better somewhere else, or is simply curious
+              whether a country fits its goals and is the right next move.
+            </p>
+            <p>
+              So I brought it all into one easy-to-use market-entry tool. Any marketer or business owner can use it to see how a
+              country fits and make the best decision for their business.
+            </p>
+            <a className="story-link" href={BRAND.authorUrl} target="_blank" rel="noopener noreferrer">
+              Find me on LinkedIn <span aria-hidden="true">→</span>
+            </a>
+          </div>
+          <div className="story-stage">
+            <JumpingTani height={200} />
+          </div>
+        </div>
+      </section>
+
       <section className="wrap how reveal" aria-labelledby="how-title">
         <p className="kicker" id="how-title">
           How it works
@@ -60,6 +114,23 @@ export default function StartPage() {
             </li>
           ))}
         </ol>
+      </section>
+
+      <section className="wrap about-diff reveal" aria-labelledby="diff-title">
+        <p className="kicker" id="diff-title">
+          What makes it different
+        </p>
+        <h2 className="section-title">
+          More than a <em>chatbot answer.</em>
+        </h2>
+        <div className="diff-grid">
+          {DIFFERENT.map((d) => (
+            <div key={d.title} className="diff-card">
+              <h3>{d.title}</h3>
+              <p>{d.text}</p>
+            </div>
+          ))}
+        </div>
       </section>
 
       <section className="wrap guide reveal" aria-labelledby="guide-title">
