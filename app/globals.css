@@ -689,3 +689,24 @@ h2, .section-title { font-size: clamp(30px, 3.2vw, 42px); }
 /* ---------- Footer: warm charcoal instead of green ---------- */
 .footer { background: #231e1d; margin-top: 0; }
 main:not(:has(.plan-cta)) + .footer { margin-top: 96px; }
+
+/* ---------- Light sage plan card resting on a maroon footer (no gap between them) ---------- */
+.plan-cta { margin: 88px 0 0; position: relative; z-index: 2; }
+.plan-cta-inner { background: linear-gradient(120deg, #dfe8d9 0%, #e9efe2 50%, #f3f2e9 100%); box-shadow: 0 24px 50px -32px rgba(46, 51, 42, 0.45); margin-bottom: -88px; }
+.plan-cta p { color: #55604f; }
+.footer { background: var(--maroon); color: #f6e7e3; padding-top: 48px; }
+.plan-cta + .footer, main:has(.plan-cta) + .footer { padding-top: 136px; }
+.footer a { color: #fff; }
+.footer .disclaimer { opacity: 0.75; }
+.plan-cta { overflow: visible; }
+
+/* ---------- Plan band: full width, sand, sitting directly on the maroon footer (no overlap, no gap) ---------- */
+.plan-cta { margin: 88px 0 0; background: linear-gradient(120deg, #efe3d4 0%, #f6eee4 100%); padding: 56px 0; z-index: auto; }
+.plan-cta-inner { background: none; box-shadow: none; margin-bottom: 0; border-radius: 0; padding: 0 var(--gutter); }
+@media (min-width: 900px) { .plan-cta-inner { padding: 0 var(--gutter); } }
+.plan-cta p { color: var(--muted); }
+.plan-cta .btn-light { background: var(--maroon); color: var(--white); }
+.plan-cta .btn-light:hover { background: var(--maroon-deep); }
+.plan-cta .btn-line-light { border-color: var(--maroon); color: var(--maroon); }
+.plan-cta .btn-line-light:hover { background: var(--maroon); color: var(--white); }
+.plan-cta + .footer, main:has(.plan-cta) + .footer { padding-top: 48px; }
