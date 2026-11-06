@@ -710,3 +710,18 @@ main:not(:has(.plan-cta)) + .footer { margin-top: 96px; }
 .plan-cta .btn-line-light { border-color: var(--maroon); color: var(--maroon); }
 .plan-cta .btn-line-light:hover { background: var(--maroon); color: var(--white); }
 .plan-cta + .footer, main:has(.plan-cta) + .footer { padding-top: 48px; }
+/* footer back to the original forest green */
+.footer { background: var(--forest); color: #e9e6df; }
+.footer a { color: #f3f1ec; }
+/* footer: black */
+.footer { background: var(--ink); color: #ece8e4; }
+.footer a { color: #fff; }
+/* tighter sand band and footer */
+.plan-cta { padding: 36px 0; margin-top: 72px; }
+.plan-cta h2 { margin-bottom: 4px; }
+.plan-cta-inner { gap: 16px; }
+.footer, .plan-cta + .footer, main:has(.plan-cta) + .footer { padding-top: 32px; padding-bottom: calc(28px + env(safe-area-inset-bottom)); }
+.footer-inner { gap: 14px; }
+.footer-mark { font-size: 26px !important; margin-bottom: 6px !important; }
+.footer p { margin-bottom: 4px; }
+@media (max-width: 767px) { .footer, .plan-cta + .footer, main:has(.plan-cta) + .footer { padding-bottom: calc(84px + env(safe-area-inset-bottom)); } }
