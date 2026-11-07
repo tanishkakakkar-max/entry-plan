@@ -725,3 +725,12 @@ main:not(:has(.plan-cta)) + .footer { margin-top: 96px; }
 .footer-mark { font-size: 26px !important; margin-bottom: 6px !important; }
 .footer p { margin-bottom: 4px; }
 @media (max-width: 767px) { .footer, .plan-cta + .footer, main:has(.plan-cta) + .footer { padding-bottom: calc(84px + env(safe-area-inset-bottom)); } }
+/* bold wordmark: Instrument Serif has one weight, so thicken the strokes instead of faking bold */
+.wordmark, .footer-mark { -webkit-text-stroke: 0.9px currentColor; paint-order: stroke fill; letter-spacing: 0.005em; }
+.wordmark { font-size: 31px; }
+.wordmark-dot { width: 10px; height: 10px; }
+/* wordmark: DM Serif Display italic (option 4) */
+.wordmark, .footer-mark { font-family: "DM Serif Display", Georgia, serif !important; font-style: italic !important; -webkit-text-stroke: 0; letter-spacing: -0.005em; }
+.wordmark { font-size: 28px; }
+.footer-mark { font-size: 26px !important; }
+@media (max-width: 420px) { .wordmark { font-size: 23px; } }

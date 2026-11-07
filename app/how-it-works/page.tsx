@@ -18,7 +18,7 @@ const STEPS = [
   {
     n: "02",
     title: "Tell us about your brand",
-    text: "Only your brand name, category and what you sell are needed, or just your website. Customer, price, brand feel and where you sell today are optional: leave them blank and the plan says what it assumed.",
+    text: "Only your brand name, category and what you sell are needed, or just your website. Customer, price, brand personality and where you sell today are optional: leave them blank and the plan says what it assumed.",
   },
   {
     n: "03",

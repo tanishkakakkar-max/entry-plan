@@ -272,7 +272,7 @@ export function CreateApp() {
           ? { face: "idea", text: "Change whatever you like, then press Continue. Your old version stays in Your plans." }
           : { face: "idea", text: "I only need your brand name and what you sell, or just your website. Everything else is optional." }
       : step === 1
-        ? { face: "curious", text: "Where to? Pick a country, then tell me how your brand feels and where you sell today." }
+        ? { face: "curious", text: "Where to? Pick a country, then tell me your brand personality and where you sell today." }
         : loading
           ? { face: "thinking", text: `Reading the ${planCountry} research and checking official sources. About 2 minutes. You can watch it write.` }
           : error
@@ -345,7 +345,7 @@ export function CreateApp() {
             </>
           ) : step === 1 ? (
             <>
-              Where to, <em>and how it feels</em>
+              Where to, <em>and your brand personality</em>
             </>
           ) : (
             <>
@@ -428,7 +428,7 @@ export function CreateApp() {
                 )}
               </label>
               {form.category === OTHER && field("categoryOther", "Your category", "e.g. pet care, toys, consulting", { max: OTHER_MAX })}
-              {field("identity", "How your brand feels", "e.g. calm, natural, made to last", { long: true, optional: true })}
+              {field("identity", "Brand personality", "e.g. calm, playful, premium, made to last", { long: true, optional: true })}
               {field("stage", "Where you sell today", "e.g. pre-launch, Shopify DTC, 40 boutiques in Australia", { optional: true })}
               <div className="form-row">
                 <button type="button" className="btn btn-line" onClick={() => goTo(0)}>
