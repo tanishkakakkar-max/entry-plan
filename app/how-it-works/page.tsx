@@ -3,6 +3,7 @@ import Link from "next/link";
 import { BRAND } from "../components/brand";
 import { PlanCta } from "../components/PlanCta";
 import { TaniFace } from "../components/Tani";
+import { AskBox, Faq, SourceKinds, StepsDetail } from "./Interactive";
 
 export const metadata: Metadata = {
   title: `How it works - ${BRAND.name}`,
@@ -14,16 +15,19 @@ const STEPS = [
     n: "01",
     title: "Pick a country",
     text: "Choose Japan, Singapore, India or the United States. Your brand can be based anywhere. Not sure which? Read the Markets page or a sample plan first.",
+    more: "Each country has its own research behind it: how buyers think, the usual ways in, and the duties, taxes and rules that apply to goods made where yours are made.",
   },
   {
     n: "02",
     title: "Tell us about your brand",
     text: "Only your brand name, category and what you sell are needed, or just your website. Customer, price, brand personality and where you sell today are optional: leave them blank and the plan says what it assumed.",
+    more: "Add your website and First Port reads it for you. Anything it has to guess is listed at the top of your plan, so you can correct it with Edit inputs and rerun.",
   },
   {
     n: "03",
     title: "Get your plan",
     text: "In about 2 minutes First Port reads its research for that country and category, searches the web for what has changed, finds relevant studies, and writes your plan. You can watch it write.",
+    more: "You see each step as it happens, then the plan fills in section by section with its sources. It's saved on your code for 30 days, and you can copy it or download a PDF.",
   },
 ];
 
@@ -40,13 +44,13 @@ const SECTIONS = [
 ];
 
 const SOURCES = [
-  ["P", "Official and primary sources", "Government notices, customs schedules and regulator pages behind the numbers."],
-  ["W", "Web", "Recent articles and pages found by a live search when your plan is written."],
-  ["S", "Peer-reviewed papers", "Studies on how consumers in that market behave."],
-  ["R", "First Port research", "First Port's own analysis of each country and category."],
+  { k: "P", title: "Official and primary sources", text: "Government notices, customs schedules and regulator pages behind the numbers.", example: "the US Federal Register notice that sets the 2026 tariff rate for goods from your country." },
+  { k: "W", title: "Web", text: "Recent articles and pages found by a live search when your plan is written.", example: "a news story from this year about a competitor opening its first store in Tokyo." },
+  { k: "S", title: "Peer-reviewed papers", text: "Studies on how consumers in that market behave.", example: "a study on what makes Gen Z shoppers pay more for sustainable fashion." },
+  { k: "R", title: "First Port research", text: "First Port's own analysis of each country and category.", example: "First Port's notes on which channels work best for beauty brands in Singapore." },
 ];
 
-const FAQ = [
+const FAQ: [string, string][] = [
   ["How much does it cost?", "Your email gets you a free code with 5 plans. Each finished plan uses one. If a plan fails or stops early, it's given back."],
   ["Can I change my answers?", "Yes. Open the plan and press Edit inputs and rerun. You get a new version, and the old one stays in Your plans."],
   ["How long are plans kept?", "30 days on your code, then deleted. You can delete one sooner, and plans are never shared with other codes."],
@@ -65,17 +69,7 @@ export default function HowItWorksPage() {
         <p className="lede">First Port turns scattered market research into one plan for your brand and one country, with every number linked to its source.</p>
       </section>
 
-      <section className="wrap steps-detail reveal" aria-label="The three steps">
-        {STEPS.map((s) => (
-          <div key={s.n} className="step-row">
-            <span className="how-n">{s.n}</span>
-            <div>
-              <h2>{s.title}</h2>
-              <p>{s.text}</p>
-            </div>
-          </div>
-        ))}
-      </section>
+      <StepsDetail steps={STEPS} />
 
       <section className="wrap plan-anatomy reveal" aria-labelledby="anatomy-title">
         <p className="kicker" id="anatomy-title">
@@ -84,7 +78,7 @@ export default function HowItWorksPage() {
         <h2 className="section-title">
           Nine sections, <em>one decision.</em>
         </h2>
-        <ol className="anatomy-list">
+        <ol className="anatomy-list reveal stagger">
           {SECTIONS.map(([t, d], i) => (
             <li key={t}>
               <span className="anatomy-n">{i + 1}</span>
@@ -113,17 +107,7 @@ export default function HowItWorksPage() {
           duties, marks anything that needs checking with [verify], and never invents a tariff rate. Small tags in the plan link to the source behind
           each line. There are four kinds:
         </p>
-        <div className="source-kinds">
-          {SOURCES.map(([k, t, d]) => (
-            <div key={k} className="source-kind">
-              <span className="cite">{k}1</span>
-              <div>
-                <strong>{t}</strong>
-                <p>{d}</p>
-              </div>
-            </div>
-          ))}
-        </div>
+        <SourceKinds sources={SOURCES} />
       </section>
 
       <section className="wrap faq reveal" aria-labelledby="faq-title">
@@ -138,14 +122,21 @@ export default function HowItWorksPage() {
             </h2>
           </div>
         </div>
-        <dl className="faq-list">
-          {FAQ.map(([q, a]) => (
-            <div key={q}>
-              <dt>{q}</dt>
-              <dd>{a}</dd>
-            </div>
-          ))}
-        </dl>
+        <Faq items={FAQ} />
+      </section>
+
+      <section className="wrap still-asking reveal" aria-labelledby="ask-title">
+        <p className="kicker" id="ask-title">
+          Still have a question?
+        </p>
+        <h2 className="section-title">
+          Ask Tani, <em>any time.</em>
+        </h2>
+        <p className="lede">
+          Not covered above? Ask me anything about the site, the four countries or your plan. For a real person, email{" "}
+          <a href={`mailto:${BRAND.email}`}>{BRAND.email}</a>.
+        </p>
+        <AskBox />
       </section>
 
       <PlanCta />

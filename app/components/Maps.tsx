@@ -1,8 +1,7 @@
 "use client";
 
 import { COUNTRY_PATHS, PINS, WORLD_COUNTRY_PATHS, WORLD_PATH } from "./geo";
-import { useEffect, useState } from "react";
-import { COUNTRIES, countryLabel } from "./brand";
+import { countryLabel } from "./brand";
 
 type Pt = [number, number];
 
@@ -38,32 +37,27 @@ function arc([x1, y1]: Pt, [x2, y2]: Pt) {
 
 // Cropped to the land (Alaska to New Zealand), so the map has no empty ocean margin on the left.
 const MAP_VIEWBOX = "85 36 915 448";
-const [VB_X, VB_Y, VB_W, VB_H] = MAP_VIEWBOX.split(" ").map(Number);
-const teaserOf = (key: string) => COUNTRIES.find((c) => c.key === key)?.teaser ?? "";
 
-export function WorldMap({ highlight = "japan", onSelect }: { highlight?: string; onSelect?: (key: string) => void }) {
+// highlight: the country shown. onSelect: a click picks a country. onPreview: hovering a country previews it
+// (null when the mouse leaves), so the page can show it without keeping it.
+export function WorldMap({
+  highlight = "japan",
+  onSelect,
+  onPreview,
+}: {
+  highlight?: string;
+  onSelect?: (key: string) => void;
+  onPreview?: (key: string | null) => void;
+}) {
   const dest = PINS[highlight] ?? PINS.japan;
   const origins = Object.entries(ORIGINS).filter(([, p]) => Math.hypot(p[0] - dest[0], p[1] - dest[1]) > 110);
   const labelLeft = dest[0] > 820;
-  // Country teaser tooltip: on hover/focus, and briefly after a tap selects a country.
-  const [tip, setTip] = useState("");
-  const [tapped, setTapped] = useState("");
-  useEffect(() => {
-    if (!tapped) return;
-    const t = setTimeout(() => setTapped(""), 2800);
-    return () => clearTimeout(t);
-  }, [tapped]);
-  const shown = tip || tapped;
-  const tipAt = shown ? PINS[shown] : null;
-  const choose = (key: string) => {
-    onSelect?.(key);
-    setTapped(key);
-  };
+  const choose = (key: string) => onSelect?.(key);
   const hover = (key: string) => ({
-    onMouseEnter: () => setTip(key),
-    onMouseLeave: () => setTip(""),
-    onFocus: () => setTip(key),
-    onBlur: () => setTip(""),
+    onMouseEnter: () => onPreview?.(key),
+    onMouseLeave: () => onPreview?.(null),
+    onFocus: () => onPreview?.(key),
+    onBlur: () => onPreview?.(null),
   });
   return (
     <div className="world-map-wrap">
@@ -110,7 +104,7 @@ export function WorldMap({ highlight = "japan", onSelect }: { highlight?: string
         key={`port-${highlight}`}
         className="port-active"
         transform={`translate(${dest[0]} ${dest[1]})`}
-        {...(onSelect ? { ...hover(highlight), onClick: () => setTapped(highlight) } : {})}
+        {...(onSelect ? { ...hover(highlight), onClick: () => choose(highlight) } : {})}
       >
         <g className="pin-pop">
           <circle r="16" className="pin-halo" />
@@ -121,15 +115,6 @@ export function WorldMap({ highlight = "japan", onSelect }: { highlight?: string
         </text>
       </g>
     </svg>
-      {onSelect && tipAt && (
-        <p
-          className={`map-tip${tipAt[0] - VB_X > VB_W * 0.62 ? " left" : ""}`}
-          style={{ left: `${((tipAt[0] - VB_X) / VB_W) * 100}%`, top: `${((tipAt[1] - VB_Y) / VB_H) * 100}%` }}
-          role="status"
-        >
-          <strong>{countryLabel(shown)}</strong> {teaserOf(shown)}
-        </p>
-      )}
     </div>
   );
 }

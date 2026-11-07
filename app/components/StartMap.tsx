@@ -9,8 +9,10 @@ import { WorldMap } from "./Maps";
 // hovers or picks one. Picking a country (map dot or name) just selects it on the map.
 export function StartMap() {
   const router = useRouter();
-  const [port, setPort] = useState<string>("japan");
-  const [touched, setTouched] = useState(false);
+  const [chosen, setChosen] = useState<string>("japan"); // cycles until someone clicks a country
+  const [preview, setPreview] = useState<string | null>(null); // hovering a country shows it, without keeping it
+  const [picked, setPicked] = useState(false);
+  const port = preview ?? chosen;
 
   useEffect(() => {
     // Old links (/#access, /#example) now live on their own pages.
@@ -19,23 +21,22 @@ export function StartMap() {
   }, [router]);
 
   useEffect(() => {
-    if (touched || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (picked || preview || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const t = setInterval(() => {
-      setPort((p) => COUNTRIES[(COUNTRIES.findIndex((c) => c.key === p) + 1) % COUNTRIES.length].key);
+      setChosen((p) => COUNTRIES[(COUNTRIES.findIndex((c) => c.key === p) + 1) % COUNTRIES.length].key);
     }, 3200);
     return () => clearInterval(t);
-  }, [touched]);
+  }, [picked, preview]);
 
   const pick = (key: string) => {
-    setTouched(true);
-    setPort(key);
+    setPicked(true);
+    setChosen(key);
+    setPreview(null);
   };
 
   return (
     <figure className="start-map">
-      <div onMouseEnter={() => setTouched(true)}>
-        <WorldMap highlight={port} onSelect={pick} />
-      </div>
+      <WorldMap highlight={port} onSelect={pick} onPreview={setPreview} />
       <figcaption className="port-names" aria-label="Choose a country">
         {COUNTRIES.map((c, i) => (
           <span key={c.key}>
@@ -43,11 +44,11 @@ export function StartMap() {
             <button
               type="button"
               className={port === c.key ? "port-name on" : "port-name"}
-              onMouseEnter={() => {
-                setTouched(true);
-                setPort(c.key);
-              }}
-              onFocus={() => setPort(c.key)}
+              aria-pressed={picked && chosen === c.key}
+              onMouseEnter={() => setPreview(c.key)}
+              onMouseLeave={() => setPreview(null)}
+              onFocus={() => setPreview(c.key)}
+              onBlur={() => setPreview(null)}
               onClick={() => pick(c.key)}
             >
               {c.label}

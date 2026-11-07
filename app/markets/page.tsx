@@ -3,6 +3,7 @@ import Link from "next/link";
 import { BRAND } from "../components/brand";
 import { CountryOutline } from "../components/Maps";
 import { PlanCta } from "../components/PlanCta";
+import { StrategyExplorer } from "./Strategies";
 
 export const metadata: Metadata = {
   title: `Markets - ${BRAND.name}`,
@@ -44,88 +45,6 @@ const MARKETS = [
   },
 ];
 
-type Level = "Low" | "Low-medium" | "Medium" | "Medium-high" | "High" | "Shared" | "Full";
-const STRATEGIES: { name: string; example: string; risk: Level; cost: Level; control: Level; reward: Level; fits: string; whyNot: string }[] = [
-  {
-    name: "Sell online from home",
-    example: "Your own store, shipping across borders",
-    risk: "Low",
-    cost: "Low",
-    control: "High",
-    reward: "Low-medium",
-    fits: "Testing whether anyone in the country wants your product before spending real money.",
-    whyNot: "Slow shipping and duties at the door put buyers off, and you have little local presence or trust.",
-  },
-  {
-    name: "Marketplaces",
-    example: "Amazon, Rakuten, Shopee, Flipkart",
-    risk: "Low-medium",
-    cost: "Low-medium",
-    control: "Low-medium",
-    reward: "Medium",
-    fits: "Reaching buyers fast where they already shop and search.",
-    whyNot: "Fees and price wars eat margin, and the platform, not you, owns the customer.",
-  },
-  {
-    name: "Distributor or importer",
-    example: "A local company buys and resells your goods",
-    risk: "Low-medium",
-    cost: "Low",
-    control: "Low",
-    reward: "Medium",
-    fits: "Regulated products like food and cosmetics, or when you don't want a local team.",
-    whyNot: "Each middleman adds margin, and you lose control of price and how the brand is shown.",
-  },
-  {
-    name: "Retail partners and pop-ups",
-    example: "Boutiques, department stores, short-term shops",
-    risk: "Medium",
-    cost: "Medium",
-    control: "Medium",
-    reward: "Medium",
-    fits: "Premium brands that need people to see and touch the product.",
-    whyNot: "Wholesale margins, long buying cycles, and costly staff and rent for pop-ups.",
-  },
-  {
-    name: "Licensing or franchising",
-    example: "A local partner runs your brand for a fee",
-    risk: "Medium",
-    cost: "Low",
-    control: "Low-medium",
-    reward: "Medium",
-    fits: "Repeatable formats like restaurants and services that need local operators.",
-    whyNot: "Your brand is only as good as your partner, and royalties are smaller than owning the business.",
-  },
-  {
-    name: "Joint venture",
-    example: "A shared company with a local partner",
-    risk: "Medium-high",
-    cost: "High",
-    control: "Shared",
-    reward: "High",
-    fits: "Markets where local know-how, licences or ownership rules make a partner essential.",
-    whyNot: "Profits and decisions are shared, and disagreements are hard and costly to undo.",
-  },
-  {
-    name: "Your own company and stores",
-    example: "A local subsidiary, office or flagship",
-    risk: "High",
-    cost: "High",
-    control: "Full",
-    reward: "High",
-    fits: "Proven demand and the capital to commit for years.",
-    whyNot: "Leases, hiring, tax and compliance cost a lot before you sell anything, and they're hard to reverse.",
-  },
-];
-
-const tone = (l: Level, reverse = false) => {
-  const order: Level[] = ["Low", "Low-medium", "Medium", "Medium-high", "High"];
-  const i = order.indexOf(l);
-  if (i < 0) return "mid";
-  const v = reverse ? 4 - i : i;
-  return v <= 1 ? "good" : v === 2 ? "mid" : "hard";
-};
-
 // Markets: the four countries and the entry strategies compared.
 export default function MarketsPage() {
   return (
@@ -138,7 +57,7 @@ export default function MarketsPage() {
         <p className="lede">What makes each country different for a foreign brand, and the main ways brands enter, from low risk to high.</p>
       </section>
 
-      <section className="wrap markets-grid reveal" aria-label="The four markets">
+      <section className="wrap markets-grid reveal stagger" aria-label="The four markets">
         {MARKETS.map((m) => (
           <article key={m.key} className="market-card">
             <div className="market-top">
@@ -176,43 +95,7 @@ export default function MarketsPage() {
           Every way into a new country trades risk and cost against control and reward. Most brands start near the top of this list and move down
           only once demand is proven.
         </p>
-        <div className="strategy-list">
-          {STRATEGIES.map((s, i) => (
-            <article key={s.name} className="strategy">
-              <div className="strategy-head">
-                <span className="strategy-n">{i + 1}</span>
-                <div>
-                  <h3>{s.name}</h3>
-                  <p className="strategy-example">{s.example}</p>
-                </div>
-              </div>
-              <dl className="strategy-meters">
-                <div>
-                  <dt>Risk</dt>
-                  <dd className={tone(s.risk)}>{s.risk}</dd>
-                </div>
-                <div>
-                  <dt>Cost</dt>
-                  <dd className={tone(s.cost)}>{s.cost}</dd>
-                </div>
-                <div>
-                  <dt>Control</dt>
-                  <dd className={s.control === "Full" ? "good" : s.control === "Shared" ? "mid" : tone(s.control as Level, true)}>{s.control}</dd>
-                </div>
-                <div>
-                  <dt>Reward</dt>
-                  <dd className={tone(s.reward, true)}>{s.reward}</dd>
-                </div>
-              </dl>
-              <p>
-                <strong>Good when:</strong> {s.fits}
-              </p>
-              <p>
-                <strong>Why not:</strong> {s.whyNot}
-              </p>
-            </article>
-          ))}
-        </div>
+        <StrategyExplorer />
         <p className="anatomy-more">
           Your plan picks one route for your brand and country, and says why. <Link href="/how-it-works" className="link-btn accent">How plans are made <span aria-hidden="true">→</span></Link>
         </p>
